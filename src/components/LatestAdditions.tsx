@@ -1,5 +1,4 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
 import './LatestAdditions.css';
 
 const LatestAdditions: React.FC = () => {
