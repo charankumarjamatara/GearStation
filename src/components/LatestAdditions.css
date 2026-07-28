@@ -1,0 +1,200 @@
+.latest-additions {
+  background-color: var(--color-bg-light);
+  padding-bottom: 0;
+  overflow: hidden;
+}
+
+.latest-additions .section-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.semicircle-wrapper {
+  --scale-y: 0.5;
+  --inv-scale-y: 2;
+  --item-size: 16vw;
+  --top-offset: 10vw;
+  
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%); /* breaks out of container to span full width */
+  height: calc(var(--top-offset) + 50vw * var(--scale-y));
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.ellipse-container {
+  position: absolute;
+  top: var(--top-offset); 
+  left: 0;
+  width: 100%; 
+  padding-bottom: 100%; /* Creates a perfect square 1:1 ratio */
+  transform-origin: top center;
+  transform: scaleY(var(--scale-y));
+}
+
+.semicircle-arch {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 20px 50px rgba(0,0,0,0.03);
+}
+
+.circle-track {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  animation: trackRotate 40s linear infinite;
+}
+
+@keyframes trackRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.floating-item {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+
+.floating-item-inner {
+  position: absolute;
+  top: calc(var(--item-size) / -2);
+  left: calc(50% - var(--item-size) / 2);
+  width: var(--item-size);
+  height: var(--item-size);
+  background-color: var(--color-white);
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: counterRotate 40s linear infinite;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+  padding: 1.5vw;
+  z-index: 2;
+}
+
+.floating-item-inner:hover {
+  box-shadow: 0 15px 40px rgba(211, 29, 29, 0.25);
+  z-index: 10;
+}
+
+.floating-item-inner:hover .floating-img {
+  transform: scale(1.15);
+}
+
+.floating-item-inner:hover .floating-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes counterRotate {
+  from { transform: rotate(calc(-1 * var(--init-angle))) scaleY(var(--inv-scale-y)); }
+  to { transform: rotate(calc(360deg - var(--init-angle))) scaleY(var(--inv-scale-y)); }
+}
+
+.floating-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: brightness(1.05) contrast(1.15); /* Pushes off-white backgrounds to pure white so they disappear */
+  transition: transform 0.3s;
+}
+
+.floating-tooltip {
+  position: absolute;
+  top: -35px;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+.floating-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  margin-left: -4px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-dark);
+  transform: rotate(45deg);
+}
+
+.center-btn-container {
+  position: absolute;
+  bottom: 2vw;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.rounded-btn {
+  border-radius: 30px;
+  padding: 16px 40px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 10px 25px rgba(211, 29, 29, 0.3);
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .semicircle-wrapper {
+    --scale-y: 0.6;
+    --inv-scale-y: 1.666;
+    --item-size: 20vw;
+    --top-offset: 12vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .semicircle-wrapper {
+    --scale-y: 0.65;
+    --inv-scale-y: 1.538;
+    --item-size: 24vw;
+    --top-offset: 14vw;
+  }
+  .center-btn-container {
+    bottom: 4vw;
+  }
+  .rounded-btn {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .semicircle-wrapper {
+    --scale-y: 0.75;
+    --inv-scale-y: 1.333;
+    --item-size: 32vw;
+    --top-offset: 18vw;
+  }
+  .floating-tooltip {
+    font-size: 12px;
+    padding: 6px 12px;
+    top: -30px;
+  }
+}
