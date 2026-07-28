@@ -10,28 +10,28 @@ const PopularRentals: React.FC = () => {
       price: '₹1,200',
       rating: 4.9,
       reviews: 120,
-      imageUrl: '/dji_action_3_pro.png'
+      imageUrl: `${import.meta.env.BASE_URL}dji_action_3_pro.png`
     },
     {
       name: 'DJI Action 4',
       price: '₹900',
       rating: 4.9,
       reviews: 96,
-      imageUrl: '/dji_action_4.png'
+      imageUrl: `${import.meta.env.BASE_URL}dji_action_4.png`
     },
     {
       name: 'GoPro Hero 12',
       price: '₹1,100',
       rating: 4.7,
       reviews: 76,
-      imageUrl: '/gopro_hero_12.png'
+      imageUrl: `${import.meta.env.BASE_URL}gopro_hero_12.png`
     },
     {
       name: 'Canon R6 Mark II',
       price: '₹2,500',
       rating: 4.9,
       reviews: 84,
-      imageUrl: '/canon_r6_mark_ii.png'
+      imageUrl: `${import.meta.env.BASE_URL}canon_r6_mark_ii.png`
     }
   ];
 

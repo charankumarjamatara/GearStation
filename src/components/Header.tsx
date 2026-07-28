@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     <header className="header">
       <div className="container header-container">
         <div className="header-logo">
-          <img src="/logo.jpg" alt="Gear Station Logo" className="full-logo" />
+          <img src={`${import.meta.env.BASE_URL}new_logo.jpg`} alt="Gear Station Logo" className="full-logo" />
         </div>
 
         <nav className="header-nav">

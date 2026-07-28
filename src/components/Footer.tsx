@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="footer-logo">
-              <img src="/logo.jpg" alt="Gear Station Logo" className="full-logo-footer" />
+              <img src={`${import.meta.env.BASE_URL}logo.jpg`} alt="Gear Station Logo" className="full-logo-footer" />
             </div>
             <p className="footer-desc">
               We provide premium cameras, action cams, bikes & riding gear on rent for your next adventure.

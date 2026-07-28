@@ -4,12 +4,12 @@ import './LatestAdditions.css';
 
 const LatestAdditions: React.FC = () => {
   const products = [
-    { name: 'Canon R6 Mark II', imageUrl: '/canon_r6_mark_ii.png' },
-    { name: 'Camera Backpack', imageUrl: '/camera_backpack.png' },
-    { name: 'GoPro Hero 12', imageUrl: '/gopro_hero_12.png' },
-    { name: 'Insta360 X4', imageUrl: '/insta360_x4.png' },
-    { name: 'DJI Action 4', imageUrl: '/dji_action_4.png' },
-    { name: 'Riding Jacket', imageUrl: '/riding_jacket.png' }
+    { name: 'Canon R6 Mark II', imageUrl: `${import.meta.env.BASE_URL}canon_r6_mark_ii.png` },
+    { name: 'Camera Backpack', imageUrl: `${import.meta.env.BASE_URL}camera_backpack.png` },
+    { name: 'GoPro Hero 12', imageUrl: `${import.meta.env.BASE_URL}gopro_hero_12.png` },
+    { name: 'Insta360 X4', imageUrl: `${import.meta.env.BASE_URL}insta360_x4.png` },
+    { name: 'DJI Action 4', imageUrl: `${import.meta.env.BASE_URL}dji_action_4.png` },
+    { name: 'Riding Jacket', imageUrl: `${import.meta.env.BASE_URL}riding_jacket.png` }
   ];
 
   return (

@@ -29,7 +29,7 @@ const About: React.FC = () => {
           
           <div className="about-images">
             <div className="image-wrapper travel-img-wrapper">
-              <img src="/gearstation_profile.png" alt="Gear Station" className="about-img" />
+              <img src={`${import.meta.env.BASE_URL}gearstation_profile.png`} alt="Gear Station" className="about-img" />
               <div className="img-caption">
                 <span className="caption-title">THE GEAR SIDE</span>
                 <span className="caption-subtitle">Gear Station</span>
@@ -37,7 +37,7 @@ const About: React.FC = () => {
             </div>
             
             <div className="image-wrapper gear-img-wrapper">
-              <img src="/backpackers_profile.jpg" alt="Backpacker Destinations" className="about-img" />
+              <img src={`${import.meta.env.BASE_URL}backpackers_profile.jpg`} alt="Backpacker Destinations" className="about-img" />
               <div className="img-caption">
                 <span className="caption-title">THE TRAVEL SIDE</span>
                 <span className="caption-subtitle">Backpackers Destinations</span>
