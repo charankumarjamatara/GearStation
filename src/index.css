@@ -159,3 +159,20 @@ img {
 .text-center {
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+  
+  .section-title {
+    font-size: 36px;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 28px;
+  }
+}

@@ -4,7 +4,7 @@ import ProductCard from './ProductCard';
 import './PopularRentals.css';
 
 const PopularRentals: React.FC = () => {
-  const products = [
+  const baseProducts = [
     {
       name: 'DJI Action 3 Pro',
       price: '₹1,200',
@@ -32,30 +32,45 @@ const PopularRentals: React.FC = () => {
       rating: 4.9,
       reviews: 84,
       imageUrl: `${import.meta.env.BASE_URL}canon_r6_mark_ii.png`
+    },
+    {
+      name: 'Riding Jacket',
+      price: '₹500',
+      rating: 4.8,
+      reviews: 210,
+      imageUrl: `${import.meta.env.BASE_URL}riding_jacket.png`
     }
   ];
+
+  // Duplicate for infinite scrolling effect
+  const products = [...baseProducts, ...baseProducts];
 
   return (
     <section id="rent-gear" className="section popular-rentals">
       <div className="container">
         <div className="section-header">
           <h2 className="section-title">POPULAR RENTALS</h2>
-          <a href="#" className="view-all-link">
-            VIEW ALL RENTALS <ArrowRight size={16} />
-          </a>
+          <div className="header-actions-group">
+            <a href="#" className="view-all-link">
+              VIEW ALL RENTALS <ArrowRight size={16} />
+            </a>
+          </div>
         </div>
         
-        <div className="products-grid">
-          {products.map((product, index) => (
-            <ProductCard
-              key={index}
-              name={product.name}
-              price={product.price}
-              rating={product.rating}
-              reviews={product.reviews}
-              imageUrl={product.imageUrl}
-            />
-          ))}
+        <div className="carousel-wrapper">
+          <div className="products-carousel-track">
+            {products.map((product, index) => (
+              <div className="carousel-item" key={index}>
+                <ProductCard
+                  name={product.name}
+                  price={product.price}
+                  rating={product.rating}
+                  reviews={product.reviews}
+                  imageUrl={product.imageUrl}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

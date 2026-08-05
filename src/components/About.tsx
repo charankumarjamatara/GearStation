@@ -28,21 +28,31 @@ const About: React.FC = () => {
           </div>
           
           <div className="about-images">
-            <div className="image-wrapper travel-img-wrapper">
+            <a 
+              href="https://www.instagram.com/gearstation.co/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="image-wrapper travel-img-wrapper"
+            >
               <img src={`${import.meta.env.BASE_URL}gearstation_profile.png`} alt="Gear Station" className="about-img" />
               <div className="img-caption">
                 <span className="caption-title">THE GEAR SIDE</span>
                 <span className="caption-subtitle">Gear Station</span>
               </div>
-            </div>
+            </a>
             
-            <div className="image-wrapper gear-img-wrapper">
-              <img src={`${import.meta.env.BASE_URL}backpackers_profile.jpg`} alt="Backpacker Destinations" className="about-img" />
+            <a 
+              href="https://www.instagram.com/backpackers.destinations/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="image-wrapper gear-img-wrapper"
+            >
+              <img src={`${import.meta.env.BASE_URL}backpackers_insta.jpg`} alt="Backpacker Destinations" className="about-img" />
               <div className="img-caption">
                 <span className="caption-title">THE TRAVEL SIDE</span>
                 <span className="caption-subtitle">Backpackers Destinations</span>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>

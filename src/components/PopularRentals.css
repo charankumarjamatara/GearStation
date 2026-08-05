@@ -24,26 +24,63 @@
   text-decoration: underline;
 }
 
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+.header-actions-group {
+  display: flex;
+  align-items: center;
+}
+
+.carousel-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.products-carousel-track {
+  display: flex;
   gap: 24px;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.products-carousel-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* 
+      We have 10 items total (5 base + 5 duplicated). 
+      Translate left by exactly 50% to create a seamless loop 
+      since the second half is identical to the first half.
+      But to be exact with gap, we translate by calc(-50% - 12px) 
+      where 12px is half the 24px gap between the two halves.
+    */
+    transform: translateX(calc(-50% - 12px));
+  }
+}
+
+.carousel-item {
+  width: 280px; /* Fixed width to make marquee calculations predictable */
+  flex-shrink: 0;
 }
 
 @media (max-width: 1024px) {
-  .products-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .carousel-item {
+    width: 240px;
   }
 }
 
 @media (max-width: 768px) {
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .carousel-item {
+    width: 220px;
   }
 }
 
 @media (max-width: 480px) {
-  .products-grid {
-    grid-template-columns: 1fr;
+  .carousel-item {
+    width: 200px;
   }
 }

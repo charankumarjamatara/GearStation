@@ -31,13 +31,15 @@ const testimonials = [
 
 const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
+    if (isHovered) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    }, 3000);
+    }, 4000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isHovered]);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
@@ -45,6 +47,13 @@ const Testimonials: React.FC = () => {
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+  };
+
+  const getCardPosition = (index: number) => {
+    if (index === currentIndex) return "active";
+    if (index === (currentIndex - 1 + testimonials.length) % testimonials.length) return "prev";
+    if (index === (currentIndex + 1) % testimonials.length) return "next";
+    return "hidden";
   };
 
   return (
@@ -56,41 +65,44 @@ const Testimonials: React.FC = () => {
           </div>
         </div>
         
-        <div className="testimonial-slider-container">
+        <div 
+          className="testimonial-3d-container"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <button className="slider-btn prev-btn" onClick={prevSlide}>
             <ChevronLeft size={24} />
           </button>
           
-          <div className="testimonial-viewport">
-            <div 
-              className="testimonial-track" 
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
-              {testimonials.map((t, index) => (
-                <div key={index} className="testimonial-card">
-                  <div className="testimonial-content-wrapper">
-                    <div className="testimonial-author">
-                      <div className="author-image-placeholder">
-                        <span className="avatar-text">{t.initials}</span>
-                      </div>
+          <div className="testimonial-3d-viewport">
+            {testimonials.map((t, index) => (
+              <div 
+                key={index} 
+                className={`testimonial-card ${getCardPosition(index)}`}
+                onClick={() => setCurrentIndex(index)}
+              >
+                <div className="testimonial-content-wrapper">
+                  <div className="testimonial-author">
+                    <div className="author-image-placeholder">
+                      <span className="avatar-text">{t.initials}</span>
                     </div>
-                    <div className="testimonial-text-content">
-                      <div className="quote-icon-wrapper">
-                        <span className="quote-mark left-quote">"</span>
-                      </div>
-                      <p className="testimonial-quote">
-                        {t.quote}
-                        <span className="quote-mark right-quote">"</span>
-                      </p>
-                      <div className="author-info">
-                        <h4 className="author-name">{t.name}</h4>
-                        <p className="author-trip">{t.trip}</p>
-                      </div>
+                  </div>
+                  <div className="testimonial-text-content">
+                    <div className="quote-icon-wrapper">
+                      <span className="quote-mark left-quote">"</span>
+                    </div>
+                    <p className="testimonial-quote">
+                      {t.quote}
+                      <span className="quote-mark right-quote">"</span>
+                    </p>
+                    <div className="author-info">
+                      <h4 className="author-name">{t.name}</h4>
+                      <p className="author-trip">{t.trip}</p>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
           
           <button className="slider-btn next-btn" onClick={nextSlide}>

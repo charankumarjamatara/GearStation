@@ -62,3 +62,43 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
+@media (max-width: 900px) {
+  .stats-container {
+    padding: 24px 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+  }
+  
+  .stat-item {
+    flex: 0 0 calc(33.333% - 32px);
+  }
+  
+  .stat-item:not(:last-child)::after {
+    display: none;
+  }
+  
+  .stat-item:not(:first-child) {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-container {
+    padding: 20px;
+    gap: 24px 16px;
+  }
+  
+  .stat-item {
+    flex: 0 0 calc(50% - 8px);
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-item {
+    flex: 0 0 100%;
+  }
+}

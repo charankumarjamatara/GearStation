@@ -54,17 +54,19 @@
   width: 100%; height: 100%;
   border-radius: 50%;
   animation: trackRotate 40s linear infinite;
+  will-change: transform;
 }
 
 @keyframes trackRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
+  from { transform: rotate(0deg) translateZ(0); }
+  to { transform: rotate(-360deg) translateZ(0); }
 }
 
 .floating-item {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
+  pointer-events: none;
 }
 
 .floating-item-inner {
@@ -73,21 +75,19 @@
   left: calc(50% - var(--item-size) / 2);
   width: var(--item-size);
   height: var(--item-size);
-  background-color: var(--color-white);
-  border-radius: 50%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   animation: counterRotate 40s linear infinite;
   cursor: pointer;
-  transition: box-shadow 0.2s;
   padding: 1.5vw;
   z-index: 2;
+  will-change: transform;
+  text-decoration: none;
+  pointer-events: auto;
 }
 
 .floating-item-inner:hover {
-  box-shadow: 0 15px 40px rgba(211, 29, 29, 0.25);
   z-index: 10;
 }
 
@@ -101,16 +101,50 @@
 }
 
 @keyframes counterRotate {
-  from { transform: rotate(calc(-1 * var(--init-angle))) scaleY(var(--inv-scale-y)); }
-  to { transform: rotate(calc(360deg - var(--init-angle))) scaleY(var(--inv-scale-y)); }
+  from { transform: rotate(calc(-1 * var(--init-angle))) scaleY(var(--inv-scale-y)) translateZ(0); }
+  to { transform: rotate(calc(360deg - var(--init-angle))) scaleY(var(--inv-scale-y)) translateZ(0); }
+}
+
+.bobbing-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: floatAnim 3s ease-in-out infinite alternate;
+  /* Applying random delays so they don't all bob in sync */
+  animation-delay: calc(var(--init-angle) * -10ms);
+}
+
+@keyframes floatAnim {
+  0% { transform: translateY(5px); }
+  100% { transform: translateY(-15px); }
+}
+
+.floating-shadow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 50%;
+  height: 12px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  animation: shadowAnim 3s ease-in-out infinite alternate;
+  animation-delay: calc(var(--init-angle) * -10ms);
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes shadowAnim {
+  0% { transform: translateX(-50%) scale(1); opacity: 1; }
+  100% { transform: translateX(-50%) scale(0.6); opacity: 0.3; }
 }
 
 .floating-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  mix-blend-mode: multiply;
-  filter: brightness(1.05) contrast(1.15); /* Pushes off-white backgrounds to pure white so they disappear */
   transition: transform 0.3s;
 }
 
@@ -142,7 +176,7 @@
   transform: rotate(45deg);
 }
 
-.center-btn-container {
+.center-text-container {
   position: absolute;
   bottom: 2vw;
   left: 50%;
@@ -150,14 +184,15 @@
   z-index: 10;
 }
 
-.rounded-btn {
-  border-radius: 30px;
-  padding: 16px 40px;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  box-shadow: 0 10px 25px rgba(211, 29, 29, 0.3);
+.instruction-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-dark);
   text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  margin: 0;
+  opacity: 0.5;
 }
 
 @media (max-width: 900px) {
@@ -176,12 +211,11 @@
     --item-size: 24vw;
     --top-offset: 14vw;
   }
-  .center-btn-container {
+  .center-text-container {
     bottom: 4vw;
   }
-  .rounded-btn {
-    padding: 12px 24px;
-    font-size: 14px;
+  .instruction-text {
+    font-size: 10px;
   }
 }
 

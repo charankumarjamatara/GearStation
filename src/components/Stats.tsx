@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { LayoutGrid, Users, Star, Headset, Target } from 'lucide-react';
 import './Stats.css';
 
 const AnimatedCounter: React.FC<{ end: number, suffix?: string, duration?: number }> = ({ end, suffix = '', duration = 2000 }) => {
@@ -46,9 +45,6 @@ const Stats: React.FC = () => {
       <div className="container">
         <div className="stats-container">
           <div className="stat-item">
-            <div className="stat-icon-wrapper">
-              <LayoutGrid className="stat-icon" size={28} />
-            </div>
             <div className="stat-text">
               <h3 className="stat-value"><AnimatedCounter end={50} suffix="+" /></h3>
               <p className="stat-label">GEAR ITEMS</p>
@@ -56,9 +52,6 @@ const Stats: React.FC = () => {
           </div>
           
           <div className="stat-item">
-            <div className="stat-icon-wrapper">
-              <Users className="stat-icon" size={28} />
-            </div>
             <div className="stat-text">
               <h3 className="stat-value"><AnimatedCounter end={100} suffix="+" /></h3>
               <p className="stat-label">HAPPY CUSTOMERS</p>
@@ -66,9 +59,6 @@ const Stats: React.FC = () => {
           </div>
           
           <div className="stat-item">
-            <div className="stat-icon-wrapper">
-              <Star className="stat-icon" size={28} />
-            </div>
             <div className="stat-text">
               <h3 className="stat-value"><AnimatedCounter end={99} suffix="%" /></h3>
               <p className="stat-label">POSITIVE REVIEWS</p>
@@ -76,9 +66,6 @@ const Stats: React.FC = () => {
           </div>
           
           <div className="stat-item">
-            <div className="stat-icon-wrapper">
-              <Headset className="stat-icon" size={28} />
-            </div>
             <div className="stat-text">
               <h3 className="stat-value"><AnimatedCounter end={24} suffix="/7" /></h3>
               <p className="stat-label">SUPPORT</p>
@@ -86,9 +73,6 @@ const Stats: React.FC = () => {
           </div>
           
           <div className="stat-item">
-            <div className="stat-icon-wrapper">
-              <Target className="stat-icon" size={28} />
-            </div>
             <div className="stat-text">
               <h3 className="stat-value"><AnimatedCounter end={1000} suffix="+" /></h3>
               <p className="stat-label">ADVENTURERS</p>
