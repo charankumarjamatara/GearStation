@@ -21,7 +21,7 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
     {
       name: 'BIKES',
       categoryKey: 'bikes',
-      imageUrl: `${import.meta.env.BASE_URL}bike.png`,
+      imageUrl: `${import.meta.env.BASE_URL}new_bike_cutout.png`,
     },
     {
       name: 'RIDING GEAR',

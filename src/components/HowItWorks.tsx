@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import './HowItWorks.css';
 
 const HowItWorks: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="how-it-works" className="section how-it-works-dark">
+    <section id="how-it-works" className={`section how-it-works-dark ${isVisible ? 'is-visible' : ''}`} ref={sectionRef}>
       <div className="container">
         <h2 className="section-title text-white">HOW IT WORKS</h2>
         
@@ -44,11 +61,8 @@ const HowItWorks: React.FC = () => {
                   EXPLORE TRIPS <ArrowRight size={16} />
                 </button>
               </div>
-              <div className="banner-images">
-                <div className="banner-img-placeholder">Image</div>
-                <div className="banner-img-placeholder">Image</div>
-                <div className="banner-img-placeholder">Image</div>
-                <div className="banner-img-placeholder">Image</div>
+              <div className="banner-images single-image">
+                <img src={`${import.meta.env.BASE_URL}ladakh_biker.jpg`} alt="Ladakh adventure" className="banner-img" />
               </div>
             </div>
           </div>

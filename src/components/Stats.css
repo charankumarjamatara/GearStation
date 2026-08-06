@@ -98,7 +98,14 @@
 }
 
 @media (max-width: 480px) {
+  .stats-container {
+    gap: 20px 8px;
+    padding: 20px 10px;
+  }
   .stat-item {
-    flex: 0 0 100%;
+    flex: 0 0 calc(33.333% - 8px);
+  }
+  .stat-label {
+    font-size: 8px; /* Slightly smaller to fit 3 in a row */
   }
 }

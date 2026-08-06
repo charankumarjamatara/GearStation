@@ -33,12 +33,12 @@
 }
 
 .social-icon {
-  color: var(--color-white);
+  color: var(--color-primary);
   transition: color 0.2s;
 }
 
 .social-icon:hover {
-  color: var(--color-primary);
+  color: var(--color-white);
 }
 
 .footer-title {
@@ -130,9 +130,13 @@
 
 @media (max-width: 480px) {
   .footer-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 16px;
   }
-  .footer-brand, .footer-newsletter {
+  .footer-brand {
+    grid-column: span 2;
+  }
+  .footer-newsletter {
     grid-column: span 1;
   }
 }

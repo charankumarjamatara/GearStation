@@ -82,6 +82,16 @@
 
 @media (max-width: 480px) {
   .categories-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .category-card {
+    height: 180px;
+  }
+  .category-name {
+    font-size: 14px;
+  }
+  .category-overlay {
+    padding: 24px 16px 16px 16px;
   }
 }

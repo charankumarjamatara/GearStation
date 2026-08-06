@@ -1,5 +1,6 @@
 import React from 'react';
-import { Camera, Globe, Video, MessageCircle, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
+import { FaInstagram, FaFacebook, FaYoutube } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer: React.FC = () => {
@@ -15,19 +16,20 @@ const Footer: React.FC = () => {
               We provide premium cameras, action cams, bikes & riding gear on rent for your next adventure.
             </p>
             <div className="social-links">
-              <a href="#" className="social-icon"><Camera size={20} /></a>
-              <a href="#" className="social-icon"><Globe size={20} /></a>
-              <a href="#" className="social-icon"><Video size={20} /></a>
-              <a href="#" className="social-icon"><MessageCircle size={20} /></a>
+              <a href="#" className="social-icon"><FaInstagram size={20} /></a>
+              <a href="#" className="social-icon"><FaFacebook size={20} /></a>
+              <a href="#" className="social-icon"><FaYoutube size={20} /></a>
             </div>
           </div>
           
           <div className="footer-links">
             <h4 className="footer-title">COMPANY</h4>
             <ul>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">How It Works</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a href="#rent-gear">RENT GEAR</a></li>
+              <li><a href="#categories">CATEGORIES</a></li>
+              <li><a href="#how-it-works">HOW IT WORKS</a></li>
+              <li><a href="#about">ABOUT US</a></li>
+              <li><a href="#contact">CONTACT</a></li>
             </ul>
           </div>
           
