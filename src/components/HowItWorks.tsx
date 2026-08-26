@@ -23,7 +23,7 @@ const HowItWorks: React.FC = () => {
   return (
     <section id="how-it-works" className={`section how-it-works-dark ${isVisible ? 'is-visible' : ''}`} ref={sectionRef}>
       <div className="container">
-        <h2 className="section-title text-white">HOW IT WORKS</h2>
+        <h2 className="section-title text-white">HOW IT <span className="text-red">WORKS</span></h2>
         
         <div className="hiw-dark-grid">
           <div className="hiw-steps-col">

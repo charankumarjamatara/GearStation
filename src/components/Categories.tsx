@@ -9,24 +9,18 @@ interface CategoriesProps {
 const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
   const categories = [
     {
-      name: 'ACTION CAMERAS',
-      categoryKey: 'cameras',
-      imageUrl: `${import.meta.env.BASE_URL}insta360_x4.png`,
+      name: 'Photography',
+      categoryKey: 'photography',
+      description: 'Cameras, lenses, drones, lighting & more.',
+      imageUrl: `${import.meta.env.BASE_URL}new_prod_3.png`,
+      number: '01',
     },
     {
-      name: 'BACKPACKS',
-      categoryKey: 'backpacks',
+      name: 'Outdoor Gear',
+      categoryKey: 'outdoor',
+      description: 'Backpacks, tripods, camping gear & essentials.',
       imageUrl: `${import.meta.env.BASE_URL}camera_backpack.png`,
-    },
-    {
-      name: 'BIKES',
-      categoryKey: 'bikes',
-      imageUrl: `${import.meta.env.BASE_URL}new_bike_cutout.png`,
-    },
-    {
-      name: 'RIDING GEAR',
-      categoryKey: 'riding-jackets',
-      imageUrl: `${import.meta.env.BASE_URL}riding_jacket.png`,
+      number: '02',
     }
   ];
 
@@ -41,28 +35,42 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
   return (
     <section id="categories" className="section categories">
       <div className="container">
-        <div className="section-header">
-          <h2 className="section-title">BROWSE BY CATEGORY</h2>
+        <div className="section-header categories-header-new">
+          <div className="header-text-container">
+            <h2 className="section-title">BROWSE BY <span className="text-red">CATEGORY</span></h2>
+            <p className="section-subtitle">Find the right gear for every kind of adventure.</p>
+          </div>
           <a 
-            href="#category/backpacks" 
-            onClick={(e) => { e.preventDefault(); handleCategoryClick('backpacks'); }} 
-            className="view-all-link"
+            href="#category/all" 
+            onClick={(e) => { e.preventDefault(); handleCategoryClick('all'); }} 
+            className="view-all-link text-red"
           >
             EXPLORE ALL CATEGORIES <ArrowRight size={16} />
           </a>
         </div>
         
-        <div className="categories-grid">
+        <div className="categories-grid-new">
           {categories.map((category, index) => (
             <div 
               key={index} 
-              className="category-card"
+              className="category-card-new"
               onClick={() => handleCategoryClick(category.categoryKey)}
             >
-              <img src={category.imageUrl} alt={category.name} className="category-bg-img" />
-              <div className="category-overlay">
-                <h3 className="category-name">{category.name}</h3>
-                <ArrowRight className="category-arrow" size={20} />
+              <div className="card-content-left">
+                <div className="card-number-wrapper">
+                  <span className="card-number">{category.number}</span>
+                  <div className="red-line"></div>
+                </div>
+                
+                <h3 className="category-name-new">{category.name}</h3>
+                <p className="category-desc-new">{category.description}</p>
+                
+                <div className="explore-link">
+                  EXPLORE <ArrowRight size={16} />
+                </div>
+              </div>
+              <div className="card-image-right">
+                <img src={category.imageUrl} alt={category.name} className="category-img-new" />
               </div>
             </div>
           ))}

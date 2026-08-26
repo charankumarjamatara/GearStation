@@ -131,6 +131,10 @@ img {
   background-color: var(--color-primary); /* Keeps theme consistent, or user's yellow? User said 'only text font, sizes' so I'll keep red */
 }
 
+.text-red {
+  color: var(--color-primary);
+}
+
 .flex {
   display: flex;
 }

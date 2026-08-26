@@ -5,7 +5,7 @@ const About: React.FC = () => {
   return (
     <section id="about" className="section about-section">
       <div className="container">
-        <h2 className="section-title">ABOUT US</h2>
+        <h2 className="section-title">ABOUT <span className="text-red">US</span></h2>
         <div className="about-grid">
           <div className="about-content">
             <p className="about-subtitle">01 / OUR STORY</p>

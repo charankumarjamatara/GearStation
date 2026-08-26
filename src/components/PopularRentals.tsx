@@ -49,9 +49,9 @@ const PopularRentals: React.FC = () => {
     <section id="rent-gear" className="section popular-rentals">
       <div className="container">
         <div className="section-header">
-          <h2 className="section-title">POPULAR RENTALS</h2>
+          <h2 className="section-title">POPULAR <span className="text-red">RENTALS</span></h2>
           <div className="header-actions-group">
-            <a href="#" className="view-all-link">
+            <a href="#category/all" className="view-all-link">
               VIEW ALL RENTALS <ArrowRight size={16} />
             </a>
           </div>

@@ -6,7 +6,7 @@ const Contact: React.FC = () => {
   return (
     <section id="contact" className="section contact-section">
       <div className="container">
-        <h2 className="section-title">CONTACT</h2>
+        <h2 className="section-title"><span className="text-red">CONTACT</span></h2>
         <div className="contact-grid">
           <div className="contact-info">
             <p className="contact-subtitle">GET IN TOUCH</p>

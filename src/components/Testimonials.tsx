@@ -61,7 +61,7 @@ const Testimonials: React.FC = () => {
       <div className="container">
         <div className="section-header center-title-header">
           <div className="title-wrapper">
-            <h2 className="section-title">WHAT ADVENTURERS SAY</h2>
+            <h2 className="section-title">WHAT ADVENTURERS <span className="text-red">SAY</span></h2>
           </div>
         </div>
         
