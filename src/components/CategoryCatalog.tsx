@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   ArrowLeft, Star, ShoppingBag, ShieldCheck, Check, Search, ChevronRight,
-  LayoutGrid, Camera, Video, HardDrive, Battery, Aperture, Mic, Briefcase, Shield, Navigation
+  LayoutGrid, Camera, Video, HardDrive, Battery, Aperture, Mic, Briefcase, Shield
 } from 'lucide-react';
 import './CategoryCatalog.css';
 
@@ -411,7 +411,7 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
   }
 };
 
-const PHOTOGRAPHY_CATEGORIES: Array<{ key: string; label: string; icon: JSX.Element; imageUrl?: string }> = [
+const PHOTOGRAPHY_CATEGORIES: Array<{ key: string; label: string; icon: React.ReactNode; imageUrl?: string }> = [
   { key: 'photography-all', label: 'All Photography', icon: <LayoutGrid size={22} /> },
   { key: 'dji-cameras', label: 'DJI Cameras..', imageUrl: `${import.meta.env.BASE_URL}dji_pocket_3.png`, icon: <Camera size={22} /> },
   { key: 'insta360-cameras', label: 'Insta360 Cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_1.png`, icon: <Camera size={22} /> },
@@ -422,7 +422,7 @@ const PHOTOGRAPHY_CATEGORIES: Array<{ key: string; label: string; icon: JSX.Elem
   { key: 'mics', label: 'Mics', imageUrl: `${import.meta.env.BASE_URL}dji_mic.png`, icon: <Mic size={22} /> }
 ];
 
-const OUTDOOR_CATEGORIES: Array<{ key: string; label: string; icon: JSX.Element; imageUrl?: string }> = [
+const OUTDOOR_CATEGORIES: Array<{ key: string; label: string; icon: React.ReactNode; imageUrl?: string }> = [
   { key: 'outdoor-all', label: 'All Outdoor', icon: <LayoutGrid size={22} /> },
   { key: 'riding-gear', label: 'Riding Gear', imageUrl: `${import.meta.env.BASE_URL}riding_jackets/alpinstar.jpg`, icon: <Shield size={22} /> },
   { key: 'camping-gear', label: 'Camping Gear', icon: <Briefcase size={22} /> },
