@@ -12,6 +12,8 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CategoryCatalog from './components/CategoryCatalog';
+import DateSelectionBanner from './components/DateSelectionBanner';
+import CartModal from './components/CartModal';
 import './App.css';
 
 function App() {
@@ -60,8 +62,8 @@ function App() {
           <>
             <Hero />
             <Stats />
-            <PopularRentals />
             <Categories onSelectCategory={handleSelectCategory} />
+            <PopularRentals />
             <HowItWorks />
             <LatestAdditions onSelectCategory={handleSelectCategory} />
             <About />
@@ -71,6 +73,8 @@ function App() {
         )}
       </main>
       <Footer />
+      <DateSelectionBanner />
+      <CartModal />
     </div>
   );
 }

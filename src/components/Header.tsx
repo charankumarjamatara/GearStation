@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Menu, X } from 'lucide-react';
+import { useCartContext } from '../CartContext';
+import HeaderSearch from './HeaderSearch';
 import './Header.css';
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const { cartItems, setIsCartOpen } = useCartContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -87,11 +90,11 @@ const Header: React.FC = () => {
         </nav>
 
         <div className="header-actions">
-          <button className="icon-btn cart-btn" aria-label="Shopping cart">
+          <HeaderSearch />
+          <button className="icon-btn cart-btn" aria-label="Shopping cart" onClick={() => setIsCartOpen(true)}>
             <ShoppingCart size={20} />
-            <span className="cart-badge">0</span>
+            {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
           </button>
-          <button className="btn btn-primary header-check-btn">CHECK AVAILABILITY</button>
           <button className="mobile-menu-btn" onClick={toggleMenu} aria-label="Toggle menu">
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

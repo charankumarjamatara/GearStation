@@ -109,17 +109,6 @@
   padding-right: 20px;
 }
 
-.search-btn {
-  height: 48px;
-  padding: 0 32px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
 @media (max-width: 1024px) {
   .hero-title {
     font-size: 80px;
@@ -144,11 +133,6 @@
     flex-direction: column;
     align-items: stretch;
     gap: 16px;
-  }
-  
-  .search-btn {
-    width: 100%;
-    justify-content: center;
   }
 }
 

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Star, ShoppingCart, Heart } from 'lucide-react';
+import { Star, Heart, Plus, ShoppingBag } from 'lucide-react';
+import { useDateContext } from '../DateContext';
+import { useCartContext } from '../CartContext';
 import './ProductCard.css';
 
 interface ProductCardProps {
@@ -18,9 +20,36 @@ const ProductCard: React.FC<ProductCardProps> = ({
   rating, 
   reviews, 
   imageUrl, 
-  buttonText = "ADD TO CART",
+  buttonText = "ADD TO BAG",
   showHeart = false 
 }) => {
+  const { startDate, endDate, totalDays, setIsDatePromptOpen } = useDateContext();
+  const { addToCart } = useCartContext();
+  const hasDates = startDate && endDate;
+
+  const parsePrice = (priceStr: string) => {
+    const numeric = priceStr.replace(/[^0-9]/g, '');
+    return parseInt(numeric, 10);
+  };
+
+  const handleActionClick = () => {
+    if (!hasDates) {
+      setIsDatePromptOpen(true);
+    } else {
+      const totalPrice = parsePrice(price) * totalDays;
+      addToCart({
+        productId: name.replace(/\s+/g, '-').toLowerCase(),
+        name,
+        price,
+        imageUrl: imageUrl || '',
+        startDate,
+        endDate,
+        totalDays,
+        totalPrice
+      });
+    }
+  };
+
   return (
     <div className="product-card">
       <div className="product-image-container">
@@ -39,9 +68,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
       <div className="product-info">
         <h4 className="product-name">{name}</h4>
-        <p className="product-price">
-          From <strong>{price}</strong> / day
-        </p>
+        {!hasDates ? (
+          <div className="date-prompt-price" style={{ marginBottom: '10px' }}>
+            <span className="date-prompt-text" style={{ fontSize: '12px', color: '#047857', fontWeight: 600, display: 'block', marginBottom: '2px' }}>Select Dates to view price</span>
+            <p className="product-price" style={{ filter: 'blur(4px)', opacity: 0.6, userSelect: 'none', margin: 0 }}>
+              From <strong>{price}</strong>
+            </p>
+          </div>
+        ) : (
+          <p className="product-price">
+            Total <strong>₹{(parsePrice(price) * totalDays).toLocaleString('en-IN')}</strong> <span style={{ fontSize: '12px', color: '#64748b' }}>for {totalDays} day{totalDays > 1 ? 's' : ''}</span>
+          </p>
+        )}
         
         {rating !== undefined && reviews !== undefined && (
           <div className="product-rating">
@@ -51,9 +89,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
         
-        <button className="btn btn-primary add-to-cart-btn">
-          {buttonText} {buttonText === "ADD TO CART" && <ShoppingCart size={16} />}
-        </button>
+        {!hasDates ? (
+          <button 
+            className="btn rent-prompt-btn"
+            style={{ background: 'transparent', border: '1px solid #0f172a', color: '#0f172a', borderRadius: '50%', width: '40px', height: '40px', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end', marginTop: '10px' }}
+            onClick={handleActionClick}
+          >
+            <Plus size={20} />
+          </button>
+        ) : (
+          <button className="btn btn-primary add-to-cart-btn" onClick={handleActionClick}>
+            <ShoppingBag size={16} style={{marginRight: '8px'}} /> {buttonText}
+          </button>
+        )}
       </div>
     </div>
   );

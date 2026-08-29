@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { 
-  ArrowLeft, Star, ShoppingBag, ShieldCheck, Check, Search, ChevronRight,
+  ArrowLeft, Star, ShoppingBag, ShieldCheck, Check, Search, ChevronRight, Plus,
   LayoutGrid, Camera, Video, HardDrive, Battery, Aperture, Mic, Briefcase, Shield
 } from 'lucide-react';
+import { useDateContext } from '../DateContext';
+import { useCartContext } from '../CartContext';
 import './CategoryCatalog.css';
 
 export interface ProductItem {
@@ -455,6 +457,15 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onBack }
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [isBooked, setIsBooked] = useState(false);
 
+  const { startDate, endDate, totalDays, setIsDatePromptOpen } = useDateContext();
+  const { addToCart } = useCartContext();
+  const hasDates = startDate && endDate;
+
+  const parsePrice = (priceStr: string) => {
+    const numeric = priceStr.replace(/[^0-9]/g, '');
+    return parseInt(numeric, 10);
+  };
+
   let displayedProducts: ProductItem[] = [];
   let currentCategoryInfo = null;
 
@@ -507,8 +518,21 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onBack }
   };
 
   const handleBookNow = (product: ProductItem) => {
-    setSelectedProduct(product);
-    setIsBooked(false);
+    if (!hasDates) {
+      setIsDatePromptOpen(true);
+      return;
+    }
+    const totalPrice = parsePrice(product.price) * totalDays;
+    addToCart({
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.imageUrl,
+      startDate,
+      endDate,
+      totalDays,
+      totalPrice
+    });
   };
 
   const confirmBooking = (e: React.FormEvent) => {
@@ -589,7 +613,6 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onBack }
             <div className="ecommerce-grid">
               {filteredProducts.map((product) => (
                 <div key={product.id} className="ecom-card">
-                  {product.badge && <span className="card-badge">{product.badge}</span>}
                   
                   <div className="card-image-wrap">
                     <img src={product.imageUrl} alt={product.name} className="card-image" />
@@ -615,20 +638,37 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onBack }
                     </div>
 
                     <div className="card-price-section">
-                      <div className="price-box">
-                        <span className="price-tag">{product.price}</span>
-                        {product.originalPrice && (
-                          <span className="original-price">{product.originalPrice}</span>
-                        )}
-                      </div>
+                      {!hasDates ? (
+                        <div className="date-prompt-price">
+                          <span className="date-prompt-text" style={{ fontSize: '12px', color: '#047857', fontWeight: 600 }}>Select Dates to view price</span>
+                          <div className="price-box" style={{ filter: 'blur(4px)', opacity: 0.6, userSelect: 'none' }}>
+                            <span className="price-tag">{product.price}</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="price-box">
+                          <span className="price-tag">₹{(parsePrice(product.price) * totalDays).toLocaleString('en-IN')}</span>
+                          <span className="price-duration" style={{ fontSize: '12px', color: '#64748b', marginLeft: '4px' }}>for {totalDays} day{totalDays > 1 ? 's' : ''}</span>
+                        </div>
+                      )}
                     </div>
 
-                    <button 
-                      className="btn btn-primary rent-now-btn"
-                      onClick={() => handleBookNow(product)}
-                    >
-                      <ShoppingBag size={16} /> RENT THIS ITEM
-                    </button>
+                    {!hasDates ? (
+                      <button 
+                        className="btn rent-prompt-btn"
+                        style={{ background: 'transparent', border: '1px solid #0f172a', color: '#0f172a', borderRadius: '50%', width: '40px', height: '40px', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end', marginTop: '10px' }}
+                        onClick={() => handleBookNow(product)}
+                      >
+                        <Plus size={20} />
+                      </button>
+                    ) : (
+                      <button 
+                        className="btn btn-primary rent-now-btn"
+                        onClick={() => handleBookNow(product)}
+                      >
+                        <ShoppingBag size={16} /> ADD TO BAG
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}

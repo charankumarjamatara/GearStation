@@ -1,8 +1,14 @@
 import React from 'react';
-import { Calendar, MapPin, ArrowRight } from 'lucide-react';
+import { Calendar, MapPin } from 'lucide-react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import './DatePickerCustom.css';
+import { useDateContext } from '../DateContext';
 import './Hero.css';
 
 const Hero: React.FC = () => {
+  const { startDate, setStartDate, endDate, setEndDate } = useDateContext();
+
   return (
     <section className="hero">
       <div className="container">
@@ -21,16 +27,49 @@ const Hero: React.FC = () => {
             <div className="search-field">
               <label>PICKUP DATE</label>
               <div className="input-wrapper">
-                <Calendar size={18} className="input-icon" />
-                <input type="text" value="26 Jul 2026" readOnly />
+                <DatePicker
+                  selected={startDate ? new Date(startDate) : null}
+                  onChange={(date: Date | null) => {
+                    if (date) {
+                      // Format to local date string to avoid timezone offset issues
+                      const offset = date.getTimezoneOffset() * 60000;
+                      const localDate = new Date(date.getTime() - offset);
+                      setStartDate(localDate.toISOString().split('T')[0]);
+                    } else {
+                      setStartDate('');
+                    }
+                  }}
+                  minDate={new Date()}
+                  dateFormat="dd MMM yyyy"
+                  placeholderText="Select Date"
+                  className="date-input-hero"
+                  showPopperArrow={false}
+                />
+                <Calendar size={18} className="input-icon" style={{position: 'absolute', right: '16px', pointerEvents: 'none'}} />
               </div>
             </div>
             
             <div className="search-field">
               <label>RETURN DATE</label>
               <div className="input-wrapper">
-                <Calendar size={18} className="input-icon" />
-                <input type="text" value="30 Jul 2026" readOnly />
+                <DatePicker
+                  selected={endDate ? new Date(endDate) : null}
+                  onChange={(date: Date | null) => {
+                    if (date) {
+                      const offset = date.getTimezoneOffset() * 60000;
+                      const localDate = new Date(date.getTime() - offset);
+                      setEndDate(localDate.toISOString().split('T')[0]);
+                    } else {
+                      setEndDate('');
+                    }
+                  }}
+                  minDate={startDate ? new Date(startDate) : new Date()}
+                  dateFormat="dd MMM yyyy"
+                  placeholderText="Select Date"
+                  className="date-input-hero"
+                  showPopperArrow={false}
+                />
+                <Calendar size={18} className="input-icon" style={{position: 'absolute', right: '16px', pointerEvents: 'none'}} />
               </div>
             </div>
 
@@ -38,16 +77,10 @@ const Hero: React.FC = () => {
               <label>PICKUP LOCATION</label>
               <div className="input-wrapper">
                 <MapPin size={18} className="input-icon" />
-                <select defaultValue="hyderabad">
-                  <option value="hyderabad">Gear Station, Hyderabad</option>
-                  <option value="bangalore">Gear Station, Bangalore</option>
-                </select>
+                <input type="text" value="Gear Station, Hyderabad" readOnly style={{ cursor: 'default' }} />
               </div>
             </div>
 
-            <button className="btn btn-primary search-btn">
-              CHECK AVAILABILITY <ArrowRight size={18} />
-            </button>
           </div>
         </div>
       </div>
