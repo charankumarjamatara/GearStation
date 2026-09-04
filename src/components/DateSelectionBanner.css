@@ -1,11 +1,693 @@
+/* ==================================================
+   VARIABLES & GLOBALS
+================================================== */
+:root {
+  --navy: #172033;
+  --red: #D83232;
+  --light-red: #FDEAEA;
+  --soft-gray: #F5F7FA;
+  --border-gray: #E5EAF0;
+  --secondary-text: #667085;
+  --green: #218A4A;
+  --pale-green: #EFFAF2;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(23, 32, 51, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* ==================================================
+   MODAL CONTAINER
+================================================== */
+.modal-container {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 95%;
+  max-width: 940px; /* Original width */
+  box-shadow: 0 16px 32px rgba(23, 32, 51, 0.15);
+  animation: modalEnter 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 24px;
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==================================================
+   HEADER
+================================================== */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-icon {
+  background: var(--light-red);
+  color: var(--red);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-titles h3 {
+  margin: 0 0 2px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.5px;
+}
+
+.header-titles p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--secondary-text);
+  font-weight: 400;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--secondary-text);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  background: var(--soft-gray);
+  color: var(--navy);
+}
+
+/* ==================================================
+   MAIN LAYOUT (40/60 Split)
+================================================== */
+.modal-body {
+  display: flex;
+  gap: 24px;
+}
+
+.modal-left {
+  flex: 0 0 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-right {
+  flex: 1; /* 60% implicitly */
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-gray);
+  padding-left: 24px;
+}
+
+/* ==================================================
+   LEFT PANE: DATE CARDS
+================================================== */
+.date-cards-row {
+  display: flex;
+  gap: 12px;
+}
+
+.date-card-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.date-card-group label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--navy);
+  text-transform: uppercase;
+}
+
+.date-card-group .req {
+  color: var(--red);
+}
+
+.date-card {
+  background: #ffffff;
+  border: 1px solid var(--border-gray);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  height: 60px;
+}
+
+.card-icon {
+  background: var(--light-red);
+  color: var(--red);
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.card-date {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.card-weekday {
+  font-size: 11px;
+  color: var(--secondary-text);
+}
+
+/* ==================================================
+   LEFT PANE: DELIVERY INFO
+================================================== */
+.delivery-info-card {
+  background: var(--pale-green);
+  border: 1px solid rgba(33, 138, 74, 0.15);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.delivery-icon {
+  color: var(--green);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.delivery-text p {
+  margin: 0 0 4px 0;
+  font-size: 12px;
+  color: var(--green);
+  line-height: 1.4;
+}
+
+.delivery-text p:last-child {
+  margin: 0;
+  color: var(--secondary-text);
+  font-size: 11px;
+}
+
+.delivery-text strong {
+  color: var(--green);
+  font-weight: 600;
+}
+
+/* ==================================================
+   LEFT PANE: RENTAL PERIOD
+================================================== */
+.rental-period-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rental-period-section label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.rental-summary-card {
+  background: #ffffff;
+  border: 1px solid var(--border-gray);
+  border-radius: 10px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.days-col {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.days-num {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--red);
+  line-height: 1;
+}
+
+.days-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--secondary-text);
+}
+
+.divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border-gray);
+}
+
+.period-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.period-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--secondary-text);
+  text-transform: uppercase;
+}
+
+.period-dates {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.period-icon {
+  color: var(--red);
+}
+
+/* ==================================================
+   LEFT PANE: SAVINGS CARD
+================================================== */
+.savings-card {
+  background: var(--navy);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.savings-icon {
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #FDE047;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.savings-content h4 {
+  margin: 0 0 4px 0;
+  color: #FDE047;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.savings-content p {
+  margin: 0;
+  font-size: 11px;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+/* ==================================================
+   LEFT PANE: CONTINUE BUTTON
+================================================== */
+.continue-btn {
+  background: var(--red);
+  color: white;
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+  margin-top: 4px;
+}
+
+.continue-btn:hover:not(:disabled) {
+  background: #B91C1C;
+}
+
+.continue-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ==================================================
+   RIGHT PANE: CALENDAR WRAPPER
+================================================== */
+.calendar-wrapper {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==================================================
+   CALENDAR COMPONENT (FRESH REBUILD)
+================================================== */
+
+/* Strip default react-datepicker container styles */
+.react-datepicker {
+  border: none !important;
+  font-family: inherit !important;
+  display: flex !important;
+  flex-direction: column;
+  width: 100% !important;
+  background-color: transparent !important;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Calendar Card Container */
+.calendar-wrapper {
+  background: #ffffff; /* Clean white background */
+  border: 1px solid #E2E8F0; /* Subtle border */
+  border-radius: 16px; /* Approx 16-18px as requested */
+  padding: 24px 28px; /* Balanced internal padding */
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05); /* Soft shadow */
+  width: 100%;
+  max-width: 380px; /* Keep it compact */
+  margin: 0 auto;
+}
+
+/* Month Container */
+.react-datepicker__month-container {
+  width: 100% !important;
+  float: none !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.react-datepicker__header {
+  background: transparent !important;
+  border-bottom: none !important;
+  padding: 0 !important;
+}
+
+/* Month Header */
+.custom-calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.calendar-nav-btn {
+  background: #ffffff;
+  border: 1px solid #E2E8F0; /* Subtle border */
+  color: var(--navy);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px; /* Rounded rectangle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02); /* Subtle background/shadow */
+}
+
+.calendar-nav-btn:hover:not(:disabled) {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+.calendar-month-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+/* Weekday Row */
+.react-datepicker__day-names {
+  display: grid !important;
+  grid-template-columns: repeat(7, 38px) !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  margin-bottom: 16px !important;
+}
+
+.react-datepicker__day-name {
+  color: #64748B !important; /* Muted gray/navy */
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  text-transform: uppercase;
+  margin: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 38px !important; /* Align exactly with date cells */
+}
+
+/* Date Grid */
+.react-datepicker__month {
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.react-datepicker__week {
+  display: grid !important;
+  grid-template-columns: repeat(7, 38px) !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+/* ==================================================
+   DATE CELL - BASE GEOMETRY
+================================================== */
+.react-datepicker__day {
+  width: 38px !important;
+  height: 38px !important;
+  margin: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important; /* NO CIRCLES. Exactly 8px radius for all states */
+  border: 1px solid transparent !important;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: none !important;
+}
+
+/* Strip default pseudo-elements */
+.react-datepicker__day::after,
+.react-datepicker__day::before {
+  display: none !important;
+}
+
+/* Handle outside month gracefully */
+.react-datepicker__day--outside-month {
+  visibility: hidden; /* Or transparent, to keep layout clean */
+  pointer-events: none;
+}
+
+/* ==================================================
+   DATE CELL - MUTUALLY EXCLUSIVE VISUAL STATES
+================================================== */
+
+/* 1. Disabled (Past Dates) */
+.react-datepicker__day.custom-day-disabled {
+  color: #CBD5E1 !important; /* Muted gray */
+  background-color: transparent !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+/* 2. Selected (Pickup & Return) */
+.react-datepicker__day.custom-day-selected {
+  background-color: var(--red) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 10px rgba(216, 50, 50, 0.2) !important; /* Subtle glow for premium feel */
+}
+
+/* 3. In-Range (Strictly between endpoints) */
+.react-datepicker__day.custom-day-in-range {
+  background-color: var(--light-red) !important; /* Very light/pale red */
+  color: var(--navy) !important; /* Dark number */
+  border-color: transparent !important;
+}
+
+/* 4. Normal (Unselected, current/future dates) */
+.react-datepicker__day.custom-day-normal {
+  background-color: #ffffff !important; /* Light/white background */
+  color: var(--navy) !important; /* Dark navy number */
+}
+
+/* Hover effects (only applied to normal/unselected) */
+.react-datepicker__day.custom-day-normal:hover {
+  background-color: #F1F5F9 !important;
+}
+
+/* ==================================================
+   SAFETY: OVERRIDE DEFAULT LIBRARY STATES
+================================================== */
+/* This prevents react-datepicker's internal classes from fighting our clean logic */
+.react-datepicker__day--selected:not(.custom-day-selected),
+.react-datepicker__day--keyboard-selected:not(.custom-day-selected):not(.custom-day-in-range),
+.react-datepicker__day--in-selecting-range:not(.custom-day-in-range),
+.react-datepicker__day--in-range:not(.custom-day-in-range),
+.react-datepicker__day--range-start:not(.custom-day-selected),
+.react-datepicker__day--range-end:not(.custom-day-selected) {
+  background-color: transparent !important;
+  color: inherit !important;
+  box-shadow: none !important;
+}
+
+/* Ensure our explicit states always win */
+.react-datepicker .react-datepicker__day.custom-day-selected {
+  background-color: var(--red) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 10px rgba(216, 50, 50, 0.2) !important;
+}
+
+.react-datepicker .react-datepicker__day.custom-day-in-range {
+  background-color: var(--light-red) !important;
+  color: var(--navy) !important;
+  border-color: transparent !important;
+}
+
+/* ==================================================
+   CALENDAR LEGEND
+================================================== */
+.calendar-legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 0 0 0;
+  margin-top: 24px;
+  border-top: 1px solid #E2E8F0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--secondary-text);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px; /* Small rectangular indicators */
+}
+
+.dot-pickup, .dot-return {
+  background-color: var(--red);
+}
+
+.dot-period {
+  background-color: var(--light-red);
+}
+
+/* ==================================================
+   RIGHT PANE: HELP CARD
+================================================== */
+.help-card {
+  background: #FFF9F5;
+  border: 1px solid #FFE4E6;
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 16px;
+}
+
+.help-icon {
+  color: #EA580C;
+  flex-shrink: 0;
+}
+
+.help-content h4 {
+  margin: 0 0 2px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #9A3412;
+}
+
+.help-content p {
+  margin: 0;
+  font-size: 11px;
+  color: #C2410C;
+  line-height: 1.5;
+}
+
+/* ==================================================
+   PILL BUTTON
+================================================== */
 .date-pill-btn {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #0f172a;
+  background-color: var(--navy);
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
   border-radius: 30px;
   padding: 12px 24px;
   display: flex;
@@ -14,138 +696,35 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 25px rgba(23, 32, 51, 0.3);
   z-index: 999;
   transition: all 0.3s ease;
 }
 
 .date-pill-btn:hover {
-  background-color: #1e293b;
+  background-color: #0f172a;
   transform: translateX(-50%) translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
-.date-pill-btn.has-dates {
-  background-color: #ffffff;
-  color: #0f172a;
-  border-color: #e2e8f0;
-}
-
-.date-pill-btn.has-dates:hover {
-  background-color: #f8fafc;
-}
-
-.date-banner-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(4px);
-}
-
-.date-banner-container {
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.date-banner-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.date-banner-header h3 {
-  margin: 0;
-  font-size: 18px;
-  color: #1e293b;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #64748b;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background 0.2s;
-}
-
-.close-btn:hover {
-  background: #f1f5f9;
-  color: #0f172a;
-}
-
-.date-inputs-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.date-input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.date-input-group label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #475569;
-}
-
-.date-input-group input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 15px;
-  font-family: inherit;
-  color: #1e293b;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.date-input-group input:focus {
-  border-color: #d32f2f;
-}
-
-.date-apply-btn {
-  width: 100%;
-  padding: 14px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.date-apply-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+/* ==================================================
+   RESPONSIVENESS
+================================================== */
+@media (max-width: 950px) {
+  .modal-body {
+    flex-direction: column;
+    gap: 24px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .modal-left {
+    flex: auto;
+  }
+  .modal-right {
+    border-left: none;
+    border-top: 1px solid var(--border-gray);
+    padding-left: 0;
+    padding-top: 24px;
+  }
+  .modal-container {
+    max-height: 90vh;
+    overflow-y: auto;
   }
 }

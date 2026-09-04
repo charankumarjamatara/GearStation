@@ -1,0 +1,332 @@
+{
+  "tg-1": {
+    "productName": "Trekking gloves",
+    "imagePath": "../assets/outdoor category/trekking gear/trekking gloves.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/trekking gloves.jpg"
+  },
+  "tg-2": {
+    "productName": "50L Backpack",
+    "imagePath": null,
+    "score": 0,
+    "suggestedImage": null
+  },
+  "tg-3": {
+    "productName": "Trekking pole",
+    "imagePath": "../assets/outdoor category/trekking gear/trekking pole.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/trekking pole.jpg"
+  },
+  "tg-4": {
+    "productName": "Rain Poncho",
+    "imagePath": "../assets/outdoor category/trekking gear/rain jacket.jpg",
+    "score": 0.5,
+    "suggestedImage": "trekking gear/rain jacket.jpg"
+  },
+  "tg-5": {
+    "productName": "Men Trek Jacket -10°C",
+    "imagePath": "../assets/outdoor category/trekking gear/men trek jacket.jpg",
+    "score": 0.6,
+    "suggestedImage": "trekking gear/men trek jacket.jpg"
+  },
+  "tg-6": {
+    "productName": "Head Torch",
+    "imagePath": "../assets/outdoor category/trekking gear/head torch.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/head torch.jpg"
+  },
+  "tg-7": {
+    "productName": "70L Backpack",
+    "imagePath": null,
+    "score": 0,
+    "suggestedImage": null
+  },
+  "tg-8": {
+    "productName": "Rain pants",
+    "imagePath": "../assets/outdoor category/trekking gear/rain pants.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/rain pants.jpg"
+  },
+  "tg-9": {
+    "productName": "Power Bank (20,000 mAh)",
+    "imagePath": "../assets/outdoor category/trekking gear/power bank.jpg",
+    "score": 0.4,
+    "suggestedImage": "trekking gear/power bank.jpg"
+  },
+  "tg-10": {
+    "productName": "60L Backpack",
+    "imagePath": null,
+    "score": 0,
+    "suggestedImage": null
+  },
+  "tg-11": {
+    "productName": "Hiking sunglasses",
+    "imagePath": "../assets/outdoor category/trekking gear/hiking sunglasses.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/hiking sunglasses.jpg"
+  },
+  "tg-12": {
+    "productName": "Men Trek pant",
+    "imagePath": "../assets/outdoor category/trekking gear/men trek pant.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/men trek pant.jpg"
+  },
+  "tg-13": {
+    "productName": "Women 3x1 Jacket -0°C",
+    "imagePath": "../assets/outdoor category/trekking gear/women 3x1 jacket - 0 degrees cel.jpg",
+    "score": 0.6666666666666666,
+    "suggestedImage": "trekking gear/women 3x1 jacket - 0 degrees cel.jpg"
+  },
+  "tg-14": {
+    "productName": "Men snow pant",
+    "imagePath": "../assets/outdoor category/trekking gear/men snow pant.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/men snow pant.jpg"
+  },
+  "tg-15": {
+    "productName": "Men snow hiking pant SH100",
+    "imagePath": "../assets/outdoor category/trekking gear/men snow hikin pant sh100.jpg",
+    "score": 0.8,
+    "suggestedImage": "trekking gear/men snow hikin pant sh100.jpg"
+  },
+  "tg-16": {
+    "productName": "Rain Jacket",
+    "imagePath": "../assets/outdoor category/trekking gear/rain jacket.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/rain jacket.jpg"
+  },
+  "tg-17": {
+    "productName": "Women Trek Jacket -10°C",
+    "imagePath": "../assets/outdoor category/trekking gear/women trek jacket - 10 deg cel.jpg",
+    "score": 0.6666666666666666,
+    "suggestedImage": "trekking gear/women trek jacket - 10 deg cel.jpg"
+  },
+  "tg-18": {
+    "productName": "Women Trek pant",
+    "imagePath": "../assets/outdoor category/trekking gear/women trek pant.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/women trek pant.jpg"
+  },
+  "tg-19": {
+    "productName": "Men down Jacket -0°C",
+    "imagePath": "../assets/outdoor category/trekking gear/men down jacket - 0 deg cel.jpg",
+    "score": 0.6666666666666666,
+    "suggestedImage": "trekking gear/men down jacket - 0 deg cel.jpg"
+  },
+  "tg-20": {
+    "productName": "Fleece jacket",
+    "imagePath": "../assets/outdoor category/trekking gear/fleece jacket.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/fleece jacket.jpg"
+  },
+  "tg-21": {
+    "productName": "Women down jacket",
+    "imagePath": "../assets/outdoor category/trekking gear/women down jacket.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/women down jacket.jpg"
+  },
+  "tg-22": {
+    "productName": "Trek Essentials + Binocular",
+    "imagePath": "../assets/outdoor category/trekking gear/trek essentials + binocular.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/trek essentials + binocular.jpg"
+  },
+  "tg-23": {
+    "productName": "Women snow pant",
+    "imagePath": "../assets/outdoor category/trekking gear/women snow pant.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/women snow pant.jpg"
+  },
+  "rg-1": {
+    "productName": "Men Riding jacket - level 2",
+    "imagePath": "../assets/outdoor category/Riding gear/men riding jacket - level 2.jpg",
+    "score": 1,
+    "suggestedImage": "Riding gear/men riding jacket - level 2.jpg"
+  },
+  "rg-2": {
+    "productName": "Riding pant for Men and women",
+    "imagePath": "../assets/outdoor category/Riding gear/riding pant for men and women.jpg",
+    "score": 1,
+    "suggestedImage": "Riding gear/riding pant for men and women.jpg"
+  },
+  "rg-3": {
+    "productName": "Riding Rain Jacket",
+    "imagePath": "../assets/outdoor category/Riding gear/riding rain jacket.jpg",
+    "score": 1,
+    "suggestedImage": "Riding gear/riding rain jacket.jpg"
+  },
+  "rg-4": {
+    "productName": "Riding Knee Guards",
+    "imagePath": "../assets/outdoor category/Riding gear/riding knee guards.jpg",
+    "score": 1,
+    "suggestedImage": "Riding gear/riding knee guards.jpg"
+  },
+  "rg-5": {
+    "productName": "Axor Riding helmet",
+    "imagePath": "../assets/outdoor category/Riding gear/axor riding helmet.jpg",
+    "score": 1,
+    "suggestedImage": "Riding gear/axor riding helmet.jpg"
+  },
+  "rg-6": {
+    "productName": "Women riding jacket - level 2",
+    "imagePath": "../assets/outdoor category/Riding gear/women riding jacket level 2.jpg",
+    "score": 1,
+    "suggestedImage": "Riding gear/women riding jacket level 2.jpg"
+  },
+  "cg-1": {
+    "productName": "3-person camping tent",
+    "imagePath": "../assets/outdoor category/camping gear/3 person camping tent.jpg",
+    "score": 1,
+    "suggestedImage": "camping gear/3 person camping tent.jpg"
+  },
+  "cg-2": {
+    "productName": "2-person camping tent",
+    "imagePath": "../assets/outdoor category/camping gear/2 person camping tent.jpg",
+    "score": 1,
+    "suggestedImage": "camping gear/2 person camping tent.jpg"
+  },
+  "cg-3": {
+    "productName": "Trekking foam mattress",
+    "imagePath": "../assets/outdoor category/camping gear/trekking foam mattress.jpg",
+    "score": 1,
+    "suggestedImage": "camping gear/trekking foam mattress.jpg"
+  },
+  "cg-4": {
+    "productName": "Camping stools",
+    "imagePath": "../assets/outdoor category/camping gear/camping stools.jpg",
+    "score": 1,
+    "suggestedImage": "camping gear/camping stools.jpg"
+  },
+  "cg-5": {
+    "productName": "Trekking sleeping Bag MT 500 5°C",
+    "imagePath": "../assets/outdoor category/camping gear/trekking sleeping bag M+500,5 deg cel.jpg",
+    "score": 0.625,
+    "suggestedImage": "camping gear/trekking sleeping bag M+500,5 deg cel.jpg"
+  },
+  "cg-6": {
+    "productName": "Camping table and stools",
+    "imagePath": "../assets/outdoor category/camping gear/camping table and stools.jpg",
+    "score": 1,
+    "suggestedImage": "camping gear/camping table and stools.jpg"
+  },
+  "cg-7": {
+    "productName": "Camping sleeping Bag 10°C",
+    "imagePath": "../assets/outdoor category/camping gear/camping sleeping bag 10 deg cel.jpg",
+    "score": 0.6666666666666666,
+    "suggestedImage": "camping gear/camping sleeping bag 10 deg cel.jpg"
+  },
+  "cg-8": {
+    "productName": "Sleeping Bag liner",
+    "imagePath": "../assets/outdoor category/camping gear/sleeping bag linear.jpg",
+    "score": 0.6666666666666666,
+    "suggestedImage": "camping gear/sleeping bag linear.jpg"
+  },
+  "cg-9": {
+    "productName": "Camping Tables",
+    "imagePath": "../assets/outdoor category/camping gear/camping stools.jpg",
+    "score": 0.5,
+    "suggestedImage": "camping gear/camping stools.jpg"
+  },
+  "wj-1": {
+    "productName": "Men 3x1 jacket 0°C",
+    "imagePath": "../assets/outdoor category/winter jackets/men 3x1 jacket 0 deg cel.jpg",
+    "score": 0.6666666666666666,
+    "suggestedImage": "winter jackets/men 3x1 jacket 0 deg cel.jpg"
+  },
+  "wj-2": {
+    "productName": "Men parka jacket 15°C",
+    "imagePath": "../assets/outdoor category/winter jackets/men parka jacket 15 deg cel.jpg",
+    "score": 0.6666666666666666,
+    "suggestedImage": "winter jackets/men parka jacket 15 deg cel.jpg"
+  },
+  "wj-3": {
+    "productName": "Men snow hiking jacket (SH100)",
+    "imagePath": "../assets/outdoor category/winter jackets/men snow hiking jacket (sh100).jpg",
+    "score": 1,
+    "suggestedImage": "winter jackets/men snow hiking jacket (sh100).jpg"
+  },
+  "wj-4": {
+    "productName": "Men down jacket -18°C",
+    "imagePath": "../assets/outdoor category/winter jackets/men down jacket 18 deg cel.jpg",
+    "score": 0.6666666666666666,
+    "suggestedImage": "winter jackets/men down jacket 18 deg cel.jpg"
+  },
+  "wj-5": {
+    "productName": "Women parka jacket -15°C",
+    "imagePath": "../assets/outdoor category/winter jackets/women parka jacket 15 deg cel.jpg",
+    "score": 0.6666666666666666,
+    "suggestedImage": "winter jackets/women parka jacket 15 deg cel.jpg"
+  },
+  "wj-6": {
+    "productName": "Women snow hiking jacket",
+    "imagePath": "../assets/outdoor category/winter jackets/men snow hiking jacket (sh100).jpg",
+    "score": 0.6,
+    "suggestedImage": "winter jackets/men snow hiking jacket (sh100).jpg"
+  },
+  "wj-7": {
+    "productName": "Women 3x1 jacket -0°C",
+    "imagePath": "../assets/outdoor category/trekking gear/women 3x1 jacket - 0 degrees cel.jpg",
+    "score": 0.6666666666666666,
+    "suggestedImage": "trekking gear/women 3x1 jacket - 0 degrees cel.jpg"
+  },
+  "wj-8": {
+    "productName": "Fleece jacket",
+    "imagePath": "../assets/outdoor category/trekking gear/fleece jacket.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/fleece jacket.jpg"
+  },
+  "wj-9": {
+    "productName": "Women down jacket -18°C",
+    "imagePath": "../assets/outdoor category/winter jackets/women down jacket 18 deg cel.jpg",
+    "score": 0.6666666666666666,
+    "suggestedImage": "winter jackets/women down jacket 18 deg cel.jpg"
+  },
+  "wj-10": {
+    "productName": "Rain jacket",
+    "imagePath": "../assets/outdoor category/trekking gear/rain jacket.jpg",
+    "score": 1,
+    "suggestedImage": "trekking gear/rain jacket.jpg"
+  },
+  "rl-1": {
+    "productName": "Saddle Bag (sports)",
+    "imagePath": "../assets/outdoor category/Riding gear/saddle bag (sports).jpg",
+    "score": 1,
+    "suggestedImage": "Riding gear/saddle bag (sports).jpg"
+  },
+  "rl-2": {
+    "productName": "Riding Tank Bag",
+    "imagePath": "../assets/outdoor category/Riding gear/riding tank bag.jpg",
+    "score": 1,
+    "suggestedImage": "Riding gear/riding tank bag.jpg"
+  },
+  "rl-3": {
+    "productName": "Rynox Riding Tail Bag",
+    "imagePath": "../assets/outdoor category/ridng luggage on rent/rynox riding tail bag.jpg",
+    "score": 1,
+    "suggestedImage": "ridng luggage on rent/rynox riding tail bag.jpg"
+  },
+  "rl-4": {
+    "productName": "Saddle bag (classic)",
+    "imagePath": "../assets/outdoor category/Riding gear/saddle bag classic.jpg",
+    "score": 1,
+    "suggestedImage": "Riding gear/saddle bag classic.jpg"
+  },
+  "bp-1": {
+    "productName": "Backpack Raincover",
+    "imagePath": null,
+    "score": 0,
+    "suggestedImage": null
+  },
+  "bp-2": {
+    "productName": "60L Backpack",
+    "imagePath": null,
+    "score": 0,
+    "suggestedImage": null
+  },
+  "bp-3": {
+    "productName": "70L Backpack",
+    "imagePath": null,
+    "score": 0,
+    "suggestedImage": null
+  }
+}
