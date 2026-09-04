@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Calendar, X, Info, ChevronRight, ChevronLeft, Lightbulb, ArrowRight } from 'lucide-react';
+import { Calendar, X, Info, ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DatePickerCustom.css';

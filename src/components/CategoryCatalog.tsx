@@ -293,6 +293,7 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
     subtitle: 'Mounts for every action.',
     icon: '🧲',
     products: [
+      { id: 'acm-1', name: 'Head strap mount for GPH 11, 12 & 13', category: 'undefined', price: '₹149', extraDayPrice: '₹10/day', rating: 4.5, reviews: 0, imageUrl: img_photo_56, description: 'Head strap mount for GPH 11, 12 & 13', specs: [] },
       { id: 'acm-5', name: 'I 360 bullet time handle', category: 'undefined', price: '₹779', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_57, description: 'I 360 bullet time handle', specs: [] },
       { id: 'acm-6', name: 'chest mount for Go Pro', category: 'undefined', price: '₹139', extraDayPrice: '₹10/day', rating: 4.5, reviews: 0, imageUrl: img_photo_58, description: 'chest mount for Go Pro', specs: [] },
       { id: 'acm-7', name: 'Gopro handler', category: 'undefined', price: '₹419', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_59, description: 'Gopro handler', specs: [] },

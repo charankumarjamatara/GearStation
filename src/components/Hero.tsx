@@ -1,6 +1,5 @@
 import React from 'react';
 import { Calendar, MapPin } from 'lucide-react';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DatePickerCustom.css';
 import { useDateContext } from '../DateContext';
