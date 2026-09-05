@@ -1,4 +1,4 @@
-import img_photo_0 from '../assets/photography category/dji action cameras/dji Action 4.jpg';
+import img_photo_0 from '../assets/photography category/dji action cameras/DJI Osmo Action 4.png';
 import img_photo_1 from '../assets/photography category/Action camera mounts/dji action 5.jpg';
 import img_photo_2 from '../assets/photography category/dji action cameras/dji Action 4 Riding combo.png';
 import img_photo_3 from '../assets/photography category/dji action cameras/dji Action 5 Riding combo.png';
@@ -19,7 +19,7 @@ import img_photo_17 from '../assets/photography category/dji action cameras/dji 
 import img_photo_19 from '../assets/photography category/dji action cameras/dji Action 5 Mountain combo.png';
 import img_photo_20 from '../assets/photography category/dji action cameras/dji Action 4 creator Edition.png';
 import img_photo_21 from '../assets/photography category/dji action cameras/dji Action 5 sky diving.jpg.jpeg';
-import img_photo_22 from '../assets/photography category/dji cameras/DJI Osmo Action 4.jpg';
+import img_photo_22 from '../assets/photography category/dji action cameras/DJI Osmo Action 4.png';
 import img_photo_23 from '../assets/photography category/insta 360/Insta 360 X4 Action Camera.jpg';
 import img_photo_24 from '../assets/photography category/insta 360/Insta 360 X4 Riding cam.webp';
 import img_photo_25 from '../assets/photography category/insta 360/I 360 X4 Bullet time.jpg';
@@ -38,7 +38,7 @@ import img_photo_37 from '../assets/photography category/dji action cameras/dji 
 import img_photo_38 from '../assets/photography category/insta 360/Insta 360 X3 Action Camera.jpg';
 import img_photo_39 from '../assets/photography category/insta 360/Insta 360 X4 Action Camera.jpg';
 import img_photo_40 from '../assets/photography category/dji cameras/DJI Creator Combo.jpg';
-import img_photo_41 from '../assets/photography category/dji cameras/DJI Osmo Action 4.jpg';
+import img_photo_41 from '../assets/photography category/dji action cameras/DJI Osmo Action 4.png';
 import img_photo_42 from '../assets/photography category/gimbals/DJI Osmo Mobile 6.jpg';
 import img_photo_43 from '../assets/photography category/gimbals/DJI OM 4 SE Gimbal.jpg';
 import img_photo_44 from "../assets/photography category/wireless and collar mic's/Rode GO II wireless Microphone.jpg";
@@ -95,7 +95,7 @@ import img_tg_7 from '../assets/outdoor category/trekking gear/70 l back pack.jp
 import img_tg_8 from '../assets/outdoor category/trekking gear/rain pants.jpg';
 import img_tg_9 from '../assets/outdoor category/trekking gear/power bank.jpg';
 import img_tg_10 from '../assets/outdoor category/trekking gear/60 L back pack.jpg';
-import img_tg_11 from '../assets/outdoor category/trekking gear/hiking sunglasses.jpg';
+import img_tg_11 from '../assets/outdoor category/trekking gear/Hiking sunglasses.png';
 import img_tg_12 from '../assets/outdoor category/trekking gear/men trek pant.jpg';
 import img_tg_13 from '../assets/outdoor category/trekking gear/women 3x1 jacket - 0 degrees cel.jpg';
 import img_tg_14 from '../assets/outdoor category/trekking gear/men snow pant.jpg';
@@ -116,13 +116,13 @@ import img_rg_5 from '../assets/outdoor category/Riding gear/axor riding helmet.
 import img_rg_6 from '../assets/outdoor category/Riding gear/women riding jacket level 2.jpg';
 import img_cg_1 from '../assets/outdoor category/camping gear/3 person camping tent.jpg';
 import img_cg_2 from '../assets/outdoor category/camping gear/2 person camping tent.jpg';
-import img_cg_3 from '../assets/outdoor category/camping gear/trekking foam mattress.jpg';
+import img_cg_3 from '../assets/outdoor category/camping gear/Trekking foam mattress.png';
 import img_cg_4 from '../assets/outdoor category/camping gear/camping stools.jpg';
 import img_cg_5 from '../assets/outdoor category/camping gear/trekking sleeping bag M+500,5 deg cel.jpg';
 import img_cg_6 from '../assets/outdoor category/camping gear/camping table and stools.jpg';
 import img_cg_7 from '../assets/outdoor category/camping gear/sleeping bag linear.jpg';
 import img_cg_8 from '../assets/outdoor category/camping gear/Sleeping Bag liner.png';
-import img_cg_9 from '../assets/outdoor category/camping gear/camping table.jpg';
+import img_cg_9 from '../assets/outdoor category/camping gear/Camping Table.png';
 import img_wj_1 from '../assets/outdoor category/winter jackets/Men 3x1 jacket 0°C.png';
 import img_wj_2 from '../assets/outdoor category/winter jackets/men parka jacket 15 deg cel.jpg';
 import img_wj_3 from '../assets/outdoor category/winter jackets/men snow hiking jacket (sh100).jpg';
@@ -164,7 +164,7 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
     subtitle: 'Capture your adventures with GoPro.',
     icon: '📷',
     products: [
-      { id: 'gp-1', name: 'dji Action 4', category: 'undefined', price: '₹1249', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_0, description: 'dji Action 4', specs: [] },
+      { id: 'gp-1', name: 'DJI Osmo Action 4', category: 'undefined', price: '₹1249', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_0, description: 'DJI Osmo Action 4', specs: [] },
       { id: 'gp-2', name: 'dji Action 5', category: 'undefined', price: '₹1699', extraDayPrice: '₹300/day', rating: 4.5, reviews: 0, imageUrl: img_photo_1, description: 'dji Action 5', specs: [] },
       { id: 'gp-3', name: 'dji Action 4 Riding combo', category: 'undefined', price: '₹3399', extraDayPrice: '₹650/day', rating: 4.5, reviews: 0, imageUrl: img_photo_2, description: 'dji Action 4 Riding combo', specs: [] },
       { id: 'gp-4', name: 'dji Action 5 Riding combo', category: 'undefined', price: '₹1899', extraDayPrice: '₹350/day', rating: 4.5, reviews: 0, imageUrl: img_photo_3, description: 'dji Action 5 Riding combo', specs: [] },
@@ -194,8 +194,8 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
     subtitle: 'Action cameras for every moment.',
     icon: '🏂',
     products: [
-      { id: 'ac-1', name: 'dji Action 4', category: 'undefined', price: '₹1399', extraDayPrice: '₹250/day', rating: 4.5, reviews: 0, imageUrl: img_photo_0, description: 'dji Action 4', specs: [] },
-      { id: 'ac-3', name: 'DJI Osmo Action 4', category: 'undefined', price: '₹2299', extraDayPrice: '₹550/day', rating: 4.5, reviews: 0, imageUrl: img_photo_22, description: 'DJI Osmo Action 4', specs: [] }
+      { id: 'ac-1', name: 'DJI Osmo Action 4', category: 'undefined', price: '₹1249', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_0, description: 'DJI Osmo Action 4', specs: [] },
+      { id: 'ac-3', name: 'DJI Osmo Action 4', category: 'undefined', price: '₹1249', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_22, description: 'DJI Osmo Action 4', specs: [] }
     ]
   },
   'insta360-cameras': {
@@ -222,7 +222,7 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
     products: [
       { id: 'dji-1', name: 'DJI Pocket 3', category: 'undefined', price: '₹1349', rating: 4.5, reviews: 0, imageUrl: img_photo_33, description: 'DJI Pocket 3', specs: [] },
       { id: 'dji-2', name: 'DJI Creator Combo', category: 'undefined', price: '₹3059', rating: 4.5, reviews: 0, imageUrl: img_photo_34, description: 'DJI Creator Combo', specs: [] },
-      { id: 'dji-3', name: 'DJI Osmo Action 4', category: 'undefined', price: '₹2329', rating: 4.5, reviews: 0, imageUrl: img_photo_22, description: 'DJI Osmo Action 4', specs: [] }
+      { id: 'dji-3', name: 'DJI Osmo Action 4', category: 'undefined', price: '₹1249', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_22, description: 'DJI Osmo Action 4', specs: [] }
     ]
   },
   'vlogging-cameras': {
@@ -239,7 +239,7 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
       { id: 'vc-17', name: 'Insta 360 X4 Action camera', category: 'undefined', price: '₹1599', extraDayPrice: '₹350/day', rating: 4.5, reviews: 0, imageUrl: img_photo_39, description: 'Insta 360 X4 Action camera', specs: [] },
       { id: 'vc-18', name: 'dji Action 4 with gimbal combo', category: 'undefined', price: '₹1599', extraDayPrice: '₹300/day', rating: 4.5, reviews: 0, imageUrl: img_action_4_gimbal, description: 'dji Action 4 with gimbal combo', specs: [] },
       { id: 'vc-19', name: 'DJI creator combo', category: 'undefined', price: '₹3049', extraDayPrice: '₹750/day', rating: 4.5, reviews: 0, imageUrl: img_photo_40, description: 'DJI creator combo', specs: [] },
-      { id: 'vc-20', name: 'DJI osmo Action 4', category: 'undefined', price: '₹2349', extraDayPrice: '₹500/day', rating: 4.5, reviews: 0, imageUrl: img_photo_41, description: 'DJI osmo Action 4', specs: [] },
+      { id: 'vc-20', name: 'DJI Osmo Action 4', category: 'undefined', price: '₹1249', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_41, description: 'DJI Osmo Action 4', specs: [] },
       { id: 'vc-22', name: 'I 360 X4 Power combo', category: 'undefined', price: '₹1749', extraDayPrice: '₹350/day', rating: 4.5, reviews: 0, imageUrl: img_i360_power, description: 'I 360 X4 Power combo', specs: [] },
       { id: 'vc-23', name: 'dji Action 4 vlogging com', category: 'undefined', price: '₹1639', extraDayPrice: '₹250/day', rating: 4.5, reviews: 0, imageUrl: img_action_4_vlog, description: 'dji Action 4 vlogging com', specs: [] },
       { id: 'vc-24', name: 'DJI vlogging combo', category: 'undefined', price: '₹1899', extraDayPrice: '₹500/day', rating: 4.5, reviews: 0, imageUrl: img_vc_24, description: 'DJI vlogging combo', specs: [] },

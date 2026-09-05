@@ -6,7 +6,7 @@ import { useDateContext } from '../DateContext';
 import './Hero.css';
 
 // Import the new images
-import djiAction4Img from '../assets/photography category/dji action cameras/dji Action 4.jpg';
+import djiAction4Img from '../assets/photography category/dji action cameras/DJI Osmo Action 4.png';
 import insta360X3Img from '../assets/photography category/insta 360/I 360 X3 Action cam.webp';
 
 const Hero: React.FC = () => {

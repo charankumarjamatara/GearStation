@@ -5,13 +5,15 @@ interface LatestAdditionsProps {
   onSelectCategory?: (categoryKey: string) => void;
 }
 
+import backpackImg from '../assets/outdoor category/back packs/50L_Backpack carousel.png';
+
 const LatestAdditions: React.FC<LatestAdditionsProps> = ({ onSelectCategory }) => {
   const baseProducts = [
-    { name: 'Insta360', categoryKey: 'cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_1.png` },
-    { name: 'DJI Action', categoryKey: 'cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_2.png` },
-    { name: 'Action Cam', categoryKey: 'cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_3.png` },
+    { name: 'Insta360', categoryKey: 'insta360-cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_1.png` },
+    { name: 'DJI Action 4', categoryKey: 'action-cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_2.png` },
+    { name: 'DJI Action 5', categoryKey: 'action-cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_3.png` },
     { name: 'Riding Jacket', categoryKey: 'riding-gear', imageUrl: `${import.meta.env.BASE_URL}new_prod_4.png` },
-    { name: 'Camera Backpack', categoryKey: 'backpacks', imageUrl: `${import.meta.env.BASE_URL}new_prod_5.png` }
+    { name: '50L Backpack', categoryKey: 'backpacks', imageUrl: backpackImg }
   ];
   const products = [...baseProducts, ...baseProducts];
 
