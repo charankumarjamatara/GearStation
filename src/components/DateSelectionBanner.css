@@ -33,9 +33,9 @@
   background: #ffffff;
   border-radius: 16px;
   width: 95%;
-  max-width: 940px; /* Original width */
+  max-width: 800px;
   box-shadow: 0 16px 32px rgba(23, 32, 51, 0.15);
-  animation: modalEnter 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: modalEnter 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   display: flex;
   flex-direction: column;
   font-family: 'Inter', system-ui, sans-serif;
@@ -45,7 +45,7 @@
 @keyframes modalEnter {
   from {
     opacity: 0;
-    transform: translateY(15px) scale(0.98);
+    transform: translateY(15px) scale(0.95);
   }
   to {
     opacity: 1;
@@ -120,6 +120,7 @@
 .modal-body {
   display: flex;
   gap: 24px;
+  position: relative;
 }
 
 .modal-left {
@@ -415,13 +416,13 @@
 
 /* Calendar Card Container */
 .calendar-wrapper {
-  background: #ffffff; /* Clean white background */
-  border: 1px solid #E2E8F0; /* Subtle border */
-  border-radius: 16px; /* Approx 16-18px as requested */
-  padding: 24px 28px; /* Balanced internal padding */
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05); /* Soft shadow */
+  background: #FCFAFA; /* very subtle off-white/light pink background */
+  border: 1px solid #F1F5F9; /* thin, extremely subtle border */
+  border-radius: 20px; /* large rounded corners */
+  padding: 32px; /* generous internal padding */
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
   width: 100%;
-  max-width: 380px; /* Keep it compact */
+  max-width: none; /* Let it fill the 60% right pane */
   margin: 0 auto;
 }
 
@@ -431,6 +432,10 @@
   float: none !important;
   display: flex;
   flex-direction: column;
+}
+
+.mobile-calendar-done-btn {
+  display: none;
 }
 
 .react-datepicker__header {
@@ -468,8 +473,24 @@
   border-color: #CBD5E1;
 }
 
+.calendar-nav-btn-pill {
+  width: auto;
+  padding: 0 16px;
+  background: #FFF0F0 !important; /* Light pink background */
+  border-color: transparent !important;
+  border-radius: 20px;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.calendar-nav-btn-pill:hover:not(:disabled) {
+  background: #FFE4E4 !important;
+}
+
 .calendar-month-name {
-  font-size: 16px;
+  font-size: 18px; /* Larger month title */
   font-weight: 700;
   color: var(--navy);
 }
@@ -477,10 +498,9 @@
 /* Weekday Row */
 .react-datepicker__day-names {
   display: grid !important;
-  grid-template-columns: repeat(7, 38px) !important;
-  justify-content: space-between !important;
-  gap: 8px !important;
-  margin-bottom: 16px !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  gap: 12px !important; /* more horizontal room */
+  margin-bottom: 24px !important; /* more breathing room below month header */
 }
 
 .react-datepicker__day-name {
@@ -492,7 +512,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 38px !important; /* Align exactly with date cells */
+  width: 100% !important; /* align with expanded grid cells */
 }
 
 /* Date Grid */
@@ -504,25 +524,24 @@
 
 .react-datepicker__week {
   display: grid !important;
-  grid-template-columns: repeat(7, 38px) !important;
-  justify-content: space-between !important;
-  gap: 8px !important;
-  margin-bottom: 8px !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  gap: 12px !important; /* Comfortable column spacing */
+  margin-bottom: 8px !important; /* Tighter vertical padding */
 }
 
 /* ==================================================
    DATE CELL - BASE GEOMETRY
 ================================================== */
 .react-datepicker__day {
-  width: 38px !important;
-  height: 38px !important;
+  width: 100% !important;
+  height: 40px !important; /* Reduced vertical padding. Width > Height for rectangular tiles */
   margin: 0 !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  font-size: 15px !important;
+  font-size: 15px !important; /* smaller date font size */
   font-weight: 600 !important;
-  border-radius: 8px !important; /* NO CIRCLES. Exactly 8px radius for all states */
+  border-radius: 10px !important; /* rounded rectangular tiles */
   border: 1px solid transparent !important;
   transition: all 0.2s ease;
   cursor: pointer;
@@ -537,8 +556,9 @@
 
 /* Handle outside month gracefully */
 .react-datepicker__day--outside-month {
-  visibility: hidden; /* Or transparent, to keep layout clean */
-  pointer-events: none;
+  visibility: visible !important;
+  color: #D1D5DB !important; /* muted gray text */
+  background-color: transparent !important; /* subtle tile backgrounds handled via custom classes */
 }
 
 /* ==================================================
@@ -644,6 +664,10 @@
   background-color: var(--light-red);
 }
 
+.dot-unavailable {
+  background-color: #E2E8F0;
+}
+
 /* ==================================================
    RIGHT PANE: HELP CARD
 ================================================== */
@@ -710,21 +734,108 @@
    RESPONSIVENESS
 ================================================== */
 @media (max-width: 950px) {
-  .modal-body {
-    flex-direction: column;
-    gap: 24px;
-  }
-  .modal-left {
-    flex: auto;
-  }
-  .modal-right {
-    border-left: none;
-    border-top: 1px solid var(--border-gray);
-    padding-left: 0;
-    padding-top: 24px;
-  }
   .modal-container {
+    width: 95%;
     max-height: 90vh;
     overflow-y: auto;
+    padding: 20px 16px;
+  }
+  
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  /* Flatten the two-column structure so children flow directly in modal-body */
+  .modal-left, .modal-right {
+    display: contents;
+  }
+
+  /* Set flex order to create a logical single column flow */
+  .date-cards-row { order: 1; }
+  .delivery-info-card { order: 2; }
+  .rental-period-section { order: 3; }
+  .savings-card { order: 4; }
+  
+  .calendar-wrapper { 
+    order: 10; 
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 16px;
+    margin: 8px 0;
+  }
+  
+  .calendar-legend { 
+    order: 11; 
+    margin-top: 0;
+    padding-top: 16px;
+  }
+  
+  .continue-btn { 
+    order: 12; 
+    margin-top: 8px;
+  }
+
+  /* Month Header Mobile */
+  .custom-calendar-header {
+    margin-bottom: 16px;
+  }
+  .calendar-month-name {
+    font-size: 18px;
+  }
+  .calendar-nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+  
+  /* Convert the pill "Next Month" button to a compact arrow button */
+  .calendar-nav-btn-pill span {
+    display: none;
+  }
+  .calendar-nav-btn-pill {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
+  }
+  .calendar-nav-btn-pill:hover:not(:disabled) {
+    background: #F1F5F9 !important;
+    border-color: #CBD5E1 !important;
+  }
+  
+  /* Weekday Header Mobile */
+  .react-datepicker__day-names {
+    gap: 4px !important;
+    margin-bottom: 12px !important;
+  }
+  .react-datepicker__day-name {
+    font-size: 11px !important;
+  }
+
+  /* Date Grid Mobile */
+  .react-datepicker__week {
+    gap: 4px !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .react-datepicker__day {
+    height: 36px !important; /* Touch-friendly height, width handled by grid */
+    font-size: 14px !important;
+    border-radius: 8px !important; /* Force rounded rectangles, no circles */
+  }
+
+  /* Remove absolute mobile calendar popover state / done button entirely */
+  .modal-body.showing-calendar .modal-left {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mobile-calendar-done-btn {
+    display: none !important;
   }
 }

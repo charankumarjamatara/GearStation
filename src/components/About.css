@@ -20,7 +20,7 @@
 }
 
 .about-title {
-  font-size: 64px;
+  font-size: clamp(32px, 5vw, 48px);
   font-weight: 900;
   line-height: 0.9;
   letter-spacing: -2px;

@@ -86,9 +86,9 @@ import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
 import './CategoryCatalog.css';
 import img_tg_1 from '../assets/outdoor category/trekking gear/trekking gloves.jpg';
-import img_tg_2 from '../assets/outdoor category/trekking gear/50 L back pack.jpg';
+import img_tg_2 from '../assets/outdoor category/trekking gear/50L Backpack.png';
 import img_tg_3 from '../assets/outdoor category/trekking gear/trekking pole.jpg';
-import img_tg_4 from '../assets/outdoor category/Riding gear/riding rain jacket.jpg';
+import img_tg_4 from '../assets/outdoor category/trekking gear/rain roncho.jpg';
 import img_tg_5 from '../assets/outdoor category/trekking gear/men trek jacket.jpg';
 import img_tg_6 from '../assets/outdoor category/trekking gear/head torch.jpg';
 import img_tg_7 from '../assets/outdoor category/trekking gear/70 l back pack.jpg';
@@ -100,45 +100,47 @@ import img_tg_12 from '../assets/outdoor category/trekking gear/men trek pant.jp
 import img_tg_13 from '../assets/outdoor category/trekking gear/women 3x1 jacket - 0 degrees cel.jpg';
 import img_tg_14 from '../assets/outdoor category/trekking gear/men snow pant.jpg';
 import img_tg_15 from '../assets/outdoor category/trekking gear/men snow hikin pant sh100.jpg';
-import img_tg_16 from '../assets/outdoor category/Riding gear/riding rain jacket.jpg';
-import img_tg_17 from '../assets/outdoor category/trekking gear/men trek jacket.jpg';
-import img_tg_18 from '../assets/outdoor category/trekking gear/men trek pant.jpg';
+import img_tg_16 from '../assets/outdoor category/trekking gear/rain jacket.jpg';
+import img_tg_17 from '../assets/outdoor category/trekking gear/women trek jacket - 10 deg cel.jpg';
+import img_tg_18 from '../assets/outdoor category/trekking gear/women trek pant.jpg';
 import img_tg_19 from '../assets/outdoor category/trekking gear/men down jacket - 0 deg cel.jpg';
 import img_tg_20 from '../assets/outdoor category/trekking gear/fleece jacket.jpg';
 import img_tg_21 from '../assets/outdoor category/trekking gear/women down jacket.jpg';
 import img_tg_22 from '../assets/outdoor category/trekking gear/trek essentials + binocular.jpg';
-import img_tg_23 from '../assets/outdoor category/trekking gear/men snow pant.jpg';
-import img_rg_1 from '../assets/outdoor category/Riding gear/men riding jacket - level 2.jpg';
+import img_tg_23 from '../assets/outdoor category/trekking gear/women snow pant.jpg';
+import img_rg_1 from '../assets/outdoor category/Riding gear/Men Riding jacket - level 2.png';
 import img_rg_2 from '../assets/outdoor category/Riding gear/riding pant for men and women.jpg';
 import img_rg_3 from '../assets/outdoor category/Riding gear/riding rain jacket.jpg';
 import img_rg_4 from '../assets/outdoor category/Riding gear/riding knee guards.jpg';
 import img_rg_5 from '../assets/outdoor category/Riding gear/axor riding helmet.jpg';
-import img_rg_6 from '../assets/outdoor category/Riding gear/men riding jacket - level 2.jpg';
+import img_rg_6 from '../assets/outdoor category/Riding gear/women riding jacket level 2.jpg';
 import img_cg_1 from '../assets/outdoor category/camping gear/3 person camping tent.jpg';
 import img_cg_2 from '../assets/outdoor category/camping gear/2 person camping tent.jpg';
 import img_cg_3 from '../assets/outdoor category/camping gear/trekking foam mattress.jpg';
 import img_cg_4 from '../assets/outdoor category/camping gear/camping stools.jpg';
 import img_cg_5 from '../assets/outdoor category/camping gear/trekking sleeping bag M+500,5 deg cel.jpg';
 import img_cg_6 from '../assets/outdoor category/camping gear/camping table and stools.jpg';
-import img_cg_7 from '../assets/outdoor category/camping gear/camping sleeping bag 10 deg cel.jpg';
-import img_cg_8 from '../assets/outdoor category/camping gear/camping sleeping bag 10 deg cel.jpg';
+import img_cg_7 from '../assets/outdoor category/camping gear/sleeping bag linear.jpg';
+import img_cg_8 from '../assets/outdoor category/camping gear/Sleeping Bag liner.png';
 import img_cg_9 from '../assets/outdoor category/camping gear/camping table.jpg';
-import img_wj_1 from '../assets/outdoor category/winter jackets/men 3x1 jacket 0 deg cel.jpg';
+import img_wj_1 from '../assets/outdoor category/winter jackets/Men 3x1 jacket 0°C.png';
 import img_wj_2 from '../assets/outdoor category/winter jackets/men parka jacket 15 deg cel.jpg';
 import img_wj_3 from '../assets/outdoor category/winter jackets/men snow hiking jacket (sh100).jpg';
-import img_wj_4 from '../assets/outdoor category/trekking gear/men down jacket - 0 deg cel.jpg';
+import img_wj_4 from '../assets/outdoor category/winter jackets/men down jacket 18 deg cel.jpg';
 import img_wj_5 from '../assets/outdoor category/winter jackets/women parka jacket 15 deg cel.jpg';
-import img_wj_6 from '../assets/outdoor category/winter jackets/men snow hiking jacket (sh100).jpg';
-import img_wj_7 from '../assets/outdoor category/trekking gear/women 3x1 jacket - 0 degrees cel.jpg';
-import img_wj_8 from '../assets/outdoor category/trekking gear/fleece jacket.jpg';
-import img_wj_9 from '../assets/outdoor category/trekking gear/women down jacket.jpg';
-import img_wj_10 from '../assets/outdoor category/Riding gear/riding rain jacket.jpg';
-import img_rl_1 from '../assets/outdoor category/Riding gear/saddle bag (sports).jpg';
-import img_rl_2 from '../assets/outdoor category/Riding gear/riding tank bag.jpg';
-import img_rl_3 from '../assets/outdoor category/ridng luggage on rent/rynox riding tail bag.jpg';
-import img_rl_4 from '../assets/outdoor category/Riding gear/saddle bag classic.jpg';
+import img_wj_6 from '../assets/outdoor category/winter jackets/womens snoe hiking jacket.jpg';
+import img_wj_7 from '../assets/outdoor category/winter jackets/women 3x1 jacket 0 deg cel.jpg';
+import img_wj_8 from '../assets/outdoor category/winter jackets/fleece jacket.jpg';
+import img_wj_9 from '../assets/outdoor category/winter jackets/women down jacket 18 deg cel.jpg';
+import img_wj_10 from '../assets/outdoor category/winter jackets/rain jacket.jpg';
+import img_rl_1 from '../assets/outdoor category/ridng luggage on rent/saddle bag sports.jpg';
+import img_rl_2 from '../assets/outdoor category/ridng luggage on rent/riding tank bag.png';
+import img_rl_3 from '../assets/outdoor category/ridng luggage on rent/rynox riding tail bag.png';
+import img_rl_4 from '../assets/outdoor category/ridng luggage on rent/saddle bag classic.jpg';
+import img_bp_1 from '../assets/outdoor category/back packs/backpack rain cover/Backpack Raincover.jpg';
 import img_bp_2 from '../assets/outdoor category/trekking gear/60 L back pack.jpg';
 import img_bp_3 from '../assets/outdoor category/trekking gear/70 l back pack.jpg';
+import img_vc_24 from '../assets/photography category/dji cameras/DJI vlogging combo.jpg';
 
 export interface ProductItem {
 
@@ -240,7 +242,7 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
       { id: 'vc-20', name: 'DJI osmo Action 4', category: 'undefined', price: '₹2349', extraDayPrice: '₹500/day', rating: 4.5, reviews: 0, imageUrl: img_photo_41, description: 'DJI osmo Action 4', specs: [] },
       { id: 'vc-22', name: 'I 360 X4 Power combo', category: 'undefined', price: '₹1749', extraDayPrice: '₹350/day', rating: 4.5, reviews: 0, imageUrl: img_i360_power, description: 'I 360 X4 Power combo', specs: [] },
       { id: 'vc-23', name: 'dji Action 4 vlogging com', category: 'undefined', price: '₹1639', extraDayPrice: '₹250/day', rating: 4.5, reviews: 0, imageUrl: img_action_4_vlog, description: 'dji Action 4 vlogging com', specs: [] },
-      { id: 'vc-24', name: 'DJI vlogging combo', category: 'undefined', price: '₹1899', extraDayPrice: '₹500/day', rating: 4.5, reviews: 0, imageUrl: 'https://placehold.co/400x300?text=DJI%20vlogging%20combo', description: 'DJI vlogging combo', specs: [] },
+      { id: 'vc-24', name: 'DJI vlogging combo', category: 'undefined', price: '₹1899', extraDayPrice: '₹500/day', rating: 4.5, reviews: 0, imageUrl: img_vc_24, description: 'DJI vlogging combo', specs: [] },
       { id: 'cam-new-1', name: 'Cannon 1300 D', category: 'vlogging-cameras', price: '₹800', extraDayPrice: '₹150/day', rating: 4.5, reviews: 0, imageUrl: img_cannon_1300, description: 'Cannon 1300 D', specs: [] }
     ]
   },
@@ -412,7 +414,7 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
     subtitle: 'Premium ergonomic, weather-resistant backpacks.',
     icon: '🎒',
     products: [
-      { id: 'bp-1', name: 'Backpack Raincover', category: 'backpacks', price: '₹99/day', rating: 4.5, reviews: 0, imageUrl: 'https://placehold.co/400x300?text=Backpack+Raincover', description: 'Backpack Raincover', specs: [] },
+      { id: 'bp-1', name: 'Backpack Raincover', category: 'backpacks', price: '₹99/day', rating: 4.5, reviews: 0, imageUrl: img_bp_1, description: 'Backpack Raincover', specs: [] },
       { id: 'bp-2', name: '60L Backpack', category: 'backpacks', price: '₹499', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_bp_2, description: '60L Backpack', specs: [] },
       { id: 'bp-3', name: '70L Backpack', category: 'backpacks', price: '₹649', extraDayPrice: '₹100/day', rating: 4.5, reviews: 0, imageUrl: img_bp_3, description: '70L Backpack', specs: [] }
     ]

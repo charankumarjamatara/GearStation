@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin } from 'lucide-react';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DatePickerCustom.css';
 import { useDateContext } from '../DateContext';
 import './Hero.css';
 
+// Import the new images
+import djiAction4Img from '../assets/photography category/dji action cameras/dji Action 4.jpg';
+import insta360X3Img from '../assets/photography category/insta 360/I 360 X3 Action cam.webp';
+
 const Hero: React.FC = () => {
   const { startDate, endDate, setIsDatePromptOpen } = useDateContext();
-  
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const carouselImages = [
+    `${import.meta.env.BASE_URL}new_prod_3.png`,
+    djiAction4Img,
+    insta360X3Img
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % carouselImages.length);
+    }, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [carouselImages.length]);
+
   const formatDate = (dateString: string) => {
     if (!dateString) return 'Select Date';
     return new Date(dateString).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -30,12 +49,26 @@ const Hero: React.FC = () => {
           </div>
           
           <div className="hero-right">
-            <div className="hero-visual">
-              <img 
-                src={`${import.meta.env.BASE_URL}new_prod_3.png`} 
-                alt="Action Camera" 
-                className="hero-camera" 
-              />
+            <div className="hero-visual-wrapper">
+              <div className="hero-visual">
+                {carouselImages.map((img, index) => {
+                  let statusClass = 'next';
+                  if (index === currentImageIndex) {
+                    statusClass = 'active';
+                  } else if (index === (currentImageIndex - 1 + carouselImages.length) % carouselImages.length) {
+                    statusClass = 'prev';
+                  }
+                  
+                  return (
+                    <img 
+                      key={index}
+                      src={img} 
+                      alt={`Action Camera ${index + 1}`} 
+                      className={`hero-camera ${statusClass}`}
+                    />
+                  );
+                })}
+              </div>
               <div className="hero-camera-shadow"></div>
             </div>
           </div>

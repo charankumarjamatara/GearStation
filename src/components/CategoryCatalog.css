@@ -21,9 +21,9 @@
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--color-white);
-  padding: 8px 18px;
+  padding: 6px 14px;
   border-radius: 20px;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -237,7 +237,7 @@
 .card-image-wrap {
   width: 100%;
   height: 220px;
-  background-color: #f9fafb;
+  background-color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -520,26 +520,225 @@
 }
 
 @media (max-width: 768px) {
-  .ecommerce-grid {
-    grid-template-columns: repeat(2, 1fr);
+  /* ── Toolbar ── */
+  .catalog-toolbar {
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
   }
-  
+  .search-box {
+    width: auto;
+    flex: 1;
+  }
+  .search-box input {
+    padding: 8px 12px 8px 36px;
+    font-size: 13px;
+  }
+  .catalog-filter-info {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* ── Sidebar ── */
   .sidebar-item {
     min-width: 90px;
   }
 
-  @media (max-width: 480px) {
-    .ecommerce-grid {
-      grid-template-columns: 1fr;
-    }
+  /* ══════════════════════════════════════════════
+     MOBILE PRODUCT GRID — 2 balanced square-like cards per row
+  ══════════════════════════════════════════════ */
+  .ecommerce-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
   }
-  
-  .catalog-toolbar {
+
+  /* The card uses height: 100% so CSS Grid stretches all cards in a row equally.
+     No fixed aspect ratio on the card to prevent cutting off text/buttons. */
+  .ecom-card {
+    display: flex;
     flex-direction: column;
-    gap: 16px;
-    align-items: stretch;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 12px;
   }
-  .search-box {
+
+  /* ── Image area: fixed proportion keeps it looking uniform ── */
+  .card-image-wrap {
     width: 100%;
+    aspect-ratio: 1.25 / 1;
+    padding: 10px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .card-image {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* ── Card body: fills the remaining space naturally ── */
+  .card-body {
+    flex: 1 1 auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ── Rating row ── */
+  .card-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  .stars {
+    gap: 2px;
+  }
+
+  .stars svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .rating-num {
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .reviews-num {
+    font-size: 11px;
+    color: var(--color-gray);
+  }
+
+  /* ── Product title ── */
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    /* clamp to 2 lines max */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── Spec tags — hide on mobile to save space ── */
+  .card-specs {
+    display: none;
+  }
+
+  /* ── Price section ── */
+  .card-price-section {
+    margin-bottom: 8px;
+    padding-top: 6px;
+    border-top: 1px dashed var(--color-border);
+    display: flex;
+    align-items: center;
+  }
+
+  .price-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .price-tag {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .price-duration {
+    font-size: 11px !important;
+    color: #64748b;
+    margin-left: 0 !important;
+    line-height: 1.2;
+  }
+
+  /* Date-prompt blurred price (no-dates state) */
+  .date-prompt-price {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .date-prompt-text {
+    font-size: 11px !important;
+  }
+
+  /* ── Add to Bag / Rent button ── */
+  .rent-now-btn {
+    width: 100%;
+    padding: 0;
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+
+  .rent-now-btn svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  /* Plus-icon rent button (no-dates state) */
+  .rent-prompt-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    align-self: flex-end !important;
+    margin-top: auto !important;
+    flex-shrink: 0;
+  }
+}
+
+/* ── Extra narrow devices (≤ 380px): keep layout, just scale down slightly ── */
+@media (max-width: 380px) {
+  .ecommerce-grid {
+    gap: 10px;
+  }
+
+  .card-image-wrap {
+    padding: 8px;
+  }
+
+  .card-body {
+    padding: 8px;
+  }
+
+  .card-title {
+    font-size: 12px;
+  }
+
+  .price-tag {
+    font-size: 14px;
+  }
+
+  .rent-now-btn {
+    height: 36px;
+    min-height: 36px;
+    max-height: 36px;
+    font-size: 10px;
   }
 }

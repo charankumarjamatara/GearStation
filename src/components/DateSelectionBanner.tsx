@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, X, Info, ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -12,6 +12,7 @@ const DateSelectionBanner: React.FC = () => {
     isDatePromptOpen, setIsDatePromptOpen, totalDays
   } = useDateContext();
   const bannerRef = useRef<HTMLDivElement>(null);
+  const [showMobileCalendar, setShowMobileCalendar] = useState(false);
 
   // Close when clicking outside
   useEffect(() => {
@@ -83,6 +84,9 @@ const DateSelectionBanner: React.FC = () => {
     decreaseMonth,
     increaseMonth,
   }: any) => {
+    const nextMonth = new Date(monthDate);
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+
     return (
       <div className="custom-calendar-header">
         <button
@@ -90,7 +94,7 @@ const DateSelectionBanner: React.FC = () => {
           className="calendar-nav-btn prev"
           onClick={decreaseMonth}
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={16} />
         </button>
         
         <span className="calendar-month-name">
@@ -102,10 +106,11 @@ const DateSelectionBanner: React.FC = () => {
 
         <button
           aria-label="Next Month"
-          className="calendar-nav-btn next"
+          className="calendar-nav-btn next calendar-nav-btn-pill"
           onClick={increaseMonth}
         >
-          <ChevronRight size={20} />
+          <span>{nextMonth.toLocaleString("en-US", { month: "long", year: "numeric" })}</span>
+          <ChevronRight size={16} />
         </button>
       </div>
     );
@@ -170,11 +175,11 @@ const DateSelectionBanner: React.FC = () => {
               </button>
             </div>
             
-            <div className="modal-body">
+            <div className={`modal-body ${showMobileCalendar ? 'showing-calendar' : ''}`}>
               <div className="modal-left">
                 
                 <div className="date-cards-row">
-                  <div className="date-card-group">
+                  <div className="date-card-group" onClick={() => setShowMobileCalendar(true)} style={{cursor: 'pointer'}}>
                     <label>PICKUP DATE <span className="req">*</span></label>
                     <div className="date-card">
                       <div className="card-icon">
@@ -187,7 +192,7 @@ const DateSelectionBanner: React.FC = () => {
                     </div>
                   </div>
                   
-                  <div className="date-card-group">
+                  <div className="date-card-group" onClick={() => setShowMobileCalendar(true)} style={{cursor: 'pointer'}}>
                     <label>RETURN DATE <span className="req">*</span></label>
                     <div className="date-card">
                       <div className="card-icon">
@@ -227,15 +232,7 @@ const DateSelectionBanner: React.FC = () => {
                   </div>
                 </div>
                 
-                <div className="savings-card">
-                  <div className="savings-icon">
-                    %
-                  </div>
-                  <div className="savings-content">
-                    <h4>Save more with us!</h4>
-                    <p>Longer rental periods mean bigger savings—enjoy discounts of up to 12%. We don't charge you for delivery and pickup days!</p>
-                  </div>
-                </div>
+
                 
                 <button 
                   className="continue-btn"
@@ -261,6 +258,11 @@ const DateSelectionBanner: React.FC = () => {
                     renderCustomHeader={renderCustomHeader}
                     dayClassName={getDayClassName}
                   />
+                  {showMobileCalendar && (
+                    <button className="mobile-calendar-done-btn" onClick={() => setShowMobileCalendar(false)}>
+                      Done
+                    </button>
+                  )}
                 </div>
                 
                 <div className="calendar-legend">
@@ -269,12 +271,16 @@ const DateSelectionBanner: React.FC = () => {
                     <span>Pickup Date</span>
                   </div>
                   <div className="legend-item">
+                    <div className="legend-dot dot-period"></div>
+                    <span>In Between Dates</span>
+                  </div>
+                  <div className="legend-item">
                     <div className="legend-dot dot-return"></div>
                     <span>Return Date</span>
                   </div>
                   <div className="legend-item">
-                    <div className="legend-dot dot-period"></div>
-                    <span>Rental Period</span>
+                    <div className="legend-dot dot-unavailable"></div>
+                    <span>Unavailable</span>
                   </div>
                 </div>
               </div>

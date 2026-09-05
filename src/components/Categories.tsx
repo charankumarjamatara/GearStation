@@ -40,13 +40,6 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
             <h2 className="section-title">BROWSE BY <span className="text-red">CATEGORY</span></h2>
             <p className="section-subtitle">Find the right gear for every kind of adventure.</p>
           </div>
-          <a 
-            href="#category/all" 
-            onClick={(e) => { e.preventDefault(); handleCategoryClick('all'); }} 
-            className="view-all-link text-red"
-          >
-            EXPLORE ALL CATEGORIES <ArrowRight size={16} />
-          </a>
         </div>
         
         <div className="categories-grid-new">

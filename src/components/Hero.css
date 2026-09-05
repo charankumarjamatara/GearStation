@@ -63,15 +63,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden; /* Bound the transition to this area */
+  padding: 20px 0; /* Add padding so the shadow is not cut off */
+}
+
+.hero-visual-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-visual {
   position: relative;
   width: 100%;
-  max-width: 360px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* Fixed height to contain images and prevent layout shifts */
+  height: 250px; 
+  /* Float animation applied to the visual container so it floats everything inside together */
+  animation: float-camera 4.5s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .hero-visual {
+    height: 300px;
+  }
 }
 
 @keyframes float-camera {
@@ -97,9 +114,34 @@
 .hero-camera {
   width: 100%;
   height: auto;
-  position: relative;
+  max-height: 100%;
+  object-fit: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* NEXT state: Waiting on the RIGHT */
+  transform: translate(calc(-50% + 40%), -50%);
+  opacity: 0;
+  transition: none; /* No transition so it jumps to this position instantly on wrap-around */
+  z-index: 1;
+}
+
+.hero-camera.active {
+  /* ACTIVE state: Centered */
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  /* Transform takes 0.9s (smooth slide), Opacity fades in over 0.6s */
+  transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease-out;
   z-index: 2;
-  animation: float-camera 4.5s ease-in-out infinite;
+}
+
+.hero-camera.prev {
+  /* PREV state: Exited to the LEFT */
+  transform: translate(calc(-50% - 40%), -50%);
+  opacity: 0;
+  /* Transform takes 0.9s, but Opacity fades out VERY fast (0.35s) so it disappears BEFORE hitting the edge */
+  transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s ease-out;
+  z-index: 1;
 }
 
 .hero-camera-shadow {
@@ -195,7 +237,7 @@
   
   .hero-main-layout {
     flex-direction: column;
-    text-align: center;
+    text-align: left;
     gap: 24px;
     margin-bottom: 32px;
   }

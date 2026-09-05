@@ -1,5 +1,4 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
 import ProductCard from './ProductCard';
 import './PopularRentals.css';
 
@@ -50,11 +49,6 @@ const PopularRentals: React.FC = () => {
       <div className="container">
         <div className="section-header">
           <h2 className="section-title">POPULAR <span className="text-red">RENTALS</span></h2>
-          <div className="header-actions-group">
-            <a href="#category/all" className="view-all-link">
-              VIEW ALL RENTALS <ArrowRight size={16} />
-            </a>
-          </div>
         </div>
         
         <div className="carousel-wrapper">

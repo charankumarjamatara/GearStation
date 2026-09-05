@@ -10,7 +10,7 @@
 }
 
 .header-text-container h2 {
-  font-size: 56px;
+  font-size: clamp(32px, 5vw, 48px);
   font-weight: 900;
   margin: 0 0 8px 0;
   text-transform: uppercase;
@@ -143,10 +143,98 @@
   .categories-header-new {
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  
+  .header-text-container h2 {
+    font-size: 24px;
+  }
+  
+  .section-subtitle {
+    font-size: 14px;
   }
   
   .categories-grid-new {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .category-card-new {
+    flex-direction: column;
+    /* Use a stable aspect ratio slightly taller than square for balance */
+    aspect-ratio: 0.82 / 1;
+    height: auto;
+    padding: 12px;
+    justify-content: flex-start; /* Fixes the top overflow issue */
+    box-sizing: border-box;
+  }
+
+  .card-content-left {
+    padding-right: 0;
+    margin-bottom: 0;
+    flex: 0 0 auto;
+  }
+
+  .card-number-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .card-number {
+    font-size: 13px; /* Small, secondary muted number */
+    color: #9ca3af;
+    font-weight: 600;
+  }
+
+  .red-line {
+    margin-top: 4px;
+    margin-bottom: 0;
+    width: 16px;
+    height: 2px;
+  }
+
+  .category-name-new {
+    font-size: 14px;
+    margin-bottom: 4px;
+    line-height: 1.2;
+    color: #111827; /* Dark and readable */
+  }
+
+  .category-desc-new {
+    display: none; /* Hide on mobile to save space */
+  }
+
+  .explore-link {
+    font-size: 11px;
+    margin-top: 2px;
+    margin-bottom: 0;
+  }
+  
+  .explore-link svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .card-image-right {
+    margin-top: auto; /* Push image region to the bottom */
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 0; /* Important for flexbox overflow */
+    padding-top: 8px;
+  }
+
+  .category-img-new {
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transform: none !important; /* Disable desktop hover scale */
   }
 }
