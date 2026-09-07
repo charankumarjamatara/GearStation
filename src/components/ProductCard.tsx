@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Heart, Plus, ShoppingBag } from 'lucide-react';
+import { Heart, Plus, ShoppingBag } from 'lucide-react';
 import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
 import './ProductCard.css';
@@ -7,8 +7,6 @@ import './ProductCard.css';
 interface ProductCardProps {
   name: string;
   price: string;
-  rating?: number;
-  reviews?: number;
   imageUrl?: string;
   buttonText?: string;
   showHeart?: boolean;
@@ -17,8 +15,6 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ 
   name, 
   price, 
-  rating, 
-  reviews, 
   imageUrl, 
   buttonText = "ADD TO BAG",
   showHeart = false 

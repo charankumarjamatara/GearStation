@@ -81,8 +81,7 @@ const PopularRentals: React.FC = () => {
                 <ProductCard
                   name={product.name}
                   price={product.price}
-                  rating={product.rating}
-                  reviews={product.reviews}
+
                   imageUrl={product.imageUrl}
                 />
               </div>
