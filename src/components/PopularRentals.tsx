@@ -1,12 +1,12 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 import './PopularRentals.css';
-import djiAction5Img from '../assets/photography category/Action camera mounts/dji action 5.jpg';
-import djiAction4Img from '../assets/photography category/dji action cameras/DJI Osmo Action 4.png';
+import djiAction5Img from '../assets/photography category/dji action cameras/dji Action 5.jpg';
+import djiAction4Img from '../assets/photography category/dji action cameras/dji Action 4.jpg';
 import djiAction5VloggingImg from '../assets/photography category/dji action cameras/dji Action 5 vlogging.png';
 import insta360X4Img from '../assets/photography category/insta 360/Insta 360 X4 Action Camera.jpg';
-import djiCreatorComboImg from '../assets/photography category/dji cameras/DJI Creator Combo.jpg';
-import menRidingJacketImg from '../assets/outdoor category/Riding gear/Men Riding jacket - level 2.png';
+
+import menRidingJacketImg from '../assets/outdoor category/Riding gear/Men Riding jacket - level 2.jpeg';
 import axorHelmetImg from '../assets/outdoor category/Riding gear/axor riding helmet.jpg';
 import backpack50LImg from '../assets/outdoor category/trekking gear/50L Backpack.png';
 
@@ -20,7 +20,7 @@ const PopularRentals: React.FC = () => {
       imageUrl: djiAction5Img
     },
     {
-      name: 'DJI Osmo Action 4',
+      name: 'DJI action 4',
       price: '₹1249',
       rating: 4.5,
       reviews: 96,
@@ -40,13 +40,7 @@ const PopularRentals: React.FC = () => {
       reviews: 84,
       imageUrl: insta360X4Img
     },
-    {
-      name: 'DJI Creator Combo',
-      price: '₹3059',
-      rating: 4.5,
-      reviews: 210,
-      imageUrl: djiCreatorComboImg
-    },
+
     {
       name: 'Men Riding jacket - level 2',
       price: '₹799',

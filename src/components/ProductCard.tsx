@@ -81,14 +81,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </p>
         )}
         
-        {rating !== undefined && reviews !== undefined && (
-          <div className="product-rating">
-            <Star size={14} className="star-icon" fill="currentColor" />
-            <span className="rating-score">{rating}</span>
-            <span className="rating-count">({reviews})</span>
-          </div>
-        )}
-        
+
         {!hasDates ? (
           <button 
             className="btn rent-prompt-btn"
