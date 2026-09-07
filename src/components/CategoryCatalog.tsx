@@ -19,7 +19,7 @@ import img_photo_17 from '../assets/photography category/dji action cameras/dji 
 import img_photo_19 from '../assets/photography category/dji action cameras/dji Action 5 Mountain combo.png';
 import img_photo_20 from '../assets/photography category/dji action cameras/dji Action 4 creator Edition.png';
 import img_photo_21 from '../assets/photography category/dji action cameras/dji Action 5 sky diving.jpg.jpeg';
-import img_photo_22 from '../assets/photography category/dji action cameras/dji Action 4.jpg';
+
 import img_photo_23 from '../assets/photography category/insta 360/Insta 360 X4 Action Camera.jpg';
 import img_photo_24 from '../assets/photography category/insta 360/Insta 360 X4 Riding cam.webp';
 import img_photo_25 from '../assets/photography category/insta 360/Insta 360 X4 Bullet time.png';
@@ -156,8 +156,8 @@ export interface ProductItem {
 }
 
 export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; icon: string; products: ProductItem[] }> = {
-  'gopro-cameras': {
-    title: 'GoPro Cameras',
+  'action-cameras': {
+    title: 'Action Cameras',
     subtitle: 'Capture your adventures with GoPro.',
     icon: '📷',
     products: [
@@ -183,16 +183,8 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
       { id: 'gp-21', name: 'dji Action 5 Mountain combo', category: 'undefined', price: '₹2059', extraDayPrice: '₹350/day', rating: 4.5, reviews: 0, imageUrl: img_photo_19, description: 'dji Action 5 Mountain combo', specs: [] },
       { id: 'gp-22', name: 'dji Action 4 creator Edition', category: 'undefined', price: '₹1699', extraDayPrice: '₹350/day', rating: 4.5, reviews: 0, imageUrl: img_photo_20, description: 'dji Action 4 creator Edition', specs: [] },
       { id: 'gp-23', name: 'dji Action 5 sky diving', category: 'undefined', price: '₹2249', extraDayPrice: '₹400/day', rating: 4.5, reviews: 0, imageUrl: img_photo_21, description: 'dji Action 5 sky diving', specs: [] },
-      { id: 'gp-24', name: 'dji Action 4 sky diving', category: 'undefined', price: '₹1599', extraDayPrice: '₹250/day', rating: 4.5, reviews: 0, imageUrl: img_action_4_sky, description: 'dji Action 4 sky diving', specs: [] }
-    ]
-  },
-  'action-cameras': {
-    title: 'Action Cameras',
-    subtitle: 'Action cameras for every moment.',
-    icon: '🏂',
-    products: [
-      { id: 'ac-1', name: 'DJI action 4', category: 'undefined', price: '₹1249', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_0, description: 'DJI action 4', specs: [] },
-      { id: 'ac-3', name: 'DJI action 4', category: 'undefined', price: '₹1249', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_22, description: 'DJI action 4', specs: [] }
+      { id: 'gp-24', name: 'dji Action 4 sky diving', category: 'undefined', price: '₹1599', extraDayPrice: '₹250/day', rating: 4.5, reviews: 0, imageUrl: img_action_4_sky, description: 'dji Action 4 sky diving', specs: [] },
+      { id: 'dji-1', name: 'DJI Pocket 3', category: 'undefined', price: '₹1349', rating: 4.5, reviews: 0, imageUrl: img_photo_33, description: 'DJI Pocket 3', specs: [] }
     ]
   },
   'insta360-cameras': {
@@ -210,15 +202,6 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
       { id: 'i360-15', name: 'Insta 360 X3 bullet time', category: 'undefined', price: '₹1859', extraDayPrice: '₹400/day', rating: 4.5, reviews: 0, imageUrl: img_photo_30, description: 'Insta 360 X3 bullet time', specs: [] },
       { id: 'i360-16', name: 'Insta 360 X4 Power', category: 'undefined', price: '₹1749', extraDayPrice: '₹370/day', rating: 4.5, reviews: 0, imageUrl: img_photo_31, description: 'Insta 360 X4 Power', specs: [] },
       { id: 'i360-17', name: 'Insta 360 X3 Scuba', category: 'undefined', price: '₹1959', extraDayPrice: '₹400/day', rating: 4.5, reviews: 0, imageUrl: img_photo_32, description: 'Insta 360 X3 Scuba', specs: [] }
-    ]
-  },
-  'dji-cameras': {
-    title: 'DJI Cameras',
-    subtitle: 'Capture cinematic footage.',
-    icon: '📷',
-    products: [
-      { id: 'dji-1', name: 'DJI Pocket 3', category: 'undefined', price: '₹1349', rating: 4.5, reviews: 0, imageUrl: img_photo_33, description: 'DJI Pocket 3', specs: [] },
-      { id: 'dji-3', name: 'DJI action 4', category: 'undefined', price: '₹1249', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_22, description: 'DJI action 4', specs: [] }
     ]
   },
   'vlogging-cameras': {
@@ -279,17 +262,13 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
       { id: 'ta-10', name: 'Canon tripod Grip', category: 'undefined', price: '₹1779', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_48, description: 'Canon tripod Grip', specs: [] },
       { id: 'ta-12', name: 'MI power bank', category: 'undefined', price: '₹699', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_49, description: 'MI power bank', specs: [] },
 
-      { id: 'bat-new-1', name: 'dji action 4 battery charger', category: 'tripod-accessories', price: '₹150', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_51, description: 'dji action 4 battery charger', specs: [] },
-      { id: 'bat-new-2', name: 'DJI action 3/4/5/6 battery', category: 'tripod-accessories', price: '₹150', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_52, description: 'DJI action 3/4/5/6 battery', specs: [] },
       { id: 'bat-new-3', name: 'Cannon 1300 D battery', category: 'tripod-accessories', price: '₹150', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_53, description: 'Cannon 1300 D battery', specs: [] },
-      { id: 'bat-new-4', name: 'Insta 360 X3 battery', category: 'tripod-accessories', price: '₹150', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_54, description: 'Insta 360 X3 battery', specs: [] },
-      { id: 'bat-new-5', name: 'Insta 360 X4 battery', category: 'tripod-accessories', price: '₹150', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_55, description: 'Insta 360 X4 battery', specs: [] }
     ]
   },
-  'action-camera-mounts': {
-    title: 'Action Camera Mounts',
-    subtitle: 'Mounts for every action.',
-    icon: '🧲',
+  'action-camera-add-ons': {
+    title: 'Action Camera Add Ons',
+    subtitle: 'Add ons for your action cameras.',
+    icon: '🔌',
     products: [
       { id: 'acm-1', name: 'Head strap mount for GPH 11, 12 & 13', category: 'undefined', price: '₹149', extraDayPrice: '₹10/day', rating: 4.5, reviews: 0, imageUrl: img_photo_56, description: 'Head strap mount for GPH 11, 12 & 13', specs: [] },
       { id: 'acm-5', name: 'Insta 360 bullet time handle', category: 'undefined', price: '₹779', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_57, description: 'Insta 360 bullet time handle', specs: [] },
@@ -306,14 +285,11 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
       { id: 'acm-16', name: '3M Flat & curve mount', category: 'undefined', price: '₹49', extraDayPrice: '₹10/day', rating: 4.5, reviews: 0, imageUrl: img_photo_68, description: '3M Flat & curve mount', specs: [] },
       { id: 'acm-20', name: 'Insta 360 X4 scuba suit', category: 'undefined', price: '₹1029', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_71, description: 'Insta 360 X4 scuba suit', specs: [] },
       { id: 'acm-21', name: 'GP magnetic swivel clip', category: 'undefined', price: '₹149', extraDayPrice: '₹5/day', rating: 4.5, reviews: 0, imageUrl: img_photo_72, description: 'GP magnetic swivel clip', specs: [] },
-      { id: 'acm-22', name: 'Insta 360 X3 scuba suit', category: 'undefined', price: '₹1599', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_73, description: 'Insta 360 X3 scuba suit', specs: [] }
-    ]
-  },
-  'action-camera-add-ons': {
-    title: 'Action Camera Add Ons',
-    subtitle: 'Add ons for your action cameras.',
-    icon: '🔌',
-    products: [
+      { id: 'acm-22', name: 'Insta 360 X3 scuba suit', category: 'undefined', price: '₹1599', extraDayPrice: '₹200/day', rating: 4.5, reviews: 0, imageUrl: img_photo_73, description: 'Insta 360 X3 scuba suit', specs: [] },
+      { id: 'bat-new-1', name: 'dji action 4 battery charger', category: 'tripod-accessories', price: '₹150', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_51, description: 'dji action 4 battery charger', specs: [] },
+      { id: 'bat-new-2', name: 'DJI action 3/4/5/6 battery', category: 'tripod-accessories', price: '₹150', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_52, description: 'DJI action 3/4/5/6 battery', specs: [] },
+      { id: 'bat-new-4', name: 'Insta 360 X3 battery', category: 'tripod-accessories', price: '₹150', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_54, description: 'Insta 360 X3 battery', specs: [] },
+      { id: 'bat-new-5', name: 'Insta 360 X4 battery', category: 'tripod-accessories', price: '₹150', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_55, description: 'Insta 360 X4 battery', specs: [] }
     ]
   },
   'trekking-gear': {
@@ -419,16 +395,13 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
 
 const PHOTOGRAPHY_CATEGORIES: Array<{ key: string; label: string; icon: React.ReactNode; imageUrl?: string }> = [
   { key: 'photography-all', label: 'All Photography', icon: <LayoutGrid size={22} /> },
-  { key: 'gopro-cameras', label: 'GoPro Cameras', icon: <Camera size={22} /> },
   { key: 'action-cameras', label: 'Action Cameras', icon: <Camera size={22} /> },
   { key: 'insta360-cameras', label: 'Insta 360 Cameras', icon: <Camera size={22} /> },
-  { key: 'dji-cameras', label: 'DJI Cameras', icon: <Camera size={22} /> },
   { key: 'vlogging-cameras', label: 'Vlogging Cameras', icon: <Camera size={22} /> },
   { key: 'pocket-cameras', label: 'Pocket Cameras', icon: <Camera size={22} /> },
   { key: 'mobile-gimbals', label: 'Mobile Gimbals', icon: <Video size={22} /> },
   { key: 'wireless-mics', label: 'Wireless & Collar Mics', icon: <Mic size={22} /> },
   { key: 'tripod-accessories', label: 'Tripod & Camera Accessories', icon: <Aperture size={22} /> },
-  { key: 'action-camera-mounts', label: 'Action Camera Mounts', icon: <Aperture size={22} /> },
   { key: 'action-camera-add-ons', label: 'Action Camera Add Ons', icon: <Aperture size={22} /> },
 ];
 

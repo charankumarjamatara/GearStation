@@ -77,6 +77,11 @@
   margin-bottom: 24px;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  
+  /* STICKY NAV RULES */
+  position: sticky;
+  top: 81px; /* Height of the desktop header (16px+16px pad + 48px logo + 1px border) */
+  z-index: 50; /* Above products, below the header (z: 100) and modals */
 }
 
 .catalog-sidebar::-webkit-scrollbar {
@@ -740,5 +745,11 @@
     min-height: 36px;
     max-height: 36px;
     font-size: 10px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .catalog-sidebar {
+    top: 73px;
   }
 }

@@ -143,15 +143,22 @@ const DateSelectionBanner: React.FC = () => {
 
   return (
     <>
-      {/* Floating Pill Button to open date selector (only visible if dates are not selected) */}
-      {!isDatePromptOpen && !hasDates && (
+      {/* Mobile Fade Background (controlled via CSS media query) */}
+      {!isDatePromptOpen && (
+        <div className="mobile-pill-fade" />
+      )}
+
+      {/* Persistent Floating Pill Button to open date selector */}
+      {!isDatePromptOpen && (
         <button 
           className="date-pill-btn"
           onClick={() => setIsDatePromptOpen(true)}
         >
-          <Calendar size={18} />
+          <Calendar size={18} className="pill-icon" />
           <span>
-            Select rental dates to view prices
+            {hasDates 
+              ? `Pickup: ${formatDate(startDate)} · Return: ${formatDate(endDate)}` 
+              : 'Select rental dates to view prices'}
           </span>
         </button>
       )}
