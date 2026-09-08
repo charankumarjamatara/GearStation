@@ -10,6 +10,7 @@ interface ProductCardProps {
   imageUrl?: string;
   buttonText?: string;
   showHeart?: boolean;
+  extraDayPrice?: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ 
@@ -17,7 +18,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   price, 
   imageUrl, 
   buttonText = "ADD TO BAG",
-  showHeart = false 
+  showHeart = false,
+  extraDayPrice
 }) => {
   const { startDate, endDate, totalDays, setIsDatePromptOpen } = useDateContext();
   const { addToCart } = useCartContext();
@@ -28,11 +30,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
     return parseInt(numeric, 10);
   };
 
+  const baseP = parsePrice(price);
+  const extraP = extraDayPrice ? parsePrice(extraDayPrice) : baseP;
+  const totalPrice = baseP + (totalDays > 1 ? extraP * (totalDays - 1) : 0);
+
   const handleActionClick = () => {
     if (!hasDates) {
       setIsDatePromptOpen(true);
     } else {
-      const totalPrice = parsePrice(price) * totalDays;
       addToCart({
         productId: name.replace(/\s+/g, '-').toLowerCase(),
         name,
@@ -73,7 +78,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         ) : (
           <p className="product-price">
-            Total <strong>₹{(parsePrice(price) * totalDays).toLocaleString('en-IN')}</strong> <span style={{ fontSize: '12px', color: '#64748b' }}>for {totalDays} day{totalDays > 1 ? 's' : ''}</span>
+            Total <strong>₹{totalPrice.toLocaleString('en-IN')}</strong> <span style={{ fontSize: '12px', color: '#64748b' }}>for {totalDays} day{totalDays > 1 ? 's' : ''}</span>
           </p>
         )}
         

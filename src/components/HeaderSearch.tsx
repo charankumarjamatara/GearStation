@@ -17,7 +17,7 @@ const HeaderSearch: React.FC = () => {
   const hasDates = startDate && endDate;
 
   // Flatten all products across all categories
-  const allProducts = Object.values(CATEGORY_DATA).flatMap(cat => cat.products);
+  const allProducts = Array.from(new Map(Object.values(CATEGORY_DATA).flatMap(cat => cat.products.map(p => [p.id, p]))).values());
 
   // Focus input when opened
   // Removed focus effect since it's always open
