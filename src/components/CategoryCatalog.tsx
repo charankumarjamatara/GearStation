@@ -44,7 +44,7 @@ import img_photo_44 from "../assets/photography category/wireless and collar mic
 import img_photo_45 from "../assets/photography category/wireless and collar mic's/DJI MIC 2.jpg";
 import img_photo_46 from '../assets/photography category/Tripod and camera accs/Camera tripod.jpg';
 import img_photo_47 from '../assets/photography category/Tripod and camera accs/sandisk.jpg';
-import img_photo_48 from '../assets/photography category/Action camera mounts/Canon tripod Grip.jpg';
+import img_photo_48 from '../assets/photography category/Tripod and camera accs/Canon tripod Grip.png';
 import img_photo_49 from '../assets/photography category/Tripod and camera accs/MI power bank.jpg';
 import img_photo_51 from '../assets/photography category/Tripod and camera accs/dji action 4 battery charger.jpeg';
 import img_photo_52 from '../assets/photography category/Tripod and camera accs/Dji Action 3,4,5,6 battery.jpeg';
@@ -107,6 +107,7 @@ import img_rg_3 from '../assets/outdoor category/Riding gear/riding rain jacket.
 import img_rg_4 from '../assets/outdoor category/Riding gear/riding knee guards.jpg';
 import img_rg_5 from '../assets/outdoor category/Riding gear/axor riding helmet.jpg';
 import img_rg_6 from '../assets/outdoor category/Riding gear/Women riding jacket - level 2.jpeg';
+import img_rg_7 from '../assets/outdoor category/Riding gear/riding rain pant.jpeg';
 import img_cg_1 from '../assets/outdoor category/camping gear/3 person camping tent.jpg';
 import img_cg_2 from '../assets/outdoor category/camping gear/2 person camping tent.jpg';
 import img_cg_3 from '../assets/outdoor category/camping gear/Trekking foam mattress.png';
@@ -329,7 +330,8 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
       { id: 'rg-3', name: 'Riding Rain Jacket', category: 'riding-gear', price: '₹129', extraDayPrice: '₹20/day', rating: 4.5, reviews: 0, imageUrl: img_rg_3, description: 'Riding Rain Jacket', specs: [] },
       { id: 'rg-4', name: 'Riding Knee Guards', category: 'riding-gear', price: '₹599', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_rg_4, description: 'Riding Knee Guards', specs: [] },
       { id: 'rg-5', name: 'Axor Riding helmet', category: 'riding-gear', price: '₹699', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_rg_5, description: 'Axor Riding helmet', specs: [] },
-      { id: 'rg-6', name: 'Women riding jacket - level 2', category: 'riding-gear', price: '₹649', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_rg_6, description: 'Women riding jacket - level 2', specs: [] }
+      { id: 'rg-6', name: 'Women riding jacket - level 2', category: 'riding-gear', price: '₹649', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_rg_6, description: 'Women riding jacket - level 2', specs: [] },
+      { id: 'rg-7', name: 'Riding Rain Pant', category: 'riding-gear', price: '₹129', extraDayPrice: '₹20/day', rating: 4.5, reviews: 0, imageUrl: img_rg_7, description: 'Riding Rain Pant', specs: [] }
     ]
   },
   'camping-gear': {
