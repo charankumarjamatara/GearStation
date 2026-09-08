@@ -119,6 +119,10 @@
   margin-bottom: 8px;
 }
 
+.sidebar-icon img {
+  mix-blend-mode: multiply;
+}
+
 .sidebar-label {
   font-size: 12px;
   font-weight: 600;

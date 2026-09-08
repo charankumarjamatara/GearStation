@@ -393,28 +393,28 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
 
 };
 
-const PHOTOGRAPHY_CATEGORIES: Array<{ key: string; label: string; icon: React.ReactNode; imageUrl?: string }> = [
-  { key: 'photography-all', label: 'All Photography', icon: <LayoutGrid size={22} /> },
-  { key: 'action-cameras', label: 'Action Cameras', icon: <Camera size={22} /> },
-  { key: 'insta360-cameras', label: 'Insta 360 Cameras', icon: <Camera size={22} /> },
-  { key: 'vlogging-cameras', label: 'Vlogging Cameras', icon: <Camera size={22} /> },
-  { key: 'pocket-cameras', label: 'Pocket Cameras', icon: <Camera size={22} /> },
-  { key: 'mobile-gimbals', label: 'Mobile Gimbals', icon: <Video size={22} /> },
-  { key: 'wireless-mics', label: 'Wireless & Collar Mics', icon: <Mic size={22} /> },
-  { key: 'tripod-accessories', label: 'Tripod & Camera Accessories', icon: <Aperture size={22} /> },
-  { key: 'action-camera-add-ons', label: 'Action Camera Add Ons', icon: <Aperture size={22} /> },
+const PHOTOGRAPHY_CATEGORIES: Array<{ key: string; label: string; icon?: React.ReactNode; imageUrl?: string }> = [
+  { key: 'photography-all', label: 'All Photography', imageUrl: img_photo_0 },
+  { key: 'action-cameras', label: 'Action Cameras', imageUrl: img_photo_0 },
+  { key: 'insta360-cameras', label: 'Insta 360 Cameras', imageUrl: img_photo_23 },
+  { key: 'vlogging-cameras', label: 'Vlogging Cameras', imageUrl: img_photo_35 },
+  { key: 'pocket-cameras', label: 'Pocket Cameras', imageUrl: img_photo_33 },
+  { key: 'mobile-gimbals', label: 'Mobile Gimbals', imageUrl: img_photo_42 },
+  { key: 'wireless-mics', label: 'Wireless & Collar Mics', imageUrl: img_photo_44 },
+  { key: 'tripod-accessories', label: 'Tripod & Camera Accessories', imageUrl: img_photo_46 },
+  { key: 'action-camera-add-ons', label: 'Action Camera Add Ons', imageUrl: img_photo_56 },
 ];
 
 
 
-const OUTDOOR_CATEGORIES: Array<{ key: string; label: string; icon: React.ReactNode; imageUrl?: string }> = [
-  { key: 'outdoor-all', label: 'All Outdoor', icon: <LayoutGrid size={22} /> },
-  { key: 'trekking-gear', label: 'Trekking Gear', icon: <Briefcase size={22} /> },
-  { key: 'riding-gear', label: 'Riding Gear', icon: <Shield size={22} /> },
-  { key: 'camping-gear', label: 'Camping Gear', icon: <Briefcase size={22} /> },
-  { key: 'winter-jackets', label: 'Winter Jackets', icon: <Briefcase size={22} /> },
-  { key: 'riding-luggage', label: 'Riding Luggage', icon: <Briefcase size={22} /> },
-  { key: 'backpacks', label: 'Backpacks', icon: <Briefcase size={22} /> }
+const OUTDOOR_CATEGORIES: Array<{ key: string; label: string; icon?: React.ReactNode; imageUrl?: string }> = [
+  { key: 'outdoor-all', label: 'All Outdoor', imageUrl: img_cg_1 },
+  { key: 'trekking-gear', label: 'Trekking Gear', imageUrl: img_tg_1 },
+  { key: 'riding-gear', label: 'Riding Gear', imageUrl: img_rg_1 },
+  { key: 'camping-gear', label: 'Camping Gear', imageUrl: img_cg_1 },
+  { key: 'winter-jackets', label: 'Winter Jackets', imageUrl: img_wj_1 },
+  { key: 'riding-luggage', label: 'Riding Luggage', imageUrl: img_rl_1 },
+  { key: 'backpacks', label: 'Backpacks', imageUrl: img_bp_2 }
 ];
 
 interface CategoryCatalogProps {
