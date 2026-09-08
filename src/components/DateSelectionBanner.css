@@ -39,7 +39,7 @@
   display: flex;
   flex-direction: column;
   font-family: 'Inter', system-ui, sans-serif;
-  padding: 24px;
+  padding: 20px 24px;
 }
 
 @keyframes modalEnter {
@@ -60,7 +60,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .header-left {
@@ -121,13 +121,14 @@
   display: flex;
   gap: 24px;
   position: relative;
+  align-items: flex-start;
 }
 
 .modal-left {
   flex: 0 0 40%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .modal-right {
@@ -203,6 +204,49 @@
 .card-weekday {
   font-size: 11px;
   color: var(--secondary-text);
+}
+
+/* Compact date field — replaces heavy date-card */
+.date-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-gray);
+  border-radius: 8px;
+  background: #ffffff;
+  min-height: 48px;
+  transition: border-color 0.15s;
+}
+
+.date-field:hover {
+  border-color: var(--red);
+}
+
+.field-icon {
+  color: var(--red);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.field-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.field-date {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+}
+
+.field-weekday {
+  font-size: 11px;
+  color: var(--secondary-text);
+  font-weight: 400;
 }
 
 /* ==================================================
@@ -416,13 +460,13 @@
 
 /* Calendar Card Container */
 .calendar-wrapper {
-  background: #FCFAFA; /* very subtle off-white/light pink background */
-  border: 1px solid #F1F5F9; /* thin, extremely subtle border */
-  border-radius: 20px; /* large rounded corners */
-  padding: 32px; /* generous internal padding */
+  background: #FCFAFA;
+  border: 1px solid #F1F5F9;
+  border-radius: 16px;
+  padding: 16px;
   box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
   width: 100%;
-  max-width: none; /* Let it fill the 60% right pane */
+  max-width: none;
   margin: 0 auto;
 }
 
@@ -450,7 +494,8 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
+  gap: 16px;
 }
 
 .calendar-nav-btn {
@@ -475,14 +520,15 @@
 
 .calendar-nav-btn-pill {
   width: auto;
-  padding: 0 16px;
-  background: #FFF0F0 !important; /* Light pink background */
+  padding: 0 12px;
+  background: #FFF0F0 !important;
   border-color: transparent !important;
   border-radius: 20px;
-  gap: 8px;
-  font-size: 13px;
+  gap: 6px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--navy);
+  height: 30px;
 }
 
 .calendar-nav-btn-pill:hover:not(:disabled) {
@@ -490,7 +536,7 @@
 }
 
 .calendar-month-name {
-  font-size: 18px; /* Larger month title */
+  font-size: 15px;
   font-weight: 700;
   color: var(--navy);
 }
@@ -499,8 +545,8 @@
 .react-datepicker__day-names {
   display: grid !important;
   grid-template-columns: repeat(7, 1fr) !important;
-  gap: 12px !important; /* more horizontal room */
-  margin-bottom: 24px !important; /* more breathing room below month header */
+  gap: 4px !important;
+  margin-bottom: 6px !important;
 }
 
 .react-datepicker__day-name {
@@ -525,8 +571,8 @@
 .react-datepicker__week {
   display: grid !important;
   grid-template-columns: repeat(7, 1fr) !important;
-  gap: 12px !important; /* Comfortable column spacing */
-  margin-bottom: 8px !important; /* Tighter vertical padding */
+  gap: 4px !important;
+  margin-bottom: 4px !important;
 }
 
 /* ==================================================
@@ -635,9 +681,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  padding: 24px 0 0 0;
-  margin-top: 24px;
+  gap: 16px;
+  padding: 10px 0 0 0;
+  margin-top: 10px;
   border-top: 1px solid #E2E8F0;
 }
 

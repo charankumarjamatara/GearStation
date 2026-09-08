@@ -29,8 +29,6 @@ const DateSelectionBanner: React.FC = () => {
     };
   }, [isDatePromptOpen, setIsDatePromptOpen]);
 
-  const hasDates = startDate && endDate;
-
   const formatDate = (dateString: string) => {
     if (!dateString) return 'Select Date';
     return new Date(dateString).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -52,14 +50,23 @@ const DateSelectionBanner: React.FC = () => {
 
   const handleDateChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
-    
+
     if (start) {
       // Offset fix for rendering localized date string YYYY-MM-DD
       const offset = start.getTimezoneOffset() * 60000;
-      setStartDate(new Date(start.getTime() - offset).toISOString().split('T')[0]);
-      
+      const startStr = new Date(start.getTime() - offset).toISOString().split('T')[0];
+      setStartDate(startStr);
+
       if (!end) {
-        setEndDate('');
+        // Clear return if it is now inside the blocked window (< start + 2 days)
+        if (endDate) {
+          const [ey, em, ed] = endDate.split('-').map(Number);
+          const endLocal = new Date(ey, em - 1, ed);
+          const minReturn = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 2);
+          if (endLocal < minReturn) setEndDate('');
+        } else {
+          setEndDate('');
+        }
       }
     } else {
       setStartDate('');
@@ -69,8 +76,12 @@ const DateSelectionBanner: React.FC = () => {
     if (end && start) {
       const normalizedStart = normalizeDate(start);
       const normalizedEnd = normalizeDate(end);
-      
-      if (normalizedEnd < normalizedStart) {
+      // Minimum return = pickup + 2 calendar days
+      const minReturn = new Date(normalizedStart);
+      minReturn.setDate(minReturn.getDate() + 2);
+
+      if (normalizedEnd < minReturn) {
+        // Invalid selection — clear return date
         setEndDate('');
       } else {
         const offset = end.getTimezoneOffset() * 60000;
@@ -78,6 +89,7 @@ const DateSelectionBanner: React.FC = () => {
       }
     }
   };
+
 
   const renderCustomHeader = ({
     monthDate,
@@ -137,31 +149,22 @@ const DateSelectionBanner: React.FC = () => {
     if (endTime && dTime === endTime) return 'custom-day-selected custom-day-end';
     
     if (startTime && endTime && dTime > startTime && dTime < endTime) return 'custom-day-in-range';
+
+    // Block the day immediately after pickup — minimum rental is 2 days (pickup + 2)
+    if (startTime && !endTime) {
+      const dayAfterPickup = startTime + 24 * 60 * 60 * 1000; // pickup + 1 day
+      if (dTime === dayAfterPickup) return 'custom-day-disabled';
+    }
+    if (startTime && endTime) {
+      const dayAfterPickup = startTime + 24 * 60 * 60 * 1000;
+      if (dTime === dayAfterPickup) return 'custom-day-disabled';
+    }
     
     return 'custom-day-normal';
   };
 
   return (
     <>
-      {/* Mobile Fade Background (controlled via CSS media query) */}
-      {!isDatePromptOpen && (
-        <div className="mobile-pill-fade" />
-      )}
-
-      {/* Persistent Floating Pill Button to open date selector */}
-      {!isDatePromptOpen && (
-        <button 
-          className="date-pill-btn"
-          onClick={() => setIsDatePromptOpen(true)}
-        >
-          <Calendar size={18} className="pill-icon" />
-          <span>
-            {hasDates 
-              ? `Pickup: ${formatDate(startDate)} · Return: ${formatDate(endDate)}` 
-              : 'Select rental dates to view prices'}
-          </span>
-        </button>
-      )}
 
       {/* Date Selection Modal / Banner */}
       {isDatePromptOpen && (
@@ -188,26 +191,26 @@ const DateSelectionBanner: React.FC = () => {
                 <div className="date-cards-row">
                   <div className="date-card-group" onClick={() => setShowMobileCalendar(true)} style={{cursor: 'pointer'}}>
                     <label>PICKUP DATE <span className="req">*</span></label>
-                    <div className="date-card">
-                      <div className="card-icon">
-                        <Calendar size={20} />
+                    <div className="date-field">
+                      <div className="field-icon">
+                        <Calendar size={16} />
                       </div>
-                      <div className="card-details">
-                        <span className="card-date">{formatDate(startDate)}</span>
-                        <span className="card-weekday">{formatWeekday(startDate)}</span>
+                      <div className="field-details">
+                        <span className="field-date">{startDate ? formatDate(startDate) : 'Select date'}</span>
+                        <span className="field-weekday">{formatWeekday(startDate)}</span>
                       </div>
                     </div>
                   </div>
                   
                   <div className="date-card-group" onClick={() => setShowMobileCalendar(true)} style={{cursor: 'pointer'}}>
                     <label>RETURN DATE <span className="req">*</span></label>
-                    <div className="date-card">
-                      <div className="card-icon">
-                        <Calendar size={20} />
+                    <div className="date-field">
+                      <div className="field-icon">
+                        <Calendar size={16} />
                       </div>
-                      <div className="card-details">
-                        <span className="card-date">{formatDate(endDate)}</span>
-                        <span className="card-weekday">{formatWeekday(endDate)}</span>
+                      <div className="field-details">
+                        <span className="field-date">{endDate ? formatDate(endDate) : 'Select date'}</span>
+                        <span className="field-weekday">{formatWeekday(endDate)}</span>
                       </div>
                     </div>
                   </div>

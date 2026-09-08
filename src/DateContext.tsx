@@ -23,11 +23,9 @@ export const DateProvider = ({ children }: { children: ReactNode }) => {
     const end = new Date(endDate);
     if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
        const diffTime = end.getTime() - start.getTime();
-       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-       totalDays = Math.max(1, diffDays - 1);
+       const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+       totalDays = Math.max(1, diffDays - 1); // exclude return day from chargeable count
     }
-  } else if (startDate && !endDate) {
-    totalDays = 1;
   }
 
   return (

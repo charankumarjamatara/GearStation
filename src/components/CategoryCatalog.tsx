@@ -71,7 +71,7 @@ import img_i360_power from '../assets/photography category/insta 360/I 360 X4 Po
 import img_action_4_vlog from '../assets/photography category/dji action cameras/dji Action 4 vlogging combo.png';
 import img_cannon_1300 from '../assets/photography category/dji action cameras/Cannon 1300 D.jpg';
 import React, { useState } from 'react';
-import { ArrowLeft, ShoppingBag, ShieldCheck, Check, Search, ChevronRight, Plus } from 'lucide-react';
+import { ShoppingBag, ShieldCheck, Check, Search, Plus, MapPin, Calendar, Edit2 } from 'lucide-react';
 import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
 import './CategoryCatalog.css';
@@ -540,7 +540,7 @@ interface CategoryCatalogProps {
   onBack: () => void;
 }
 
-const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onBack }) => {
+const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
   const [activeCategory, setActiveCategory] = useState('');
   
   React.useEffect(() => {
@@ -567,6 +567,11 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onBack }
   const parsePrice = (priceStr: string) => {
     const numeric = priceStr.replace(/[^0-9]/g, '');
     return parseInt(numeric, 10);
+  };
+
+  const formatDate = (dateString: string) => {
+    if (!dateString) return 'Select Date';
+    return new Date(dateString).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
   };
 
   let displayedProducts: ProductItem[] = [];
@@ -655,41 +660,45 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onBack }
 
   return (
     <div className="category-catalog-page">
-      {/* Top Banner Navigation */}
-      <div className="catalog-header-bar">
-        <div className="container header-bar-content">
-          <button className="back-btn" onClick={onBack}>
-            <ArrowLeft size={18} /> BACK TO HOME
-          </button>
-
-          <div className="breadcrumb">
-            <span onClick={onBack} className="crumb-link">Home</span>
-            <ChevronRight size={14} />
-            <span className="crumb-active">{currentCategoryInfo?.title || 'All'}</span>
-          </div>
-        </div>
-      </div>
-
       {/* Main Catalog Layout */}
       <div className="container catalog-layout">
+        {/* Global Utility Bar */}
+        <div className="utility-bar">
+          <div className="utility-location">
+            <MapPin size={18} className="utility-icon" />
+            <span>Hyderabad</span>
+          </div>
+          
+          <div className="utility-dates">
+            <div className="utility-date">
+              <Calendar size={18} className="utility-icon" />
+              <span>Pickup: {startDate ? formatDate(startDate) : 'Select Date'}</span>
+            </div>
+            <div className="utility-date-divider"></div>
+            <div className="utility-date">
+              <Calendar size={18} className="utility-icon" />
+              <span>Return: {endDate ? formatDate(endDate) : 'Select Date'}</span>
+            </div>
+            
+            <button className="utility-edit-btn" onClick={() => setIsDatePromptOpen(true)}>
+              <Edit2 size={16} /> Edit
+            </button>
+          </div>
+          
+          <div className="utility-search">
+            <Search size={18} className="search-icon" />
+            <input
+              type="text"
+              placeholder={`Search ${currentCategoryInfo?.title || 'gear'}...`}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
         
         {/* CONTENT */}
         <div className="catalog-content">
           
-          <div className="catalog-toolbar">
-            <div className="search-box">
-              <Search size={18} className="search-icon" />
-              <input
-                type="text"
-                placeholder={`Search ${currentCategoryInfo?.title || 'rentals'}...`}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            <div className="catalog-filter-info">
-              <span>Showing <strong>{filteredProducts.length}</strong> items</span>
-            </div>
-          </div>
 
           {/* TOP CATEGORIES */}
           <div className="catalog-sidebar">
