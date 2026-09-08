@@ -74,10 +74,7 @@ import img_i360_power from '../assets/photography category/insta 360/I 360 X4 Po
 import img_action_4_vlog from '../assets/photography category/dji action cameras/dji Action 4 vlogging combo.png';
 import img_cannon_1300 from '../assets/photography category/dji action cameras/Cannon 1300 D.jpg';
 import React, { useState } from 'react';
-import { 
-  ArrowLeft, ShoppingBag, ShieldCheck, Check, Search, ChevronRight, Plus,
-  LayoutGrid, Camera, Video, Aperture, Mic, Briefcase, Shield
-} from 'lucide-react';
+import { ArrowLeft, ShoppingBag, ShieldCheck, Check, Search, ChevronRight, Plus } from 'lucide-react';
 import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
 import './CategoryCatalog.css';
