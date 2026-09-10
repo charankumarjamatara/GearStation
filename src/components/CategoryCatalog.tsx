@@ -71,7 +71,7 @@ import img_i360_power from '../assets/photography category/insta 360/I 360 X4 Po
 import img_action_4_vlog from '../assets/photography category/dji action cameras/dji Action 4 vlogging combo.png';
 import img_cannon_1300 from '../assets/photography category/dji action cameras/Cannon 1300 D.jpg';
 import React, { useState } from 'react';
-import { ShoppingBag, ShieldCheck, Check, Search, Plus, MapPin, Calendar, Edit2 } from 'lucide-react';
+import { ShoppingBag, ShieldCheck, Check, Plus, MapPin, Calendar, Edit2 } from 'lucide-react';
 import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
 import './CategoryCatalog.css';
@@ -556,7 +556,6 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
   const parentCategory = ['outdoor', 'outdoor-all', 'trekking-gear', 'riding-gear', 'camping-gear', 'winter-jackets', 'riding-luggage', 'backpacks'].includes(activeCategory || categoryKey) ? 'outdoor' : 'photography';
   const sidebarCategories = parentCategory === 'outdoor' ? OUTDOOR_CATEGORIES : PHOTOGRAPHY_CATEGORIES;
 
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [isBooked, setIsBooked] = useState(false);
 
@@ -575,42 +574,25 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
   };
 
   let displayedProducts: ProductItem[] = [];
-  let currentCategoryInfo = null;
 
   if (activeCategory === 'photography-all') {
     PHOTOGRAPHY_CATEGORIES.slice(1).forEach(catInfo => {
       const cat = CATEGORY_DATA[catInfo.key];
       if (cat) displayedProducts = [...displayedProducts, ...cat.products];
     });
-    currentCategoryInfo = {
-      title: 'All Photography Rentals',
-      subtitle: 'Browse all our available photography gear.',
-      icon: '📸'
-    };
   } else if (activeCategory === 'outdoor-all') {
     OUTDOOR_CATEGORIES.slice(1).forEach(catInfo => {
       const cat = CATEGORY_DATA[catInfo.key];
       if (cat) displayedProducts = [...displayedProducts, ...cat.products];
     });
-    currentCategoryInfo = {
-      title: 'All Outdoor Rentals',
-      subtitle: 'Browse all our available outdoor gear.',
-      icon: '⛺'
-    };
   } else if (activeCategory === 'all') {
     Object.values(CATEGORY_DATA).forEach(cat => {
       displayedProducts = [...displayedProducts, ...cat.products];
     });
-    currentCategoryInfo = {
-      title: 'All Rentals',
-      subtitle: 'Browse all our available gear and equipment.',
-      icon: '✨'
-    };
   } else {
     const cat = CATEGORY_DATA[activeCategory];
     if (cat) {
       displayedProducts = cat.products;
-      currentCategoryInfo = cat;
     }
   }
 
@@ -618,10 +600,7 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
   // Deduplicate displayedProducts by ID for All views
   displayedProducts = Array.from(new Map(displayedProducts.map(p => [p.id, p])).values());
 
-  const filteredProducts = displayedProducts.filter(p =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredProducts = displayedProducts;
 
   const handleCategoryChange = (key: string) => {
     setActiveCategory(key);
@@ -685,15 +664,6 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
             </button>
           </div>
           
-          <div className="utility-search">
-            <Search size={18} className="search-icon" />
-            <input
-              type="text"
-              placeholder={`Search ${currentCategoryInfo?.title || 'gear'}...`}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
         </div>
         
         {/* CONTENT */}
