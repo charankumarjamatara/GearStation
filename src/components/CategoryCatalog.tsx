@@ -57,8 +57,7 @@ import img_photo_61 from '../assets/photography category/Action camera mounts/Go
 import img_photo_62 from '../assets/photography category/Action camera mounts/Handle Bar mount for GPH 11 12 13.jpg';
 import img_photo_63 from '../assets/photography category/Action camera mounts/Suction cup mount.jpg';
 import img_photo_64 from '../assets/photography category/Action camera mounts/3 way mount for dji.png';
-import img_photo_65 from '../assets/photography category/Action camera mounts/Snorkling Grip.jpg';
-import img_photo_66 from '../assets/photography category/Action camera mounts/3 in 1 Motorcycle Mount.jpg';
+import img_photo_66 from '../assets/photography category/Action camera mounts/3 in 1 Motorcycle Mount.png';
 import img_photo_67 from '../assets/photography category/Action camera mounts/Selfie stick for GP.jpg';
 import img_photo_68 from '../assets/photography category/Action camera mounts/3M Flat & curve mount.jpg';
 import img_photo_71 from '../assets/photography category/Action camera mounts/I 360 X4 scuba suit.jpg';
@@ -71,7 +70,7 @@ import img_i360_power from '../assets/photography category/insta 360/I 360 X4 Po
 import img_action_4_vlog from '../assets/photography category/dji action cameras/dji Action 4 vlogging combo.png';
 import img_cannon_1300 from '../assets/photography category/dji action cameras/Cannon 1300 D.jpg';
 import React, { useState } from 'react';
-import { ShoppingBag, ShieldCheck, Check, Plus, MapPin, Calendar, Edit2 } from 'lucide-react';
+import { ShoppingBag, ShieldCheck, Check, Plus, MapPin, Calendar, Edit2, ChevronRight } from 'lucide-react';
 import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
 import './CategoryCatalog.css';
@@ -207,7 +206,6 @@ export const ALL_PRODUCTS: Record<string, ProductItem> = {
   'acm-10': { id: 'acm-10', name: 'Handle Bar mount for GPH 11 12 13', category: 'undefined', price: '₹185', extraDayPrice: '₹30/day', rating: 4.5, reviews: 0, imageUrl: img_photo_62, description: 'Handle Bar mount for GPH 11 12 13', specs: [] },
   'acm-11': { id: 'acm-11', name: 'Suction cup mount', category: 'undefined', price: '₹165', extraDayPrice: '₹15/day', rating: 4.5, reviews: 0, imageUrl: img_photo_63, description: 'Suction cup mount', specs: [] },
   'acm-12': { id: 'acm-12', name: '3 way mount for dji', category: 'undefined', price: '₹269', extraDayPrice: '₹15/day', rating: 4.5, reviews: 0, imageUrl: img_photo_64, description: '3 way mount for dji', specs: [] },
-  'acm-13': { id: 'acm-13', name: 'Snorkling Grip', category: 'undefined', price: '₹129', extraDayPrice: '₹10/day', rating: 4.5, reviews: 0, imageUrl: img_photo_65, description: 'Snorkling Grip', specs: [] },
   'acm-14': { id: 'acm-14', name: '3 in 1 Motorcycle Mount', category: 'undefined', price: '₹379', extraDayPrice: '₹20/day', rating: 4.5, reviews: 0, imageUrl: img_photo_66, description: '3 in 1 Motorcycle Mount', specs: [] },
   'acm-15': { id: 'acm-15', name: 'Selfie stick for GP', category: 'undefined', price: '₹419', extraDayPrice: '₹50/day', rating: 4.5, reviews: 0, imageUrl: img_photo_67, description: 'Selfie stick for GP', specs: [] },
   'acm-16': { id: 'acm-16', name: '3M Flat & curve mount', category: 'undefined', price: '₹49', extraDayPrice: '₹10/day', rating: 4.5, reviews: 0, imageUrl: img_photo_68, description: '3M Flat & curve mount', specs: [] },
@@ -396,7 +394,6 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
       ALL_PRODUCTS['acm-10'],
       ALL_PRODUCTS['acm-11'],
       ALL_PRODUCTS['acm-12'],
-      ALL_PRODUCTS['acm-13'],
       ALL_PRODUCTS['acm-14'],
       ALL_PRODUCTS['acm-15'],
       ALL_PRODUCTS['acm-16'],
@@ -559,7 +556,7 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [isBooked, setIsBooked] = useState(false);
 
-  const { startDate, endDate, totalDays, setIsDatePromptOpen } = useDateContext();
+  const { startDate, endDate, totalDays, setIsDatePromptOpen, setMobileCalendarMode } = useDateContext();
   const { addToCart } = useCartContext();
   const hasDates = startDate && endDate;
 
@@ -571,6 +568,11 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
   const formatDate = (dateString: string) => {
     if (!dateString) return 'Select Date';
     return new Date(dateString).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  };
+
+  const formatWeekday = (dateString: string) => {
+    if (!dateString) return '';
+    return new Date(dateString).toLocaleDateString('en-GB', { weekday: 'long' });
   };
 
   let displayedProducts: ProductItem[] = [];
@@ -641,8 +643,8 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
     <div className="category-catalog-page">
       {/* Main Catalog Layout */}
       <div className="container catalog-layout">
-        {/* Global Utility Bar */}
-        <div className="utility-bar">
+        {/* Global Utility Bar (Desktop) */}
+        <div className="utility-bar desktop-utility-bar">
           <div className="utility-location">
             <MapPin size={18} className="utility-icon" />
             <span>Hyderabad</span>
@@ -663,7 +665,51 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
               <Edit2 size={16} /> Edit
             </button>
           </div>
+        </div>
+
+        {/* Global Utility Bar (Mobile) */}
+        <div className="utility-bar-compact mobile-utility-bar">
+          <div className="utility-top-row">
+            <div className="utility-location">
+              <MapPin size={16} className="location-pin" />
+              <span>Hyderabad</span>
+            </div>
+            <button className="utility-edit-btn-compact" onClick={() => setIsDatePromptOpen(true)}>
+              <Edit2 size={14} /> Edit
+            </button>
+          </div>
           
+          <div className="utility-bottom-row">
+            <div className="utility-date-card" onClick={() => setMobileCalendarMode('pickup')}>
+              <div className="date-card-header">
+                <Calendar size={14} className="card-icon" />
+                <span>PICKUP</span>
+              </div>
+              <div className="date-card-value">
+                <div className="date-text">
+                  <span className="date-main">{startDate ? formatDate(startDate).split(' ').slice(0, 2).join(' ') : 'Select'}</span>
+                  <span className="date-year">{startDate ? formatDate(startDate).split(' ')[2] : 'Date'}</span>
+                  <span className="date-weekday">{startDate ? formatWeekday(startDate) : ''}</span>
+                </div>
+                <ChevronRight size={16} className="card-chevron" />
+              </div>
+            </div>
+            
+            <div className="utility-date-card" onClick={() => setMobileCalendarMode('return')}>
+              <div className="date-card-header">
+                <Calendar size={14} className="card-icon" />
+                <span>RETURN</span>
+              </div>
+              <div className="date-card-value">
+                <div className="date-text">
+                  <span className="date-main">{endDate ? formatDate(endDate).split(' ').slice(0, 2).join(' ') : 'Select'}</span>
+                  <span className="date-year">{endDate ? formatDate(endDate).split(' ')[2] : 'Date'}</span>
+                  <span className="date-weekday">{endDate ? formatWeekday(endDate) : ''}</span>
+                </div>
+                <ChevronRight size={16} className="card-chevron" />
+              </div>
+            </div>
+          </div>
         </div>
         
         {/* CONTENT */}

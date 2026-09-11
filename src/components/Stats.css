@@ -16,6 +16,7 @@
 .stat-item {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
   flex: 1;
   position: relative;
@@ -33,7 +34,7 @@
 }
 
 .stat-item:not(:first-child) {
-  padding-left: 32px;
+  /* Removed padding-left to keep perfectly centered */
 }
 
 .stat-icon-wrapper {
@@ -45,7 +46,8 @@
 
 .stat-text {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
 .stat-value {
@@ -73,6 +75,8 @@
   
   .stat-item {
     flex: 0 0 calc(33.333% - 32px);
+    justify-content: center;
+    text-align: center;
   }
   
   .stat-item:not(:last-child)::after {
@@ -91,21 +95,26 @@
   }
   
   .stat-item {
-    flex: 0 0 calc(50% - 8px);
+    flex: 0 0 calc(33.333% - 16px);
     justify-content: center;
     text-align: center;
+  }
+
+  .stat-text {
+    flex-direction: column;
+    gap: 4px;
   }
 }
 
 @media (max-width: 480px) {
   .stats-container {
-    gap: 20px 8px;
+    gap: 16px 8px;
     padding: 20px 10px;
   }
   .stat-item {
     flex: 0 0 calc(33.333% - 8px);
   }
   .stat-label {
-    font-size: 8px; /* Slightly smaller to fit 3 in a row */
+    font-size: 8px;
   }
 }

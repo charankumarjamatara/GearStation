@@ -47,7 +47,7 @@ const CartModal: React.FC = () => {
             <div className="cart-success-state">
               <CheckCircle size={64} className="success-icon" color="#10b981" />
               <h3>Request Received!</h3>
-              <p>We'll contact you shortly to confirm your booking.</p>
+              <p>Your booking request has been received successfully.<br />Our team will contact you shortly to confirm the details.</p>
               <button className="btn btn-primary" onClick={handleClose} style={{marginTop: '20px'}}>
                 Continue Browsing
               </button>

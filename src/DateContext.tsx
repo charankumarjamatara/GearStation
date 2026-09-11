@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 
+type CalendarMode = 'pickup' | 'return' | null;
+
 interface DateContextType {
   startDate: string;
   endDate: string;
@@ -7,6 +9,8 @@ interface DateContextType {
   setEndDate: (date: string) => void;
   isDatePromptOpen: boolean;
   setIsDatePromptOpen: (isOpen: boolean) => void;
+  mobileCalendarMode: CalendarMode;
+  setMobileCalendarMode: (mode: CalendarMode) => void;
   totalDays: number;
 }
 
@@ -16,6 +20,7 @@ export const DateProvider = ({ children }: { children: ReactNode }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [isDatePromptOpen, setIsDatePromptOpen] = useState(false);
+  const [mobileCalendarMode, setMobileCalendarMode] = useState<CalendarMode>(null);
 
   let totalDays = 0;
   if (startDate && endDate) {
@@ -29,7 +34,12 @@ export const DateProvider = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <DateContext.Provider value={{ startDate, endDate, setStartDate, setEndDate, isDatePromptOpen, setIsDatePromptOpen, totalDays }}>
+    <DateContext.Provider value={{ 
+      startDate, endDate, setStartDate, setEndDate, 
+      isDatePromptOpen, setIsDatePromptOpen, 
+      mobileCalendarMode, setMobileCalendarMode,
+      totalDays 
+    }}>
       {children}
     </DateContext.Provider>
   );

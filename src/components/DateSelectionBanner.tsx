@@ -9,10 +9,10 @@ import './DateSelectionBanner.css';
 const DateSelectionBanner: React.FC = () => {
   const { 
     startDate, endDate, setStartDate, setEndDate, 
-    isDatePromptOpen, setIsDatePromptOpen, totalDays
+    isDatePromptOpen, setIsDatePromptOpen, totalDays,
+    mobileCalendarMode, setMobileCalendarMode
   } = useDateContext();
   const bannerRef = useRef<HTMLDivElement>(null);
-  const [showMobileCalendar, setShowMobileCalendar] = useState(false);
 
   // Close when clicking outside
   useEffect(() => {
@@ -51,14 +51,47 @@ const DateSelectionBanner: React.FC = () => {
   const handleDateChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
 
+    if (mobileCalendarMode === 'pickup') {
+      const chosenDate = start;
+      if (chosenDate) {
+        const offset = chosenDate.getTimezoneOffset() * 60000;
+        const startStr = new Date(chosenDate.getTime() - offset).toISOString().split('T')[0];
+        setStartDate(startStr);
+        if (endDate) {
+          const [ey, em, ed] = endDate.split('-').map(Number);
+          const endLocal = new Date(ey, em - 1, ed);
+          const minReturn = new Date(chosenDate.getFullYear(), chosenDate.getMonth(), chosenDate.getDate() + 2);
+          if (endLocal < minReturn) setEndDate('');
+        }
+        setMobileCalendarMode(null);
+      }
+      return;
+    }
+
+    if (mobileCalendarMode === 'return') {
+      // When a user selects a date in selectsRange, if start and end are already set,
+      // react-datepicker fires with the new date as 'start' and 'end' as null.
+      // Or if end was null, it fires with 'start' and 'end'.
+      const chosenDate = end || start; 
+      if (chosenDate && startDate) {
+        const [sy, sm, sd] = startDate.split('-').map(Number);
+        const minReturn = new Date(sy, sm - 1, sd + 2);
+        if (chosenDate >= minReturn) {
+          const offset = chosenDate.getTimezoneOffset() * 60000;
+          setEndDate(new Date(chosenDate.getTime() - offset).toISOString().split('T')[0]);
+          setMobileCalendarMode(null);
+        }
+      }
+      return;
+    }
+
+    // Desktop logic
     if (start) {
-      // Offset fix for rendering localized date string YYYY-MM-DD
       const offset = start.getTimezoneOffset() * 60000;
       const startStr = new Date(start.getTime() - offset).toISOString().split('T')[0];
       setStartDate(startStr);
 
       if (!end) {
-        // Clear return if it is now inside the blocked window (< start + 2 days)
         if (endDate) {
           const [ey, em, ed] = endDate.split('-').map(Number);
           const endLocal = new Date(ey, em - 1, ed);
@@ -76,12 +109,10 @@ const DateSelectionBanner: React.FC = () => {
     if (end && start) {
       const normalizedStart = normalizeDate(start);
       const normalizedEnd = normalizeDate(end);
-      // Minimum return = pickup + 2 calendar days
       const minReturn = new Date(normalizedStart);
       minReturn.setDate(minReturn.getDate() + 2);
 
       if (normalizedEnd < minReturn) {
-        // Invalid selection — clear return date
         setEndDate('');
       } else {
         const offset = end.getTimezoneOffset() * 60000;
@@ -96,11 +127,8 @@ const DateSelectionBanner: React.FC = () => {
     decreaseMonth,
     increaseMonth,
   }: any) => {
-    const nextMonth = new Date(monthDate);
-    nextMonth.setMonth(nextMonth.getMonth() + 1);
-
     return (
-      <div className="custom-calendar-header">
+      <div className="custom-calendar-header mobile-centered-header">
         <button
           aria-label="Previous Month"
           className="calendar-nav-btn prev"
@@ -118,10 +146,9 @@ const DateSelectionBanner: React.FC = () => {
 
         <button
           aria-label="Next Month"
-          className="calendar-nav-btn next calendar-nav-btn-pill"
+          className="calendar-nav-btn next"
           onClick={increaseMonth}
         >
-          <span>{nextMonth.toLocaleString("en-US", { month: "long", year: "numeric" })}</span>
           <ChevronRight size={16} />
         </button>
       </div>
@@ -149,6 +176,12 @@ const DateSelectionBanner: React.FC = () => {
     if (endTime && dTime === endTime) return 'custom-day-selected custom-day-end';
     
     if (startTime && endTime && dTime > startTime && dTime < endTime) return 'custom-day-in-range';
+
+    // If in return mode on mobile, disable everything before pickup + 2
+    if (mobileCalendarMode === 'return' && startTime) {
+      const minReturn = startTime + 2 * 24 * 60 * 60 * 1000;
+      if (dTime < minReturn) return 'custom-day-disabled';
+    }
 
     // Block the day immediately after pickup — minimum rental is 2 days (pickup + 2)
     if (startTime && !endTime) {
@@ -185,13 +218,13 @@ const DateSelectionBanner: React.FC = () => {
               </button>
             </div>
             
-            <div className={`modal-body ${showMobileCalendar ? 'showing-calendar' : ''}`}>
+            <div className="modal-body">
               <div className="modal-left">
                 
                 <div className="date-cards-row">
-                  <div className="date-card-group" onClick={() => setShowMobileCalendar(true)} style={{cursor: 'pointer'}}>
+                  <div className="date-card-group" onClick={() => setMobileCalendarMode('pickup')} style={{cursor: 'pointer'}}>
                     <label>PICKUP DATE <span className="req">*</span></label>
-                    <div className="date-field">
+                    <div className={`date-field ${mobileCalendarMode === 'pickup' ? 'active' : ''}`}>
                       <div className="field-icon">
                         <Calendar size={16} />
                       </div>
@@ -199,12 +232,13 @@ const DateSelectionBanner: React.FC = () => {
                         <span className="field-date">{startDate ? formatDate(startDate) : 'Select date'}</span>
                         <span className="field-weekday">{formatWeekday(startDate)}</span>
                       </div>
+                      <ChevronRight size={16} className="field-chevron" />
                     </div>
                   </div>
                   
-                  <div className="date-card-group" onClick={() => setShowMobileCalendar(true)} style={{cursor: 'pointer'}}>
+                  <div className="date-card-group" onClick={() => setMobileCalendarMode('return')} style={{cursor: 'pointer'}}>
                     <label>RETURN DATE <span className="req">*</span></label>
-                    <div className="date-field">
+                    <div className={`date-field ${mobileCalendarMode === 'return' ? 'active' : ''}`}>
                       <div className="field-icon">
                         <Calendar size={16} />
                       </div>
@@ -212,6 +246,7 @@ const DateSelectionBanner: React.FC = () => {
                         <span className="field-date">{endDate ? formatDate(endDate) : 'Select date'}</span>
                         <span className="field-weekday">{formatWeekday(endDate)}</span>
                       </div>
+                      <ChevronRight size={16} className="field-chevron" />
                     </div>
                   </div>
                 </div>
@@ -254,7 +289,8 @@ const DateSelectionBanner: React.FC = () => {
                 </button>
               </div>
               
-              <div className="modal-right">
+              {/* Desktop Calendar - Hidden on mobile via CSS */}
+              <div className="modal-right desktop-only-calendar">
                 <div className="calendar-wrapper">
                   <DatePicker
                     selected={startDate ? new Date(startDate) : null}
@@ -268,11 +304,6 @@ const DateSelectionBanner: React.FC = () => {
                     renderCustomHeader={renderCustomHeader}
                     dayClassName={getDayClassName}
                   />
-                  {showMobileCalendar && (
-                    <button className="mobile-calendar-done-btn" onClick={() => setShowMobileCalendar(false)}>
-                      Done
-                    </button>
-                  )}
                 </div>
                 
                 <div className="calendar-legend">
@@ -294,6 +325,57 @@ const DateSelectionBanner: React.FC = () => {
                   </div>
                 </div>
               </div>
+            </div>
+            
+            
+          </div>
+        </div>
+      )}
+
+      {/* Centered Mobile Calendar Overlay */}
+      {mobileCalendarMode && (
+        <div className="mobile-calendar-fullscreen-overlay" onClick={(e) => {
+          if (e.target === e.currentTarget) setMobileCalendarMode(null);
+        }}>
+          <div className="mobile-calendar-centered-card">
+            <div className="mobile-calendar-top-header">
+              <div className="top-header-left">
+                <div className="header-icon">
+                  <Calendar size={20} />
+                </div>
+                <div>
+                  <h3>{mobileCalendarMode === 'pickup' ? 'Select Pickup Date' : 'Select Return Date'}</h3>
+                  <p className="subtitle">{mobileCalendarMode === 'pickup' ? 'Choose your pickup date' : 'Choose your return date'}</p>
+                </div>
+              </div>
+              <button className="close-btn" onClick={() => setMobileCalendarMode(null)}>
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className="mobile-calendar-body">
+              <DatePicker
+                selected={startDate ? new Date(startDate) : null}
+                onChange={handleDateChange}
+                startDate={startDate ? new Date(startDate) : null}
+                endDate={endDate ? new Date(endDate) : null}
+                minDate={new Date(new Date().setHours(0,0,0,0))}
+                selectsRange
+                inline
+                monthsShown={1}
+                renderCustomHeader={renderCustomHeader}
+                dayClassName={getDayClassName}
+              />
+              
+              {mobileCalendarMode === 'return' && (
+                <div className="mobile-return-rule-box">
+                  <Info size={18} className="return-rule-icon" />
+                  <div className="return-rule-text">
+                    <strong>Minimum 2 days required</strong>
+                    <p>Your return date must be at least 2 days after the pickup date.</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
