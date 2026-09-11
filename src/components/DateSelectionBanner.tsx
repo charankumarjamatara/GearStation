@@ -51,73 +51,54 @@ const DateSelectionBanner: React.FC = () => {
   const handleDateChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
 
-    if (mobileCalendarMode === 'pickup') {
-      const chosenDate = start;
-      if (chosenDate) {
-        const offset = chosenDate.getTimezoneOffset() * 60000;
-        const startStr = new Date(chosenDate.getTime() - offset).toISOString().split('T')[0];
+    // STATE 3: Both dates are selected
+    if (startDate && endDate) {
+      // The user clicked a new date when a full range was already selected.
+      // Completely reset the old range and start a new one.
+      const newPickupDate = start || end;
+      if (newPickupDate) {
+        const offset = newPickupDate.getTimezoneOffset() * 60000;
+        const startStr = new Date(newPickupDate.getTime() - offset).toISOString().split('T')[0];
         setStartDate(startStr);
-        if (endDate) {
-          const [ey, em, ed] = endDate.split('-').map(Number);
-          const endLocal = new Date(ey, em - 1, ed);
-          const minReturn = new Date(chosenDate.getFullYear(), chosenDate.getMonth(), chosenDate.getDate() + 2);
-          if (endLocal < minReturn) setEndDate('');
-        }
-        setMobileCalendarMode(null);
+        setEndDate(''); // Discard old return date
+        setMobileCalendarMode('return'); // Enter RETURN selection mode
       }
       return;
     }
 
-    if (mobileCalendarMode === 'return') {
-      // When a user selects a date in selectsRange, if start and end are already set,
-      // react-datepicker fires with the new date as 'start' and 'end' as null.
-      // Or if end was null, it fires with 'start' and 'end'.
-      const chosenDate = end || start; 
-      if (chosenDate && startDate) {
-        const [sy, sm, sd] = startDate.split('-').map(Number);
-        const minReturn = new Date(sy, sm - 1, sd + 2);
-        if (chosenDate >= minReturn) {
-          const offset = chosenDate.getTimezoneOffset() * 60000;
-          setEndDate(new Date(chosenDate.getTime() - offset).toISOString().split('T')[0]);
-          setMobileCalendarMode(null);
+    // STATE 2: Pickup selected, Return is null
+    if (startDate && !endDate) {
+      if (end) {
+        // User clicked a potentially valid return date
+        const normalizedStart = normalizeDate(start!);
+        const normalizedEnd = normalizeDate(end);
+        const minReturn = new Date(normalizedStart);
+        minReturn.setDate(minReturn.getDate() + 2);
+
+        if (normalizedEnd >= minReturn) {
+          const offset = end.getTimezoneOffset() * 60000;
+          setEndDate(new Date(end.getTime() - offset).toISOString().split('T')[0]);
+          setMobileCalendarMode(null); // Range complete, close mobile calendar
         }
+      } else if (start) {
+        // User clicked a date before the pickup date, resetting the pickup
+        const offset = start.getTimezoneOffset() * 60000;
+        const startStr = new Date(start.getTime() - offset).toISOString().split('T')[0];
+        setStartDate(startStr);
+        setMobileCalendarMode('return'); // Still in RETURN selection mode
       }
       return;
     }
 
-    // Desktop logic
-    if (start) {
-      const offset = start.getTimezoneOffset() * 60000;
-      const startStr = new Date(start.getTime() - offset).toISOString().split('T')[0];
-      setStartDate(startStr);
-
-      if (!end) {
-        if (endDate) {
-          const [ey, em, ed] = endDate.split('-').map(Number);
-          const endLocal = new Date(ey, em - 1, ed);
-          const minReturn = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 2);
-          if (endLocal < minReturn) setEndDate('');
-        } else {
-          setEndDate('');
-        }
+    // STATE 1: No dates
+    if (!startDate && !endDate) {
+      if (start) {
+        const offset = start.getTimezoneOffset() * 60000;
+        const startStr = new Date(start.getTime() - offset).toISOString().split('T')[0];
+        setStartDate(startStr);
+        setMobileCalendarMode('return'); // Enter RETURN selection mode
       }
-    } else {
-      setStartDate('');
-      setEndDate('');
-    }
-
-    if (end && start) {
-      const normalizedStart = normalizeDate(start);
-      const normalizedEnd = normalizeDate(end);
-      const minReturn = new Date(normalizedStart);
-      minReturn.setDate(minReturn.getDate() + 2);
-
-      if (normalizedEnd < minReturn) {
-        setEndDate('');
-      } else {
-        const offset = end.getTimezoneOffset() * 60000;
-        setEndDate(new Date(end.getTime() - offset).toISOString().split('T')[0]);
-      }
+      return;
     }
   };
 
