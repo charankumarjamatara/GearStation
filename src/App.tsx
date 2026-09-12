@@ -12,6 +12,7 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CategoryCatalog from './components/CategoryCatalog';
+import ProductDetailPage from './components/ProductDetailPage';
 import DateSelectionBanner from './components/DateSelectionBanner';
 import CartModal from './components/CartModal';
 import './App.css';
@@ -25,14 +26,28 @@ function App() {
     return null;
   });
 
+  const [selectedProduct, setSelectedProduct] = useState<string | null>(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#product/')) {
+      return hash.replace('#product/', '');
+    }
+    return null;
+  });
+
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
-      if (hash.startsWith('#category/')) {
+      if (hash.startsWith('#product/')) {
+        setSelectedProduct(hash.replace('#product/', ''));
+        setSelectedCategory(null);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash.startsWith('#category/')) {
         setSelectedCategory(hash.replace('#category/', ''));
+        setSelectedProduct(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (!hash) {
         setSelectedCategory(null);
+        setSelectedProduct(null);
       }
     };
 
@@ -42,12 +57,21 @@ function App() {
 
   const handleSelectCategory = (categoryKey: string) => {
     setSelectedCategory(categoryKey);
+    setSelectedProduct(null);
     window.location.hash = `category/${categoryKey}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSelectProduct = (productIdOrSlug: string) => {
+    setSelectedProduct(productIdOrSlug);
+    setSelectedCategory(null);
+    window.location.hash = `product/${productIdOrSlug}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToHome = () => {
     setSelectedCategory(null);
+    setSelectedProduct(null);
     window.location.hash = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -56,16 +80,29 @@ function App() {
     <div className="app">
       <Header />
       <main>
-        {selectedCategory ? (
-          <CategoryCatalog categoryKey={selectedCategory} onBack={handleBackToHome} />
+        {selectedProduct ? (
+          <ProductDetailPage 
+            productId={selectedProduct} 
+            onBack={handleBackToHome}
+            onSelectProduct={handleSelectProduct}
+          />
+        ) : selectedCategory ? (
+          <CategoryCatalog 
+            categoryKey={selectedCategory} 
+            onBack={handleBackToHome}
+            onSelectProduct={handleSelectProduct}
+          />
         ) : (
           <>
             <Hero />
             <Stats />
             <Categories onSelectCategory={handleSelectCategory} />
-            <PopularRentals />
+            <PopularRentals onSelectProduct={handleSelectProduct} />
             <HowItWorks />
-            <LatestAdditions onSelectCategory={handleSelectCategory} />
+            <LatestAdditions 
+              onSelectCategory={handleSelectCategory} 
+              onSelectProduct={handleSelectProduct}
+            />
             <About />
             <Contact />
             <Testimonials />

@@ -69,10 +69,11 @@ import img_action_4_gimbal from '../assets/photography category/dji action camer
 import img_i360_power from '../assets/photography category/insta 360/I 360 X4 Power combo.jpg';
 import img_action_4_vlog from '../assets/photography category/dji action cameras/dji Action 4 vlogging combo.png';
 import img_cannon_1300 from '../assets/photography category/dji action cameras/Cannon 1300 D.jpg';
-import React, { useState } from 'react';
-import { ShoppingBag, ShieldCheck, Check, Plus, MapPin, Calendar, Edit2, ChevronRight } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { ShoppingBag, ShieldCheck, Check, Plus } from 'lucide-react';
 import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
+import RentalDatePill from './RentalDatePill';
 import './CategoryCatalog.css';
 import img_tg_1 from '../assets/outdoor category/trekking gear/trekking gloves.jpg';
 import img_tg_2 from '../assets/outdoor category/trekking gear/50L Backpack.png';
@@ -535,9 +536,10 @@ const OUTDOOR_CATEGORIES: Array<{ key: string; label: string; icon?: React.React
 interface CategoryCatalogProps {
   categoryKey: string;
   onBack: () => void;
+  onSelectProduct?: (productIdOrSlug: string) => void;
 }
 
-const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
+const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelectProduct }) => {
   const [activeCategory, setActiveCategory] = useState('');
   
   React.useEffect(() => {
@@ -556,7 +558,7 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [isBooked, setIsBooked] = useState(false);
 
-  const { startDate, endDate, totalDays, setIsDatePromptOpen, setMobileCalendarMode } = useDateContext();
+  const { startDate, endDate, totalDays, setIsDatePromptOpen } = useDateContext();
   const { addToCart } = useCartContext();
   const hasDates = startDate && endDate;
 
@@ -565,42 +567,32 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
     return parseInt(numeric, 10);
   };
 
-  const formatDate = (dateString: string) => {
-    if (!dateString) return 'Select Date';
-    return new Date(dateString).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-  };
+  const displayedProducts = useMemo(() => {
+    let products: ProductItem[] = [];
 
-  const formatWeekday = (dateString: string) => {
-    if (!dateString) return '';
-    return new Date(dateString).toLocaleDateString('en-GB', { weekday: 'long' });
-  };
-
-  let displayedProducts: ProductItem[] = [];
-
-  if (activeCategory === 'photography-all') {
-    PHOTOGRAPHY_CATEGORIES.slice(1).forEach(catInfo => {
-      const cat = CATEGORY_DATA[catInfo.key];
-      if (cat) displayedProducts = [...displayedProducts, ...cat.products];
-    });
-  } else if (activeCategory === 'outdoor-all') {
-    OUTDOOR_CATEGORIES.slice(1).forEach(catInfo => {
-      const cat = CATEGORY_DATA[catInfo.key];
-      if (cat) displayedProducts = [...displayedProducts, ...cat.products];
-    });
-  } else if (activeCategory === 'all') {
-    Object.values(CATEGORY_DATA).forEach(cat => {
-      displayedProducts = [...displayedProducts, ...cat.products];
-    });
-  } else {
-    const cat = CATEGORY_DATA[activeCategory];
-    if (cat) {
-      displayedProducts = cat.products;
+    if (activeCategory === 'photography-all') {
+      PHOTOGRAPHY_CATEGORIES.slice(1).forEach(catInfo => {
+        const cat = CATEGORY_DATA[catInfo.key];
+        if (cat) products = [...products, ...cat.products];
+      });
+    } else if (activeCategory === 'outdoor-all') {
+      OUTDOOR_CATEGORIES.slice(1).forEach(catInfo => {
+        const cat = CATEGORY_DATA[catInfo.key];
+        if (cat) products = [...products, ...cat.products];
+      });
+    } else if (activeCategory === 'all') {
+      Object.values(CATEGORY_DATA).forEach(cat => {
+        products = [...products, ...cat.products];
+      });
+    } else {
+      const cat = CATEGORY_DATA[activeCategory];
+      if (cat) {
+        products = cat.products;
+      }
     }
-  }
 
-  
-  // Deduplicate displayedProducts by ID for All views
-  displayedProducts = Array.from(new Map(displayedProducts.map(p => [p.id, p])).values());
+    return Array.from(new Map(products.map(p => [p.id, p])).values());
+  }, [activeCategory]);
 
   const filteredProducts = displayedProducts;
 
@@ -608,6 +600,16 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
     setActiveCategory(key);
     window.location.hash = `category/${key}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleProductClick = (product: ProductItem) => {
+    const target = (product as any).slug || product.id;
+    if (onSelectProduct) {
+      onSelectProduct(target);
+    } else {
+      window.location.hash = `product/${target}`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleBookNow = (product: ProductItem) => {
@@ -643,74 +645,8 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
     <div className="category-catalog-page">
       {/* Main Catalog Layout */}
       <div className="container catalog-layout">
-        {/* Global Utility Bar (Desktop) */}
-        <div className="utility-bar desktop-utility-bar">
-          <div className="utility-location">
-            <MapPin size={18} className="utility-icon" />
-            <span>Hyderabad</span>
-          </div>
-          
-          <div className="utility-dates">
-            <div className="utility-date">
-              <Calendar size={18} className="utility-icon" />
-              <span>Pickup: {startDate ? formatDate(startDate) : 'Select Date'}</span>
-            </div>
-            <div className="utility-date-divider"></div>
-            <div className="utility-date">
-              <Calendar size={18} className="utility-icon" />
-              <span>Return: {endDate ? formatDate(endDate) : 'Select Date'}</span>
-            </div>
-            
-            <button className="utility-edit-btn" onClick={() => setIsDatePromptOpen(true)}>
-              <Edit2 size={16} /> Edit
-            </button>
-          </div>
-        </div>
-
-        {/* Global Utility Bar (Mobile) */}
-        <div className="utility-bar-compact mobile-utility-bar">
-          <div className="utility-top-row">
-            <div className="utility-location">
-              <MapPin size={16} className="location-pin" />
-              <span>Hyderabad</span>
-            </div>
-            <button className="utility-edit-btn-compact" onClick={() => setIsDatePromptOpen(true)}>
-              <Edit2 size={14} /> Edit
-            </button>
-          </div>
-          
-          <div className="utility-bottom-row">
-            <div className="utility-date-card" onClick={() => setMobileCalendarMode('pickup')}>
-              <div className="date-card-header">
-                <Calendar size={14} className="card-icon" />
-                <span>PICKUP</span>
-              </div>
-              <div className="date-card-value">
-                <div className="date-text">
-                  <span className="date-main">{startDate ? formatDate(startDate).split(' ').slice(0, 2).join(' ') : 'Select'}</span>
-                  <span className="date-year">{startDate ? formatDate(startDate).split(' ')[2] : 'Date'}</span>
-                  <span className="date-weekday">{startDate ? formatWeekday(startDate) : ''}</span>
-                </div>
-                <ChevronRight size={16} className="card-chevron" />
-              </div>
-            </div>
-            
-            <div className="utility-date-card" onClick={() => setMobileCalendarMode('return')}>
-              <div className="date-card-header">
-                <Calendar size={14} className="card-icon" />
-                <span>RETURN</span>
-              </div>
-              <div className="date-card-value">
-                <div className="date-text">
-                  <span className="date-main">{endDate ? formatDate(endDate).split(' ').slice(0, 2).join(' ') : 'Select'}</span>
-                  <span className="date-year">{endDate ? formatDate(endDate).split(' ')[2] : 'Date'}</span>
-                  <span className="date-weekday">{endDate ? formatWeekday(endDate) : ''}</span>
-                </div>
-                <ChevronRight size={16} className="card-chevron" />
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Global Persistent Rental Date Pill */}
+        <RentalDatePill locationName="Hyderabad" />
         
         {/* CONTENT */}
         <div className="catalog-content">
@@ -746,7 +682,12 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
           ) : (
             <div className="ecommerce-grid">
               {filteredProducts.map((product) => (
-                <div key={product.id} className="ecom-card">
+                <div 
+                  key={product.id} 
+                  className="ecom-card"
+                  onClick={() => handleProductClick(product)}
+                  style={{ cursor: 'pointer' }}
+                >
                   
                   <div className="card-image-wrap">
                     <img src={product.imageUrl} alt={product.name} className="card-image" />
@@ -782,14 +723,20 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey }) => {
                       <button 
                         className="btn rent-prompt-btn"
                         style={{ background: 'transparent', border: '1px solid #0f172a', color: '#0f172a', borderRadius: '50%', width: '40px', height: '40px', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end', marginTop: '10px' }}
-                        onClick={() => handleBookNow(product)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleBookNow(product);
+                        }}
                       >
                         <Plus size={20} />
                       </button>
                     ) : (
                       <button 
                         className="btn btn-primary rent-now-btn"
-                        onClick={() => handleBookNow(product)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleBookNow(product);
+                        }}
                       >
                         <ShoppingBag size={16} /> ADD TO BAG
                       </button>

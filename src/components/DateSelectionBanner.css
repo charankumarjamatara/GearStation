@@ -12,440 +12,812 @@
   --pale-green: #EFFAF2;
 }
 
+/* Modal Overlay (Shared Backdrop) */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(23, 32, 51, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(15, 23, 42, 0.45);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeInBackdrop 0.22s ease-out forwards;
+  will-change: opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-/* ==================================================
-   MODAL CONTAINER
-================================================== */
-.modal-container {
-  background: #ffffff;
-  border-radius: 16px;
-  width: 95%;
-  max-width: 800px;
-  box-shadow: 0 16px 32px rgba(23, 32, 51, 0.15);
-  animation: modalEnter 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Inter', system-ui, sans-serif;
-  padding: 20px 24px;
+.modal-overlay.is-closing {
+  animation: fadeOutBackdrop 0.22s cubic-bezier(0.32, 0, 0.67, 0) forwards;
+  pointer-events: none;
 }
 
-@keyframes modalEnter {
+@keyframes fadeInBackdrop {
   from {
     opacity: 0;
-    transform: translateY(15px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOutBackdrop {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
 /* ==================================================
-   HEADER
+   DESKTOP MODAL (> 768px)
 ================================================== */
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 14px;
-}
+@media (min-width: 769px) {
+  .mobile-bottom-sheet {
+    display: none !important;
+  }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+  .modal-container.desktop-modal-view {
+    background: #ffffff;
+    border-radius: 16px;
+    width: 95%;
+    max-width: 800px;
+    box-shadow: 0 16px 32px rgba(23, 32, 51, 0.15);
+    animation: modalEnter 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', system-ui, sans-serif;
+    padding: 20px 24px;
+    will-change: transform, opacity;
+  }
 
-.header-icon {
-  background: var(--light-red);
-  color: var(--red);
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .modal-container.desktop-modal-view.modal-closing {
+    animation: modalExit 0.18s ease-out forwards;
+    pointer-events: none;
+  }
 
-.header-titles h3 {
-  margin: 0 0 2px 0;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--navy);
-  letter-spacing: -0.5px;
-}
+  @keyframes modalEnter {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
 
-.header-titles p {
-  margin: 0;
-  font-size: 13px;
-  color: var(--secondary-text);
-  font-weight: 400;
-}
+  @keyframes modalExit {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(10px) scale(0.97);
+    }
+  }
 
-.close-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: var(--secondary-text);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
 
-.close-btn:hover {
-  background: var(--soft-gray);
-  color: var(--navy);
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header-icon {
+    background: var(--light-red);
+    color: var(--red);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-titles h3 {
+    margin: 0 0 2px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+  }
+
+  .header-titles p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--secondary-text);
+    font-weight: 400;
+  }
+
+  .close-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--secondary-text);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .close-btn:hover {
+    background: var(--soft-gray);
+    color: var(--navy);
+  }
+
+  /* Split Layout */
+  .modal-body {
+    display: flex;
+    gap: 24px;
+    position: relative;
+    align-items: flex-start;
+  }
+
+  .modal-left {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--border-gray);
+    padding-left: 24px;
+  }
+
+  /* Date Cards */
+  .date-cards-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .date-card-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .date-card-group label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--navy);
+    text-transform: uppercase;
+  }
+
+  .date-card-group .req {
+    color: var(--red);
+  }
+
+  .date-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    background: #ffffff;
+    min-height: 48px;
+    transition: border-color 0.15s;
+  }
+
+  .date-field:hover {
+    border-color: var(--red);
+  }
+
+  .field-icon {
+    color: var(--red);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .field-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .field-date {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+
+  .field-weekday {
+    font-size: 11px;
+    color: var(--secondary-text);
+    font-weight: 400;
+  }
+
+  .field-chevron {
+    color: var(--secondary-text);
+    margin-left: auto;
+  }
+
+  /* Delivery info */
+  .delivery-info-card {
+    background: var(--pale-green);
+    border: 1px solid rgba(33, 138, 74, 0.15);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .delivery-icon {
+    color: var(--green);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .delivery-text p {
+    margin: 0 0 4px 0;
+    font-size: 12px;
+    color: var(--green);
+    line-height: 1.4;
+  }
+
+  .delivery-text p:last-child {
+    margin: 0;
+    color: var(--secondary-text);
+    font-size: 11px;
+  }
+
+  .delivery-text strong {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* Rental Period */
+  .rental-period-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .rental-period-section label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .rental-summary-card {
+    background: #ffffff;
+    border: 1px solid var(--border-gray);
+    border-radius: 10px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .days-col {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .days-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .days-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--secondary-text);
+  }
+
+  .divider {
+    width: 1px;
+    height: 28px;
+    background: var(--border-gray);
+  }
+
+  .period-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .period-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--secondary-text);
+    text-transform: uppercase;
+  }
+
+  .period-dates {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .period-icon {
+    color: var(--red);
+  }
+
+  /* Continue Button */
+  .continue-btn {
+    background: var(--red);
+    color: white;
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+
+  .continue-btn:hover:not(:disabled) {
+    background: #B91C1C;
+  }
+
+  .continue-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Calendar in Desktop Modal */
+  .calendar-wrapper {
+    background: #FCFAFA;
+    border: 1px solid #F1F5F9;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+    width: 100%;
+  }
+
+  .calendar-legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0 0 0;
+    margin-top: 10px;
+    border-top: 1px solid #E2E8F0;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--secondary-text);
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+  }
+
+  .dot-pickup, .dot-return {
+    background-color: var(--red);
+  }
+
+  .dot-period {
+    background-color: var(--light-red);
+  }
+
+  .dot-unavailable {
+    background-color: #E2E8F0;
+  }
 }
 
 /* ==================================================
-   MAIN LAYOUT (40/60 Split)
+   MOBILE BOTTOM SHEET (<= 768px)
 ================================================== */
-.modal-body {
-  display: flex;
-  gap: 24px;
-  position: relative;
-  align-items: flex-start;
-}
+@media (max-width: 768px) {
+  .desktop-modal-view {
+    display: none !important;
+  }
 
-.modal-left {
-  flex: 0 0 40%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+  .modal-overlay {
+    align-items: flex-end; /* Align bottom sheet to bottom of viewport */
+    padding: 0;
+  }
 
-.modal-right {
-  flex: 1; /* 60% implicitly */
-  display: flex;
-  flex-direction: column;
-  border-left: 1px solid var(--border-gray);
-  padding-left: 24px;
+  .mobile-bottom-sheet {
+    background: #ffffff;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    box-shadow: 0 -8px 32px rgba(15, 23, 42, 0.16);
+    padding: 10px 18px 24px 18px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    max-height: 92vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    animation: slideUpBottomSheet 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .mobile-bottom-sheet.sheet-closing {
+    animation: slideDownBottomSheet 0.22s cubic-bezier(0.32, 0, 0.67, 0) forwards;
+    pointer-events: none;
+  }
+
+  @keyframes slideUpBottomSheet {
+    from {
+      transform: translate3d(0, 100%, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes slideDownBottomSheet {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+
+  /* Drag Handle */
+  .sheet-drag-handle-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 0 10px 0;
+  }
+
+  .sheet-drag-handle {
+    width: 38px;
+    height: 4px;
+    border-radius: 99px;
+    background-color: #CBD5E1;
+  }
+
+  /* Header */
+  .sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .sheet-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sheet-header-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background-color: var(--light-red);
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .sheet-header-titles h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+
+  .sheet-header-titles p {
+    margin: 2px 0 0 0;
+    font-size: 13px;
+    color: var(--secondary-text);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .sheet-close-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #64748B;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s, color 0.15s;
+    padding: 0;
+  }
+
+  .sheet-close-btn:active,
+  .sheet-close-btn:hover {
+    background-color: #F1F5F9;
+    color: var(--navy);
+  }
+
+  /* Pickup & Return Cards Row */
+  .sheet-date-cards-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+    width: 100%;
+  }
+
+  .sheet-date-card-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .sheet-field-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .sheet-field-label .req {
+    color: var(--red);
+    margin-left: 2px;
+  }
+
+  .sheet-date-box {
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 52px;
+    min-height: 52px;
+    max-height: 52px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
+  }
+
+  .sheet-field-icon-wrapper {
+    color: var(--red);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sheet-field-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    gap: 1px;
+  }
+
+  .sheet-field-date {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 18px;
+    height: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+
+  .sheet-field-weekday {
+    font-size: 11.5px;
+    color: var(--secondary-text);
+    font-weight: 500;
+    line-height: 14px;
+    height: 14px;
+    display: block;
+  }
+
+  /* Calendar Section */
+  .sheet-calendar-wrapper {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    width: 100%;
+    min-height: 280px;
+    box-sizing: border-box;
+  }
+
+  /* Delivery Information Card */
+  .sheet-delivery-info-card {
+    background-color: var(--pale-green);
+    border: 1px solid rgba(33, 138, 74, 0.2);
+    border-radius: 12px;
+    padding: 10px 13px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+    min-height: 52px;
+    box-sizing: border-box;
+  }
+
+  .sheet-delivery-icon-wrapper {
+    color: var(--green);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sheet-delivery-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sheet-delivery-text .delivery-p-title {
+    margin: 0 0 2px 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #166534;
+    line-height: 1.35;
+  }
+
+  .sheet-delivery-text .delivery-p-sub {
+    margin: 0;
+    font-size: 11.5px;
+    color: #475569;
+    line-height: 1.35;
+  }
+
+  /* Rental Summary Section */
+  .sheet-rental-summary-card {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 10px;
+    height: 48px;
+    min-height: 48px;
+    max-height: 48px;
+    box-sizing: border-box;
+  }
+
+  .sheet-days-col {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .sheet-days-num {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .sheet-days-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--secondary-text);
+  }
+
+  .sheet-summary-divider {
+    width: 1px;
+    height: 22px;
+    background: #CBD5E1;
+  }
+
+  .sheet-period-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sheet-period-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--secondary-text);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .sheet-period-dates {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .sheet-period-icon {
+    color: var(--red);
+  }
+
+  /* Continue Button */
+  .sheet-continue-btn {
+    background-color: var(--red);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    width: 100%;
+    height: 48px;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    margin-top: 12px;
+    box-shadow: 0 4px 12px rgba(216, 50, 50, 0.22);
+    transition: background-color 0.15s, transform 0.1s;
+    flex-shrink: 0;
+  }
+
+  .sheet-continue-btn:hover:not(:disabled) {
+    background-color: #B91C1C;
+  }
+
+  .sheet-continue-btn:active:not(:disabled) {
+    transform: scale(0.99);
+  }
+
+  .sheet-continue-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 }
 
 /* ==================================================
-   LEFT PANE: DATE CARDS
+   GLOBAL REACT-DATEPICKER OVERRIDES & CLEAN STYLES
 ================================================== */
-.date-cards-row {
-  display: flex;
-  gap: 12px;
-}
-
-.date-card-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.date-card-group label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--navy);
-  text-transform: uppercase;
-}
-
-.date-card-group .req {
-  color: var(--red);
-}
-
-.date-card {
-  background: #ffffff;
-  border: 1px solid var(--border-gray);
-  border-radius: 10px;
-  padding: 10px 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-  height: 60px;
-}
-
-.card-icon {
-  background: var(--light-red);
-  color: var(--red);
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.card-details {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.card-date {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--navy);
-}
-
-.card-weekday {
-  font-size: 11px;
-  color: var(--secondary-text);
-}
-
-/* Compact date field — replaces heavy date-card */
-.date-field {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  border: 1px solid var(--border-gray);
-  border-radius: 8px;
-  background: #ffffff;
-  min-height: 48px;
-  transition: border-color 0.15s;
-}
-
-.date-field:hover {
-  border-color: var(--red);
-}
-
-.field-icon {
-  color: var(--red);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-}
-
-.field-details {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.field-date {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--navy);
-  line-height: 1.2;
-}
-
-.field-weekday {
-  font-size: 11px;
-  color: var(--secondary-text);
-  font-weight: 400;
-}
-
-/* ==================================================
-   LEFT PANE: DELIVERY INFO
-================================================== */
-.delivery-info-card {
-  background: var(--pale-green);
-  border: 1px solid rgba(33, 138, 74, 0.15);
-  border-radius: 10px;
-  padding: 12px;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-
-.delivery-icon {
-  color: var(--green);
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.delivery-text p {
-  margin: 0 0 4px 0;
-  font-size: 12px;
-  color: var(--green);
-  line-height: 1.4;
-}
-
-.delivery-text p:last-child {
-  margin: 0;
-  color: var(--secondary-text);
-  font-size: 11px;
-}
-
-.delivery-text strong {
-  color: var(--green);
-  font-weight: 600;
-}
-
-/* ==================================================
-   LEFT PANE: RENTAL PERIOD
-================================================== */
-.rental-period-section {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.rental-period-section label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--navy);
-}
-
-.rental-summary-card {
-  background: #ffffff;
-  border: 1px solid var(--border-gray);
-  border-radius: 10px;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.days-col {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-
-.days-num {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--red);
-  line-height: 1;
-}
-
-.days-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--secondary-text);
-}
-
-.divider {
-  width: 1px;
-  height: 28px;
-  background: var(--border-gray);
-}
-
-.period-col {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.period-label {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--secondary-text);
-  text-transform: uppercase;
-}
-
-.period-dates {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--navy);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.period-icon {
-  color: var(--red);
-}
-
-/* ==================================================
-   LEFT PANE: SAVINGS CARD
-================================================== */
-.savings-card {
-  background: var(--navy);
-  border-radius: 10px;
-  padding: 12px 16px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-.savings-icon {
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #FDE047;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 12px;
-  border-radius: 6px;
-  flex-shrink: 0;
-}
-
-.savings-content h4 {
-  margin: 0 0 4px 0;
-  color: #FDE047;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.savings-content p {
-  margin: 0;
-  font-size: 11px;
-  color: #cbd5e1;
-  line-height: 1.5;
-}
-
-/* ==================================================
-   LEFT PANE: CONTINUE BUTTON
-================================================== */
-.continue-btn {
-  background: var(--red);
-  color: white;
-  width: 100%;
-  height: 48px;
-  border: none;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.2s;
-  margin-top: 4px;
-}
-
-.continue-btn:hover:not(:disabled) {
-  background: #B91C1C;
-}
-
-.continue-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ==================================================
-   RIGHT PANE: CALENDAR WRAPPER
-================================================== */
-.calendar-wrapper {
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ==================================================
-   CALENDAR COMPONENT (FRESH REBUILD)
-================================================== */
-
-/* Strip default react-datepicker container styles */
 .react-datepicker {
   border: none !important;
   font-family: inherit !important;
@@ -454,32 +826,14 @@
   width: 100% !important;
   background-color: transparent !important;
   padding: 0;
-  border-radius: 0;
   box-shadow: none;
 }
 
-/* Calendar Card Container */
-.calendar-wrapper {
-  background: #FCFAFA;
-  border: 1px solid #F1F5F9;
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
-  width: 100%;
-  max-width: none;
-  margin: 0 auto;
-}
-
-/* Month Container */
 .react-datepicker__month-container {
   width: 100% !important;
   float: none !important;
   display: flex;
   flex-direction: column;
-}
-
-.mobile-calendar-done-btn {
-  display: none;
 }
 
 .react-datepicker__header {
@@ -488,598 +842,200 @@
   padding: 0 !important;
 }
 
-/* Month Header */
+/* Custom Calendar Header (Month + Arrows) */
 .custom-calendar-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 12px;
-  gap: 16px;
+  padding: 0 4px;
+  box-sizing: border-box;
 }
 
 .calendar-nav-btn {
-  background: #ffffff;
-  border: 1px solid #E2E8F0; /* Subtle border */
-  color: var(--navy);
-  width: 36px;
-  height: 36px;
-  border-radius: 8px; /* Rounded rectangle */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.02); /* Subtle background/shadow */
+  background: #ffffff !important;
+  border: 1px solid #E2E8F0 !important;
+  color: var(--navy) !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+  transition: background-color 0.15s, border-color 0.15s !important;
+  padding: 0 !important;
 }
 
 .calendar-nav-btn:hover:not(:disabled) {
-  background: #F1F5F9;
-  border-color: #CBD5E1;
-}
-
-.calendar-nav-btn-pill {
-  width: auto;
-  padding: 0 12px;
-  background: #FFF0F0 !important;
-  border-color: transparent !important;
-  border-radius: 20px;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--navy);
-  height: 30px;
-}
-
-.calendar-nav-btn-pill:hover:not(:disabled) {
-  background: #FFE4E4 !important;
+  background: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
 }
 
 .calendar-month-name {
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: 700;
   color: var(--navy);
+  letter-spacing: -0.2px;
 }
 
 /* Weekday Row */
 .react-datepicker__day-names {
   display: grid !important;
   grid-template-columns: repeat(7, 1fr) !important;
-  gap: 4px !important;
-  margin-bottom: 6px !important;
+  gap: 2px !important;
+  margin-bottom: 8px !important;
 }
 
 .react-datepicker__day-name {
-  color: #64748B !important; /* Muted gray/navy */
+  color: #64748B !important;
   font-weight: 600 !important;
-  font-size: 11px !important;
-  text-transform: uppercase;
+  font-size: 12px !important;
+  text-transform: capitalize !important;
   margin: 0 !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100% !important; /* align with expanded grid cells */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 24px !important;
 }
 
-/* Date Grid */
+/* Month & Week Grid */
 .react-datepicker__month {
   margin: 0 !important;
   display: flex;
   flex-direction: column;
+  gap: 3px;
 }
 
 .react-datepicker__week {
   display: grid !important;
   grid-template-columns: repeat(7, 1fr) !important;
-  gap: 4px !important;
-  margin-bottom: 4px !important;
+  gap: 2px !important;
+  margin: 0 !important;
 }
 
-/* ==================================================
-   DATE CELL - BASE GEOMETRY
-================================================== */
+/* Date Cell Base Geometry */
 .react-datepicker__day {
   width: 100% !important;
-  height: 40px !important; /* Reduced vertical padding. Width > Height for rectangular tiles */
+  height: 38px !important;
   margin: 0 !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  font-size: 15px !important; /* smaller date font size */
+  font-size: 14.5px !important;
   font-weight: 600 !important;
-  border-radius: 10px !important; /* rounded rectangular tiles */
-  border: 1px solid transparent !important;
-  transition: all 0.2s ease;
+  border-radius: 8px !important;
+  border: none !important;
+  transition: background-color 0.12s, color 0.12s;
   cursor: pointer;
   box-shadow: none !important;
+  will-change: background-color, color;
 }
 
-/* Strip default pseudo-elements */
 .react-datepicker__day::after,
 .react-datepicker__day::before {
   display: none !important;
 }
 
-/* Handle outside month gracefully */
+/* Outside month days */
 .react-datepicker__day--outside-month {
   visibility: visible !important;
-  color: #D1D5DB !important; /* muted gray text */
-  background-color: transparent !important; /* subtle tile backgrounds handled via custom classes */
+  color: #CBD5E1 !important;
+  background-color: transparent !important;
 }
-
-/* ==================================================
-   DATE CELL - MUTUALLY EXCLUSIVE VISUAL STATES
-================================================== */
 
 /* 1. Disabled (Past Dates) */
 .react-datepicker__day.custom-day-disabled {
-  color: #CBD5E1 !important; /* Muted gray */
+  color: #CBD5E1 !important;
   background-color: transparent !important;
   cursor: not-allowed !important;
   pointer-events: none !important;
 }
 
-/* 2. Selected (Pickup & Return) */
-.react-datepicker__day.custom-day-selected {
+/* 2. Selected Endpoints (Pickup & Return) - Solid Red with White Text */
+.react-datepicker__day.custom-day-selected,
+.react-datepicker__day.custom-day-start,
+.react-datepicker__day.custom-day-end,
+.react-datepicker__day.react-datepicker__day--range-start,
+.react-datepicker__day.react-datepicker__day--range-end,
+.react-datepicker__day.react-datepicker__day--selecting-range-start,
+.react-datepicker__day.react-datepicker__day--selecting-range-end,
+.react-datepicker .react-datepicker__day--selected {
   background-color: var(--red) !important;
+  background: var(--red) !important;
   color: #ffffff !important;
-  border-color: transparent !important;
-  box-shadow: 0 4px 10px rgba(216, 50, 50, 0.2) !important; /* Subtle glow for premium feel */
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 6px rgba(216, 50, 50, 0.3) !important;
 }
 
-/* 3. In-Range (Strictly between endpoints) */
-.react-datepicker__day.custom-day-in-range {
-  background-color: var(--light-red) !important; /* Very light/pale red */
-  color: var(--navy) !important; /* Dark number */
-  border-color: transparent !important;
+/* 3. In-Range - Soft Light Red with Dark Text */
+.react-datepicker__day.custom-day-in-range,
+.react-datepicker__day.react-datepicker__day--in-range:not(.react-datepicker__day--range-start):not(.react-datepicker__day--range-end):not(.custom-day-selected),
+.react-datepicker__day.react-datepicker__day--in-selecting-range:not(.react-datepicker__day--selecting-range-start):not(.react-datepicker__day--selecting-range-end):not(.custom-day-selected) {
+  background-color: var(--light-red) !important;
+  background: var(--light-red) !important;
+  color: var(--navy) !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
 }
 
-/* 4. Normal (Unselected, current/future dates) */
+.react-datepicker__day.custom-day-start,
+.react-datepicker__day.react-datepicker__day--range-start {
+  border-top-left-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+}
+
+.react-datepicker__day.custom-day-end,
+.react-datepicker__day.react-datepicker__day--range-end {
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+}
+
+/* 4. Normal Unselected */
 .react-datepicker__day.custom-day-normal {
-  background-color: #ffffff !important; /* Light/white background */
-  color: var(--navy) !important; /* Dark navy number */
+  background-color: transparent !important;
+  color: var(--navy) !important;
 }
 
-/* Hover effects (only applied to normal/unselected) */
 .react-datepicker__day.custom-day-normal:hover {
   background-color: #F1F5F9 !important;
 }
 
-/* ==================================================
-   SAFETY: OVERRIDE DEFAULT LIBRARY STATES
-================================================== */
-/* This prevents react-datepicker's internal classes from fighting our clean logic */
-.react-datepicker__day--selected:not(.custom-day-selected),
-.react-datepicker__day--keyboard-selected:not(.custom-day-selected):not(.custom-day-in-range),
-.react-datepicker__day--in-selecting-range:not(.custom-day-in-range),
-.react-datepicker__day--in-range:not(.custom-day-in-range),
-.react-datepicker__day--range-start:not(.custom-day-selected),
-.react-datepicker__day--range-end:not(.custom-day-selected) {
+/* Reset default unwanted background on today / keyboard-selected */
+.react-datepicker__day.react-datepicker__day--keyboard-selected:not(.custom-day-selected):not(.react-datepicker__day--range-start):not(.react-datepicker__day--range-end):not(.custom-day-in-range):not(.react-datepicker__day--in-range),
+.react-datepicker__day.react-datepicker__day--today:not(.custom-day-selected):not(.react-datepicker__day--range-start):not(.react-datepicker__day--range-end):not(.custom-day-in-range):not(.react-datepicker__day--in-range) {
   background-color: transparent !important;
-  color: inherit !important;
+  background: transparent !important;
+  color: var(--navy) !important;
+  font-weight: 600 !important;
   box-shadow: none !important;
 }
 
-/* Ensure our explicit states always win */
-.react-datepicker .react-datepicker__day.custom-day-selected {
-  background-color: var(--red) !important;
-  color: #ffffff !important;
-  border-color: transparent !important;
-  box-shadow: 0 4px 10px rgba(216, 50, 50, 0.2) !important;
-}
-
-.react-datepicker .react-datepicker__day.custom-day-in-range {
-  background-color: var(--light-red) !important;
-  color: var(--navy) !important;
-  border-color: transparent !important;
-}
-
-/* ==================================================
-   CALENDAR LEGEND
-================================================== */
-.calendar-legend {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  padding: 10px 0 0 0;
-  margin-top: 10px;
-  border-top: 1px solid #E2E8F0;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--secondary-text);
-}
-
-.legend-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 4px; /* Small rectangular indicators */
-}
-
-.dot-pickup, .dot-return {
-  background-color: var(--red);
-}
-
-.dot-period {
-  background-color: var(--light-red);
-}
-
-.dot-unavailable {
-  background-color: #E2E8F0;
-}
-
-/* ==================================================
-   RIGHT PANE: HELP CARD
-================================================== */
-.help-card {
-  background: #FFF9F5;
-  border: 1px solid #FFE4E6;
-  border-radius: 10px;
-  padding: 12px 16px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  margin-top: 16px;
-}
-
-.help-icon {
-  color: #EA580C;
-  flex-shrink: 0;
-}
-
-.help-content h4 {
-  margin: 0 0 2px 0;
-  font-size: 12px;
-  font-weight: 600;
-  color: #9A3412;
-}
-
-.help-content p {
-  margin: 0;
-  font-size: 11px;
-  color: #C2410C;
-  line-height: 1.5;
-}
-
-/* ==================================================
-   PILL BUTTON & FADE
-================================================== */
-.mobile-pill-fade {
-  display: none;
-}
-
-.date-pill-btn {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--navy);
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.25);
-  z-index: 999;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-  max-width: 90vw;
-}
-
-.date-pill-btn:hover {
-  background-color: #0f172a;
-  transform: translateX(-50%) translateY(-2px);
-  box-shadow: 0 12px 28px rgba(23, 32, 51, 0.3);
-}
-
-.date-pill-btn:active {
-  transform: translateX(-50%) translateY(0px);
-  box-shadow: 0 4px 12px rgba(23, 32, 51, 0.2);
-}
-
-.pill-icon {
-  flex-shrink: 0;
-}
-
-/* ==================================================
-   RESPONSIVENESS
-================================================== */
-@media (max-width: 950px) {
-  .modal-container {
-    width: 95%;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 20px 16px;
-  }
-  
-  .modal-body {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .modal-left, .modal-right {
-    display: contents;
+/* Small Screens (320px - 360px) Adaptations */
+@media (max-width: 360px) {
+  .mobile-bottom-sheet {
+    padding: 8px 12px 20px 12px;
   }
 
-  .desktop-only-calendar {
-    display: none !important;
-  }
-
-  .date-cards-row { 
-    order: 1; 
-  }
-  .delivery-info-card { order: 2; }
-  .rental-period-section { order: 3; }
-  .savings-card { order: 4; }
-  .continue-btn { 
-    order: 12; 
-    margin-top: 8px;
-  }
-
-  /* ==================================================
-     DATE FIELDS POLISH
-  ================================================== */
-  .date-field {
-    justify-content: flex-start;
-    padding: 10px 12px;
-    height: 56px;
-  }
-
-  .field-details {
-    flex: 1;
-  }
-
-  .field-chevron {
-    color: var(--secondary-text);
-    margin-left: auto;
-  }
-
-  .date-field.active {
-    border-color: var(--red);
-    background-color: var(--light-red);
-  }
-
-  /* ==================================================
-     CENTERED MOBILE CALENDAR (FULLSCREEN BACKDROP)
-  ================================================== */
-  .mobile-calendar-fullscreen-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(23, 32, 51, 0.6);
-    backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    padding: 16px;
-    animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  .mobile-calendar-centered-card {
-    background: #ffffff;
-    width: 100%;
-    max-width: 420px; /* user requested max 420px */
-    border-radius: 20px;
-    padding: 24px 20px;
-    box-shadow: 0 16px 40px rgba(23, 32, 51, 0.2);
-    display: flex;
-    flex-direction: column;
-    animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  @keyframes scaleUp {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-
-  .mobile-calendar-top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-  }
-
-  .mobile-calendar-top-header h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--navy);
-  }
-
-  /* ==================================================
-     CALENDAR GRID POLISH
-  ================================================== */
-  .mobile-calendar-body {
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  /* Keep it totally clean, no extra borders or wrappers inside */
-  .mobile-calendar-body .calendar-wrapper {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-  }
-
-  .custom-calendar-header.mobile-centered-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    padding: 0 8px;
-  }
-
-  .calendar-month-name {
+  .sheet-header-titles h3 {
     font-size: 16px;
-    font-weight: 700;
-    color: var(--navy);
   }
 
-  .calendar-nav-btn {
-    background: #ffffff !important;
-    border: 1px solid #E2E8F0 !important;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
-    color: var(--navy) !important;
-    width: 36px !important;
-    height: 36px !important;
-    border-radius: 8px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .sheet-field-date {
+    font-size: 12px;
   }
 
-  .calendar-nav-btn:hover:not(:disabled) {
-    background: #F1F5F9 !important;
+  .sheet-date-box {
+    padding: 8px 8px;
+    gap: 6px;
   }
 
-  /* Remove borders and lines */
-  .react-datepicker__header {
-    border-bottom: none !important;
-    background: transparent !important;
-    padding: 0 !important;
-  }
-
-  .react-datepicker {
-    font-family: inherit !important;
-    border: none !important;
-    background: transparent !important;
-  }
-
-  .calendar-legend {
-    display: none !important;
-  }
-
-  /* Weekday Header Mobile */
-  .react-datepicker__day-names {
-    gap: 4px !important;
-    margin-bottom: 12px !important;
-  }
-  
-  .react-datepicker__day-name {
-    font-size: 12px !important;
-    color: var(--secondary-text) !important;
-    font-weight: 600 !important;
-  }
-
-  /* Date Grid Mobile */
-  .react-datepicker__month {
-    margin: 0 !important;
-  }
-
-  .react-datepicker__week {
-    gap: 4px !important;
-    margin-bottom: 4px !important;
-  }
-  
   .react-datepicker__day {
-    height: 42px !important; /* Larger comfortable touch target */
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    border-radius: 8px !important; 
-    border: none !important; /* Clean white surface */
-    background: transparent !important;
+    height: 34px !important;
+    font-size: 13.5px !important;
   }
-  
-  .react-datepicker__day.custom-day-normal {
-    background-color: transparent !important;
-  }
-
-  /* Remove library default selections to be safe */
-  .react-datepicker__day--selected,
-  .react-datepicker__day--keyboard-selected,
-  .react-datepicker__day--in-selecting-range,
-  .react-datepicker__day--in-range {
-    background-color: transparent;
-    color: inherit;
-  }
-}
-
-@media (max-width: 768px) {
-  .mobile-pill-fade {
-    display: block;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-    pointer-events: none;
-    z-index: 998;
-  }
-
-  .date-pill-btn {
-    font-size: 13px;
-    padding: 10px 18px;
-  }
-}
-
-/* ==================================================
-   RETURN RULE INFO BOX
-================================================== */
-.mobile-return-rule-box {
-  display: flex;
-  background-color: #E8F5E9; /* Light green tint */
-  border-radius: 12px;
-  padding: 16px;
-  margin-top: 16px;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.return-rule-icon {
-  color: #2E7D32;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.return-rule-text {
-  color: #1B5E20;
-}
-
-.return-rule-text strong {
-  display: block;
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.return-rule-text p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.4;
-  opacity: 0.9;
-}
-
-.top-header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.top-header-left .header-icon {
-  width: 40px;
-  height: 40px;
-  background: var(--light-red);
-  color: var(--red);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.top-header-left .subtitle {
-  margin: 4px 0 0 0;
-  font-size: 13px;
-  color: var(--secondary-text);
 }

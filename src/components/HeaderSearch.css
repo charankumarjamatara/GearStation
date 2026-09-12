@@ -1,29 +1,58 @@
 /* ==================================================
-   HEADER SEARCH — Premium pill-shaped global search
+   HEADER SEARCH — Clean Search Icon + Smooth Expand
 ================================================== */
+
 .header-search-wrapper {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-/* The search bar pill */
+/* Minimal Search Trigger Icon (Default State) */
+.search-trigger-btn {
+  background: none;
+  border: none;
+  color: var(--color-dark);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+}
+
+.search-trigger-btn:hover {
+  color: var(--color-primary);
+  background-color: rgba(211, 29, 29, 0.06);
+  transform: scale(1.05);
+}
+
+.search-trigger-btn:active {
+  transform: scale(0.95);
+}
+
+/* Expanded Search Input Pill */
 .header-search-bar {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: #ffffff;
   border: 1.5px solid #e2e8f0;
-  border-radius: 22px;
-  padding: 0 14px;
-  width: 260px;
-  height: 38px;
-  transition: border-color 0.2s ease;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  border-radius: 24px;
+  padding: 0 10px 0 12px;
+  width: 210px;
+  height: 40px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+  animation: expandSearch 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .header-search-bar:focus-within {
-  border-color: #D83232;
+  border-color: #d31d1d;
+  box-shadow: 0 4px 20px rgba(211, 29, 29, 0.12);
 }
 
 .search-bar-icon {
@@ -33,7 +62,7 @@
 }
 
 .header-search-bar:focus-within .search-bar-icon {
-  color: #D83232;
+  color: #d31d1d;
 }
 
 .header-search-input {
@@ -41,23 +70,25 @@
   background: transparent;
   outline: none;
   font-family: inherit;
-  font-size: 13px;
-  color: #1e293b;
+  font-size: 13.5px;
+  color: #0f172a;
   width: 100%;
   min-width: 0;
+  font-weight: 500;
 }
 
 .header-search-input::placeholder {
   color: #94a3b8;
   font-size: 13px;
+  font-weight: 400;
 }
 
-.search-clear-btn {
+.search-close-btn {
   background: #f1f5f9;
   border: none;
   padding: 0;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   color: #64748b;
   display: flex;
@@ -68,13 +99,13 @@
   transition: all 0.15s ease;
 }
 
-.search-clear-btn:hover {
-  color: #1e293b;
+.search-close-btn:hover {
+  color: #0f172a;
   background: #e2e8f0;
 }
 
 /* ==================================================
-   DROPDOWN
+   DROPDOWN RESULTS
 ================================================== */
 .header-search-dropdown {
   position: absolute;
@@ -83,11 +114,11 @@
   width: 360px;
   background: #ffffff;
   border: 1px solid #e8edf3;
-  border-radius: 14px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.14);
   z-index: 1000;
   overflow: hidden;
-  animation: dropdownFade 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: dropdownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Header: "MATCHING GEAR (12)  View all results ->" */
@@ -95,15 +126,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 14px;
+  padding: 10px 16px;
   border-bottom: 1px solid #f1f5f9;
   background: #f8fafc;
 }
 
 .search-match-label {
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
-  color: #94a3b8;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.6px;
 }
@@ -113,8 +144,8 @@
   border: none;
   cursor: pointer;
   font-size: 12px;
-  font-weight: 600;
-  color: #D83232;
+  font-weight: 700;
+  color: #d31d1d;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -123,7 +154,7 @@
 }
 
 .search-view-all-btn:hover {
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 /* Result rows list */
@@ -138,8 +169,8 @@
 .search-result-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
+  gap: 12px;
+  padding: 10px 16px;
   border-bottom: 1px solid #f1f5f9;
   cursor: pointer;
   transition: background-color 0.12s ease;
@@ -150,7 +181,7 @@
 }
 
 .search-result-row:hover {
-  background-color: #fafafa;
+  background-color: #fafbfd;
 }
 
 /* Thumbnail */
@@ -159,9 +190,10 @@
   height: 44px;
   object-fit: contain;
   border-radius: 8px;
-  background: #f8fafc;
+  background: #ffffff;
   border: 1px solid #e8edf3;
   flex-shrink: 0;
+  padding: 2px;
 }
 
 /* Name + price */
@@ -175,8 +207,8 @@
 
 .search-result-name {
   font-size: 13px;
-  font-weight: 600;
-  color: #1e293b;
+  font-weight: 700;
+  color: #0f172a;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -184,8 +216,8 @@
 
 .search-result-price {
   font-size: 12px;
-  color: #D83232;
-  font-weight: 600;
+  color: #d31d1d;
+  font-weight: 700;
 }
 
 .search-result-price.price-blurred {
@@ -198,13 +230,13 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: #D83232;
+  background: #d31d1d;
   color: #ffffff;
   border: none;
-  padding: 5px 11px;
+  padding: 5px 12px;
   border-radius: 8px;
   font-size: 11.5px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: background-color 0.15s ease;
   flex-shrink: 0;
@@ -212,20 +244,20 @@
 }
 
 .search-add-btn:hover {
-  background: #b91c1c;
+  background: #b51515;
 }
 
-/* Footer: "Search for 'query' in all gear ->" */
+/* Footer row */
 .search-footer-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 14px;
+  padding: 11px 16px;
   border-top: 1px solid #f1f5f9;
   cursor: pointer;
   font-size: 13px;
   color: #475569;
-  background: #fcfcfc;
+  background: #f8fafc;
   transition: background-color 0.12s ease;
 }
 
@@ -239,7 +271,7 @@
 }
 
 .search-footer-arrow {
-  color: #D83232;
+  color: #d31d1d;
   margin-left: auto;
   flex-shrink: 0;
 }
@@ -265,7 +297,22 @@
   color: #64748b;
 }
 
-/* Animation */
+/* ==================================================
+   ANIMATIONS
+================================================== */
+@keyframes expandSearch {
+  from {
+    opacity: 0;
+    width: 40px;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    width: 210px;
+    transform: scale(1);
+  }
+}
+
 @keyframes dropdownFade {
   from {
     opacity: 0;
@@ -282,20 +329,20 @@
 ================================================== */
 @media (max-width: 1024px) {
   .header-search-bar {
-    width: 240px;
+    width: 190px;
   }
   .header-search-dropdown {
-    width: 320px;
+    width: 290px;
   }
 }
 
 @media (max-width: 768px) {
   .header-search-bar {
-    width: 180px;
+    width: 175px;
     height: 38px;
   }
   .header-search-dropdown {
-    width: 290px;
+    width: 275px;
     right: 0;
   }
 }

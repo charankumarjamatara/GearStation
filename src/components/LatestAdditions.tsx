@@ -3,26 +3,28 @@ import './LatestAdditions.css';
 
 interface LatestAdditionsProps {
   onSelectCategory?: (categoryKey: string) => void;
+  onSelectProduct?: (productIdOrSlug: string) => void;
 }
 
 import backpackImg from '../assets/outdoor category/back packs/50L_Backpack carousel.png';
 
-const LatestAdditions: React.FC<LatestAdditionsProps> = ({ onSelectCategory }) => {
+const LatestAdditions: React.FC<LatestAdditionsProps> = ({ onSelectProduct }) => {
   const baseProducts = [
-    { name: 'Insta360', categoryKey: 'insta360-cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_1.png` },
-    { name: 'DJI Action 4', categoryKey: 'action-cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_2.png` },
-    { name: 'DJI Action 5', categoryKey: 'action-cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_3.png` },
-    { name: 'Riding Jacket', categoryKey: 'riding-gear', imageUrl: `${import.meta.env.BASE_URL}new_prod_4.png` },
-    { name: '50L Backpack', categoryKey: 'backpacks', imageUrl: backpackImg }
+    { name: 'Insta360 X4', productSlug: 'insta360-x4-action-camera', categoryKey: 'insta360-cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_1.png` },
+    { name: 'DJI Action 4', productSlug: 'dji-action-4', categoryKey: 'action-cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_2.png` },
+    { name: 'DJI Action 5', productSlug: 'dji-action-5', categoryKey: 'action-cameras', imageUrl: `${import.meta.env.BASE_URL}new_prod_3.png` },
+    { name: 'Riding Jacket', productSlug: 'men-riding-jacket-level-2', categoryKey: 'riding-gear', imageUrl: `${import.meta.env.BASE_URL}new_prod_4.png` },
+    { name: '50L Backpack', productSlug: '50l-trekking-backpack', categoryKey: 'backpacks', imageUrl: backpackImg }
   ];
   const products = [...baseProducts, ...baseProducts];
 
-  const handleClick = (e: React.MouseEvent, categoryKey: string) => {
+  const handleClick = (e: React.MouseEvent, product: typeof baseProducts[0]) => {
     e.preventDefault();
-    if (onSelectCategory) {
-      onSelectCategory(categoryKey);
+    if (onSelectProduct) {
+      onSelectProduct(product.productSlug);
     } else {
-      window.location.hash = `category/${categoryKey}`;
+      window.location.hash = `product/${product.productSlug}`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -44,8 +46,8 @@ const LatestAdditions: React.FC<LatestAdditionsProps> = ({ onSelectCategory }) =
                   style={{ transform: `rotate(${angle}deg)` }}
                 >
                   <a 
-                    href={`#category/${product.categoryKey}`}
-                    onClick={(e) => handleClick(e, product.categoryKey)}
+                    href={`#product/${product.productSlug}`}
+                    onClick={(e) => handleClick(e, product)}
                     className="floating-item-inner"
                     style={{ '--init-angle': `${angle}deg` } as React.CSSProperties}
                   >

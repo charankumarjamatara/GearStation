@@ -2,24 +2,31 @@ import React from 'react';
 import { Heart, Plus, ShoppingBag } from 'lucide-react';
 import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
+import { getProductBySlugOrId } from '../data/products';
 import './ProductCard.css';
 
 interface ProductCardProps {
+  id?: string;
+  slug?: string;
   name: string;
   price: string;
   imageUrl?: string;
   buttonText?: string;
   showHeart?: boolean;
   extraDayPrice?: string;
+  onSelectProduct?: (productIdOrSlug: string) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ 
+  id,
+  slug,
   name, 
   price, 
   imageUrl, 
   buttonText = "ADD TO BAG",
   showHeart = false,
-  extraDayPrice
+  extraDayPrice,
+  onSelectProduct
 }) => {
   const { startDate, endDate, totalDays, setIsDatePromptOpen } = useDateContext();
   const { addToCart } = useCartContext();
@@ -34,12 +41,24 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const extraP = extraDayPrice ? parsePrice(extraDayPrice) : baseP;
   const totalPrice = baseP + (totalDays > 1 ? extraP * (totalDays - 1) : 0);
 
-  const handleActionClick = () => {
+  const targetIdentifier = slug || id || getProductBySlugOrId(name)?.slug || getProductBySlugOrId(name)?.id || name.toLowerCase().replace(/\s+/g, '-');
+
+  const handleCardClick = () => {
+    if (onSelectProduct) {
+      onSelectProduct(targetIdentifier);
+    } else {
+      window.location.hash = `product/${targetIdentifier}`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleActionClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!hasDates) {
       setIsDatePromptOpen(true);
     } else {
       addToCart({
-        productId: name.replace(/\s+/g, '-').toLowerCase(),
+        productId: id || targetIdentifier,
         name,
         price,
         imageUrl: imageUrl || '',
@@ -52,10 +71,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <div className="product-card">
+    <div className="product-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
       <div className="product-image-container">
         {showHeart && (
-          <button className="heart-btn" aria-label="Add to wishlist">
+          <button className="heart-btn" aria-label="Add to wishlist" onClick={(e) => e.stopPropagation()}>
             <Heart size={16} />
           </button>
         )}
