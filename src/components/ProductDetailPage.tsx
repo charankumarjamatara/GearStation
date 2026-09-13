@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { ShoppingBag, ShoppingCart, Check, ArrowRight, Truck, ShieldCheck, RotateCcw } from 'lucide-react';
+import { ShoppingBag, Check, ArrowRight, Truck, ShieldCheck, RotateCcw } from 'lucide-react';
 import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
 import { 
@@ -23,10 +23,12 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   onBack,
   onSelectProduct
 }) => {
-  const { startDate, endDate, totalDays } = useDateContext();
+  const { startDate, endDate, totalDays, setIsDatePromptOpen } = useDateContext();
   const { addToCart } = useCartContext();
   const [isAdded, setIsAdded] = useState(false);
   const [addedAddOnId, setAddedAddOnId] = useState<string | null>(null);
+
+  const hasDates = Boolean(startDate && endDate);
 
   const product = useMemo(() => {
     return getProductBySlugOrId(productId);
@@ -54,14 +56,19 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
   const basePrice = product ? parsePrice(product.price) : 0;
   const extraPrice = product?.extraDayPrice ? parsePrice(product.extraDayPrice) : basePrice;
-  const daysCount = totalDays > 0 ? totalDays : 1;
-  const totalPrice = basePrice + (daysCount > 1 ? extraPrice * (daysCount - 1) : 0);
+  const totalPrice = basePrice + (totalDays > 1 ? extraPrice * (totalDays - 1) : 0);
 
   const handleAddToCart = (itemToAdd: ProductItem = product!) => {
     if (!itemToAdd) return;
+
+    if (!hasDates) {
+      setIsDatePromptOpen(true);
+      return;
+    }
+
     const itemBase = parsePrice(itemToAdd.price);
     const itemExtra = itemToAdd.extraDayPrice ? parsePrice(itemToAdd.extraDayPrice) : itemBase;
-    const itemTotal = itemBase + (daysCount > 1 ? itemExtra * (daysCount - 1) : 0);
+    const itemTotal = itemBase + (totalDays > 1 ? itemExtra * (totalDays - 1) : 0);
 
     addToCart({
       productId: itemToAdd.id,
@@ -70,16 +77,16 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
       imageUrl: itemToAdd.imageUrl,
       startDate: startDate || '',
       endDate: endDate || '',
-      totalDays: daysCount,
+      totalDays: totalDays,
       totalPrice: itemTotal
     });
 
     if (itemToAdd.id === product?.id) {
       setIsAdded(true);
-      setTimeout(() => setIsAdded(false), 2000);
+      setTimeout(() => setIsAdded(false), 1200);
     } else {
       setAddedAddOnId(itemToAdd.id);
-      setTimeout(() => setAddedAddOnId(null), 1800);
+      setTimeout(() => setAddedAddOnId(null), 1200);
     }
   };
 
@@ -100,9 +107,9 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
   if (!product) {
     return (
-      <div className="product-detail-page not-found-page">
-        <div className="container">
-          <div className="not-found-card">
+      <div className="product-detail-page pdp-not-found-page">
+        <div className="container pdp-container">
+          <div className="pdp-not-found-card">
             <h2>Product Not Found</h2>
             <p>The equipment you are looking for might have been moved or is currently unavailable.</p>
             <button className="btn btn-primary" onClick={onBack || (() => { window.location.hash = ''; })}>
@@ -122,75 +129,81 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
         <RentalDatePill locationName="Hyderabad" className="pdp-date-pill" />
 
         {/* Main Two-Column Product Section */}
-        <div className="product-main-grid">
+        <div className="pdp-main-grid">
           
-          {/* Left Column: Single Clean Product Image */}
-          <div className="product-image-column">
-            <div className="product-image-container">
+          {/* Left Column: Large Product Image Panel */}
+          <div className="pdp-image-column">
+            <div className="pdp-image-panel">
               <img 
                 src={product.imageUrl} 
                 alt={product.name} 
-                className="main-product-image"
+                className="pdp-main-image"
               />
             </div>
           </div>
 
           {/* Right Column: Product Information & Booking */}
-          <div className="product-info-column">
+          <div className="pdp-info-column">
             {brandLabel && (
-              <span className="detail-brand-label">{brandLabel}</span>
+              <span className="pdp-brand-label">{brandLabel}</span>
             )}
             
-            <h1 className="detail-product-name">{product.name}</h1>
+            <h1 className="pdp-product-name">{product.name}</h1>
             
-            <p className="detail-product-description">
+            <p className="pdp-product-description">
               {product.description}
             </p>
 
             {/* Rental Price Section */}
-            <div className="detail-price-box">
-              <span className="price-term-label">
-                Rent for {daysCount} day{daysCount > 1 ? 's' : ''}
+            <div className="pdp-price-box">
+              <span className="pdp-price-term">
+                {hasDates ? `Rent for ${totalDays} day${totalDays > 1 ? 's' : ''}` : 'Rent for -- days'}
               </span>
-              <div className="price-amount-row">
-                <span className="price-currency">₹</span>
-                <span className="price-number">{totalPrice.toLocaleString('en-IN')}</span>
+              <div className="pdp-price-amount-row">
+                <span className="pdp-price-currency">₹</span>
+                {hasDates ? (
+                  <span className="pdp-price-number">{totalPrice.toLocaleString('en-IN')}</span>
+                ) : (
+                  <span className="pdp-price-number pdp-price-blurred" aria-hidden="true">
+                    ••••
+                  </span>
+                )}
               </div>
-              <span className="price-tax-note">Price incl. of all taxes</span>
+              <span className="pdp-price-tax-note">Price incl. of all taxes</span>
             </div>
 
-            {/* Add to Cart Primary Button */}
+            {/* Add to Bag Primary Button */}
             <button 
-              className={`detail-add-to-cart-btn ${isAdded ? 'added' : ''}`}
+              className={`pdp-add-to-cart-btn ${isAdded ? 'added' : ''}`}
               onClick={() => handleAddToCart(product)}
-              aria-label={`Add ${product.name} to Cart`}
+              aria-label={isAdded ? `Added ${product.name} To Bag` : `Add ${product.name} To Bag`}
             >
               {isAdded ? (
                 <>
-                  <Check size={20} className="btn-icon" />
-                  Added to Cart!
+                  <Check size={20} className="pdp-btn-icon" />
+                  Added To Bag
                 </>
               ) : (
                 <>
-                  <ShoppingCart size={20} className="btn-icon" />
-                  Add to Cart
+                  <ShoppingBag size={20} className="pdp-btn-icon" />
+                  Add To Bag
                 </>
               )}
             </button>
 
             {/* Trust Badges Row */}
-            <div className="detail-trust-badges-row">
-              <div className="trust-badge-item">
-                <Truck size={18} className="trust-icon" />
-                <span className="trust-text">Free Delivery in Hyderabad</span>
+            <div className="pdp-trust-badges-row">
+              <div className="pdp-trust-badge-item">
+                <Truck size={18} className="pdp-trust-icon" />
+                <span className="pdp-trust-text">Free Delivery in Hyderabad</span>
               </div>
-              <div className="trust-badge-item">
-                <ShieldCheck size={18} className="trust-icon" />
-                <span className="trust-text">Damage Protection Included</span>
+              <div className="pdp-trust-badge-item">
+                <ShieldCheck size={18} className="pdp-trust-icon" />
+                <span className="pdp-trust-text">Damage Protection Included</span>
               </div>
-              <div className="trust-badge-item">
-                <RotateCcw size={18} className="trust-icon" />
-                <span className="trust-text">Flexible Cancellation</span>
+              <div className="pdp-trust-badge-item">
+                <RotateCcw size={18} className="pdp-trust-icon" />
+                <span className="pdp-trust-text">Flexible Cancellation</span>
               </div>
             </div>
 
@@ -199,12 +212,12 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
 
         {/* RELATED ADD-ONS Section */}
         {relatedAddOns.length > 0 && (
-          <section className="related-addons-section">
-            <div className="addons-header">
-              <h2 className="addons-title">RELATED ADD-ONS</h2>
+          <section className="pdp-addons-section">
+            <div className="pdp-addons-header">
+              <h2 className="pdp-addons-title">RELATED ADD-ONS</h2>
               <a 
                 href={`#category/${addOnCategory.key}`} 
-                className="addons-view-all"
+                className="pdp-addons-view-all"
                 onClick={(e) => {
                   e.preventDefault();
                   handleViewAllAddOns(addOnCategory.key);
@@ -214,44 +227,44 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
               </a>
             </div>
 
-            <div className="addons-grid">
+            <div className="pdp-addons-grid">
               {relatedAddOns.map((addon) => {
                 const isItemAdded = addedAddOnId === addon.id;
                 return (
                   <div 
                     key={addon.id} 
-                    className="addon-card"
+                    className="pdp-addon-card"
                     onClick={() => handleNavigateProduct(addon)}
                     role="button"
                     tabIndex={0}
                   >
-                    <div className="addon-image-box">
-                      <img src={addon.imageUrl} alt={addon.name} className="addon-img" />
+                    <div className="pdp-addon-image-box">
+                      <img src={addon.imageUrl} alt={addon.name} className="pdp-addon-img" />
                     </div>
 
-                    <div className="addon-details">
-                      <h4 className="addon-name">{addon.name}</h4>
-                      <p className="addon-price">
-                        <strong>{addon.price}</strong> <span className="price-suffix">/ day</span>
+                    <div className="pdp-addon-details">
+                      <h4 className="pdp-addon-name">{addon.name}</h4>
+                      <p className="pdp-addon-price">
+                        <strong>{addon.price}</strong> <span className="pdp-price-suffix">/ day</span>
                       </p>
                       
                       <button 
-                        className={`addon-add-btn ${isItemAdded ? 'added' : ''}`}
+                        className={`pdp-addon-add-btn ${isItemAdded ? 'added' : ''}`}
                         onClick={(e) => {
                           e.stopPropagation();
                           handleAddToCart(addon);
                         }}
-                        aria-label={`Add ${addon.name} to Cart`}
+                        aria-label={isItemAdded ? `Added ${addon.name} To Bag` : `Add ${addon.name} To Bag`}
                       >
                         {isItemAdded ? (
                           <>
-                            <Check size={14} className="addon-btn-icon" />
-                            Added
+                            <Check size={14} className="pdp-addon-btn-icon" />
+                            Added To Bag
                           </>
                         ) : (
                           <>
-                            <ShoppingBag size={14} className="addon-btn-icon" />
-                            Add to Cart
+                            <ShoppingBag size={14} className="pdp-addon-btn-icon" />
+                            Add To Bag
                           </>
                         )}
                       </button>

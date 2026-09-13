@@ -19,7 +19,7 @@ const PopularRentals: React.FC<PopularRentalsProps> = ({ onSelectProduct }) => {
     ALL_PRODUCTS['tg-2']      // 50L Backpack
   ].filter(Boolean);
 
-  // Duplicate for infinite scrolling effect
+  // Duplicate for seamless infinite scrolling loop
   const products = [...baseProducts, ...baseProducts];
 
   return (

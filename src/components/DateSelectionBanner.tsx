@@ -422,104 +422,109 @@ const DateSelectionBanner: React.FC = () => {
           </button>
         </div>
 
-        {/* Pickup & Return Fields */}
-        <div className="sheet-date-cards-row">
-          <div className="sheet-date-card-group">
-            <label className="sheet-field-label">
-              PICKUP DATE <span className="req">*</span>
-            </label>
-            <div className="sheet-date-box">
-              <div className="sheet-field-icon-wrapper">
-                <Calendar size={20} className="sheet-field-icon" />
+        {/* Scrollable Middle Content */}
+        <div className="sheet-scrollable-body">
+          {/* Pickup & Return Fields */}
+          <div className="sheet-date-cards-row">
+            <div className="sheet-date-card-group">
+              <label className="sheet-field-label">
+                PICKUP DATE <span className="req">*</span>
+              </label>
+              <div className="sheet-date-box">
+                <div className="sheet-field-icon-wrapper">
+                  <Calendar size={20} className="sheet-field-icon" />
+                </div>
+                <div className="sheet-field-details">
+                  <span className="sheet-field-date">
+                    {startDate ? formatDate(startDate) : 'Select date'}
+                  </span>
+                  <span className="sheet-field-weekday">
+                    {startDate ? formatWeekday(startDate) : '-'}
+                  </span>
+                </div>
               </div>
-              <div className="sheet-field-details">
-                <span className="sheet-field-date">
-                  {startDate ? formatDate(startDate) : 'Select date'}
-                </span>
-                <span className="sheet-field-weekday">
-                  {startDate ? formatWeekday(startDate) : '-'}
-                </span>
+            </div>
+
+            <div className="sheet-date-card-group">
+              <label className="sheet-field-label">
+                RETURN DATE <span className="req">*</span>
+              </label>
+              <div className="sheet-date-box">
+                <div className="sheet-field-icon-wrapper">
+                  <Calendar size={20} className="sheet-field-icon" />
+                </div>
+                <div className="sheet-field-details">
+                  <span className="sheet-field-date">
+                    {endDate ? formatDate(endDate) : 'Select date'}
+                  </span>
+                  <span className="sheet-field-weekday">
+                    {endDate ? formatWeekday(endDate) : '-'}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="sheet-date-card-group">
-            <label className="sheet-field-label">
-              RETURN DATE <span className="req">*</span>
-            </label>
-            <div className="sheet-date-box">
-              <div className="sheet-field-icon-wrapper">
-                <Calendar size={20} className="sheet-field-icon" />
-              </div>
-              <div className="sheet-field-details">
-                <span className="sheet-field-date">
-                  {endDate ? formatDate(endDate) : 'Select date'}
-                </span>
-                <span className="sheet-field-weekday">
-                  {endDate ? formatWeekday(endDate) : '-'}
-                </span>
+          {/* Single-Month Calendar */}
+          <div className="sheet-calendar-wrapper">
+            <DatePicker
+              selected={selectedStartDate}
+              onChange={handleDateChange}
+              startDate={selectedStartDate}
+              endDate={selectedEndDate}
+              minDate={minCalendarDate}
+              selectsRange
+              inline
+              monthsShown={1}
+              fixedHeight
+              renderCustomHeader={renderCustomHeader}
+              dayClassName={getDayClassName}
+            />
+          </div>
+
+          {/* Delivery Info Card */}
+          <div className="sheet-delivery-info-card">
+            <div className="sheet-delivery-icon-wrapper">
+              <Clock size={20} className="sheet-delivery-icon" />
+            </div>
+            <div className="sheet-delivery-text">
+              <p className="delivery-p-title">
+                Same-day delivery between 5PM and 11PM
+              </p>
+              <p className="delivery-p-sub">
+                For future dates, you can select a specific time slot at checkout.
+              </p>
+            </div>
+          </div>
+
+          {/* Rental Summary Section (Always rendered for layout stability) */}
+          <div className="sheet-rental-summary-card">
+            <div className="sheet-days-col">
+              <span className="sheet-days-num">{String(totalDays || 0).padStart(2, '0')}</span>
+              <span className="sheet-days-label">DAYS</span>
+            </div>
+            <div className="sheet-summary-divider"></div>
+            <div className="sheet-period-col">
+              <span className="sheet-period-label">CHARGEABLE PERIOD</span>
+              <div className="sheet-period-dates">
+                <Calendar size={13} className="sheet-period-icon" />
+                <span>{startDate && endDate ? `${formatDateShort(startDate)} – ${formatDateShort(endDate)}` : 'Select dates'}</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Single-Month Calendar */}
-        <div className="sheet-calendar-wrapper">
-          <DatePicker
-            selected={selectedStartDate}
-            onChange={handleDateChange}
-            startDate={selectedStartDate}
-            endDate={selectedEndDate}
-            minDate={minCalendarDate}
-            selectsRange
-            inline
-            monthsShown={1}
-            fixedHeight
-            renderCustomHeader={renderCustomHeader}
-            dayClassName={getDayClassName}
-          />
+        {/* Pinned Sticky Footer - Always Visible */}
+        <div className="sheet-fixed-footer">
+          <button 
+            className="sheet-continue-btn"
+            disabled={!startDate || !endDate}
+            onClick={handleClose}
+          >
+            Continue
+            <ArrowRight size={18} className="sheet-continue-icon" />
+          </button>
         </div>
-
-        {/* Delivery Info Card */}
-        <div className="sheet-delivery-info-card">
-          <div className="sheet-delivery-icon-wrapper">
-            <Clock size={20} className="sheet-delivery-icon" />
-          </div>
-          <div className="sheet-delivery-text">
-            <p className="delivery-p-title">
-              Same-day delivery between 5PM and 11PM
-            </p>
-            <p className="delivery-p-sub">
-              For future dates, you can select a specific time slot at checkout.
-            </p>
-          </div>
-        </div>
-
-        {/* Rental Summary Section (Always rendered for layout stability) */}
-        <div className="sheet-rental-summary-card">
-          <div className="sheet-days-col">
-            <span className="sheet-days-num">{String(totalDays || 0).padStart(2, '0')}</span>
-            <span className="sheet-days-label">DAYS</span>
-          </div>
-          <div className="sheet-summary-divider"></div>
-          <div className="sheet-period-col">
-            <span className="sheet-period-label">CHARGEABLE PERIOD</span>
-            <div className="sheet-period-dates">
-              <Calendar size={13} className="sheet-period-icon" />
-              <span>{startDate && endDate ? `${formatDateShort(startDate)} – ${formatDateShort(endDate)}` : 'Select dates'}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Continue Button */}
-        <button 
-          className="sheet-continue-btn"
-          disabled={!startDate || !endDate}
-          onClick={handleClose}
-        >
-          Continue
-          <ArrowRight size={18} className="sheet-continue-icon" />
-        </button>
       </div>
     </div>
   );

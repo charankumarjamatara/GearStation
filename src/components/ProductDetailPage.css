@@ -1,5 +1,6 @@
 /* ==================================================
-   PRODUCT DETAIL PAGE STYLING (MATCHING TARGET DESIGN)
+   PRODUCT DETAIL PAGE STYLING (MATCHING APPROVED DESIGN IMAGE 1)
+   Scoped to avoid collision with any global or card styles
 ================================================== */
 
 .product-detail-page {
@@ -21,58 +22,65 @@
 }
 
 /* --- MAIN TWO-COLUMN PRODUCT GRID --- */
-.product-main-grid {
+.pdp-main-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
   gap: 48px;
   align-items: start;
   margin-bottom: 56px;
 }
 
-/* --- LEFT COLUMN: PRODUCT IMAGE --- */
-.product-image-column {
+/* --- LEFT COLUMN: PRODUCT IMAGE PANEL --- */
+.pdp-image-column {
   width: 100%;
 }
 
-.product-image-container {
-  background: #ffffff;
-  border-radius: 20px;
+.pdp-image-panel {
+  background-color: #ffffff;
+  border-radius: 22px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
-  height: 440px;
+  height: 460px;
+  min-height: 460px;
+  max-height: 460px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px;
+  padding: 20px;
   overflow: hidden;
   position: relative;
+  box-sizing: border-box;
   transition: box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-.product-image-container:hover {
+.pdp-image-panel:hover {
   border-color: #cbd5e1;
   box-shadow: 0 8px 30px rgba(15, 23, 42, 0.07);
 }
 
-.main-product-image {
-  max-width: 94%;
-  max-height: 94%;
+.pdp-main-image {
+  max-width: 90%;
+  max-height: 90%;
+  width: auto;
+  height: auto;
   object-fit: contain;
+  background-color: transparent;
+  mix-blend-mode: multiply;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.product-image-container:hover .main-product-image {
+.pdp-image-panel:hover .pdp-main-image {
   transform: scale(1.03);
 }
 
 /* --- RIGHT COLUMN: PRODUCT INFO --- */
-.product-info-column {
+.pdp-info-column {
   display: flex;
   flex-direction: column;
   padding-top: 4px;
 }
 
-.detail-brand-label {
+.pdp-brand-label {
   font-size: 13px;
   font-weight: 700;
   color: #64748b;
@@ -82,7 +90,7 @@
   display: inline-block;
 }
 
-.detail-product-name {
+.pdp-product-name {
   font-size: 38px;
   font-weight: 800;
   color: #0f172a;
@@ -91,7 +99,7 @@
   letter-spacing: -0.5px;
 }
 
-.detail-product-description {
+.pdp-product-description {
   font-size: 15px;
   line-height: 1.6;
   color: #64748b;
@@ -100,13 +108,13 @@
 }
 
 /* Rental Price Box */
-.detail-price-box {
+.pdp-price-box {
   margin-bottom: 24px;
   padding-bottom: 18px;
   border-bottom: 1px solid #f1f5f9;
 }
 
-.price-term-label {
+.pdp-price-term {
   display: block;
   font-size: 14px;
   color: #475569;
@@ -114,26 +122,37 @@
   margin-bottom: 2px;
 }
 
-.price-amount-row {
+.pdp-price-amount-row {
   display: flex;
   align-items: baseline;
   gap: 2px;
+  min-height: 48px;
 }
 
-.price-currency {
+.pdp-price-currency {
   font-size: 34px;
   font-weight: 800;
   color: #d31d1d;
+  line-height: 1;
 }
 
-.price-number {
+.pdp-price-number {
   font-size: 44px;
   font-weight: 800;
   color: #d31d1d;
   letter-spacing: -1px;
+  line-height: 1;
 }
 
-.price-tax-note {
+.pdp-price-number.pdp-price-blurred {
+  filter: blur(5px);
+  opacity: 0.6;
+  user-select: none;
+  letter-spacing: 2px;
+  display: inline-block;
+}
+
+.pdp-price-tax-note {
   display: block;
   font-size: 13px;
   color: #94a3b8;
@@ -142,7 +161,7 @@
 }
 
 /* Primary Add to Cart CTA */
-.detail-add-to-cart-btn {
+.pdp-add-to-cart-btn {
   width: 100%;
   height: 52px;
   background-color: #d31d1d;
@@ -161,23 +180,29 @@
   margin-bottom: 24px;
 }
 
-.detail-add-to-cart-btn:hover {
+.pdp-add-to-cart-btn:hover {
   background-color: #b51515;
   transform: translateY(-1px);
   box-shadow: 0 6px 18px rgba(211, 29, 29, 0.35);
 }
 
-.detail-add-to-cart-btn:active {
+.pdp-add-to-cart-btn:active {
   transform: scale(0.98);
 }
 
-.detail-add-to-cart-btn.added {
-  background-color: #059669;
-  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+.pdp-add-to-cart-btn.added {
+  background-color: #FAD816;
+  color: #0f172a;
+  border-color: #FAD816;
+  box-shadow: 0 4px 14px rgba(250, 216, 22, 0.4);
+}
+
+.pdp-btn-icon {
+  flex-shrink: 0;
 }
 
 /* Trust Badges Row */
-.detail-trust-badges-row {
+.pdp-trust-badges-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -186,18 +211,18 @@
   border-top: 1px solid #f1f5f9;
 }
 
-.trust-badge-item {
+.pdp-trust-badge-item {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.trust-icon {
+.pdp-trust-icon {
   color: #0f172a;
   flex-shrink: 0;
 }
 
-.trust-text {
+.pdp-trust-text {
   font-size: 12px;
   font-weight: 600;
   color: #0f172a;
@@ -205,20 +230,20 @@
 }
 
 /* --- RELATED ADD-ONS SECTION --- */
-.related-addons-section {
+.pdp-addons-section {
   margin-top: 48px;
   padding-top: 36px;
   border-top: 1px solid #e2e8f0;
 }
 
-.addons-header {
+.pdp-addons-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
 }
 
-.addons-title {
+.pdp-addons-title {
   font-size: 22px;
   font-weight: 800;
   color: #0f172a;
@@ -226,7 +251,7 @@
   margin: 0;
 }
 
-.addons-view-all {
+.pdp-addons-view-all {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -237,18 +262,18 @@
   transition: gap 0.15s ease, color 0.15s ease;
 }
 
-.addons-view-all:hover {
+.pdp-addons-view-all:hover {
   color: #b51515;
   gap: 9px;
 }
 
-.addons-grid {
+.pdp-addons-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 18px;
 }
 
-.addon-card {
+.pdp-addon-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 14px;
@@ -260,42 +285,48 @@
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
 }
 
-.addon-card:hover {
+.pdp-addon-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
   border-color: #cbd5e1;
 }
 
-.addon-image-box {
+/* Add-on image container - Pure uniform white background to eliminate rectangular box borders */
+.pdp-addon-image-box {
   width: 100%;
   height: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
-  background: #fafbfd;
+  background-color: #ffffff;
   border-radius: 10px;
   padding: 8px;
+  box-sizing: border-box;
 }
 
-.addon-img {
+.pdp-addon-img {
   max-width: 90%;
   max-height: 90%;
+  width: auto;
+  height: auto;
   object-fit: contain;
+  background-color: transparent;
+  mix-blend-mode: multiply;
   transition: transform 0.2s ease;
 }
 
-.addon-card:hover .addon-img {
+.pdp-addon-card:hover .pdp-addon-img {
   transform: scale(1.05);
 }
 
-.addon-details {
+.pdp-addon-details {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.addon-name {
+.pdp-addon-name {
   font-size: 13px;
   font-weight: 700;
   color: #0f172a;
@@ -308,20 +339,20 @@
   height: 34px;
 }
 
-.addon-price {
+.pdp-addon-price {
   font-size: 14px;
   color: #d31d1d;
   font-weight: 700;
   margin: 0 0 12px 0;
 }
 
-.addon-price .price-suffix {
+.pdp-addon-price .pdp-price-suffix {
   font-size: 11px;
   color: #64748b;
   font-weight: 500;
 }
 
-.addon-add-btn {
+.pdp-addon-add-btn {
   width: 100%;
   height: 36px;
   background-color: #d31d1d;
@@ -339,20 +370,27 @@
   transition: background-color 0.15s ease, transform 0.15s ease;
 }
 
-.addon-add-btn:hover {
+.pdp-addon-add-btn:hover {
   background-color: #b51515;
 }
 
-.addon-add-btn:active {
+.pdp-addon-add-btn:active {
   transform: scale(0.96);
 }
 
-.addon-add-btn.added {
-  background-color: #059669;
+.pdp-addon-add-btn.added {
+  background-color: #FAD816;
+  color: #0f172a;
+  border-color: #FAD816;
+  box-shadow: 0 2px 8px rgba(250, 216, 22, 0.3);
+}
+
+.pdp-addon-btn-icon {
+  flex-shrink: 0;
 }
 
 /* --- NOT FOUND STATE --- */
-.not-found-card {
+.pdp-not-found-card {
   background: #ffffff;
   border-radius: 16px;
   border: 1px solid #e2e8f0;
@@ -363,49 +401,51 @@
   box-shadow: 0 4px 16px rgba(0,0,0,0.04);
 }
 
-.not-found-card h2 {
+.pdp-not-found-card h2 {
   font-size: 24px;
   font-weight: 800;
   color: #0f172a;
   margin-bottom: 12px;
 }
 
-.not-found-card p {
+.pdp-not-found-card p {
   color: #64748b;
   font-size: 14px;
   margin-bottom: 24px;
 }
 
 /* ==================================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN (PRESERVING APPROVED MOBILE BEHAVIOR)
 ================================================== */
 
 @media (max-width: 1024px) {
-  .addons-grid {
+  .pdp-addons-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 900px) {
-  .product-main-grid {
+  .pdp-main-grid {
     grid-template-columns: 1fr;
     gap: 32px;
   }
 
-  .product-image-container {
-    height: 360px;
-    padding: 24px;
+  .pdp-image-panel {
+    height: 340px;
+    min-height: 340px;
+    max-height: 340px;
+    padding: 22px;
   }
 
-  .detail-product-name {
+  .pdp-product-name {
     font-size: 30px;
   }
 
-  .price-number {
+  .pdp-price-number {
     font-size: 38px;
   }
 
-  .detail-trust-badges-row {
+  .pdp-trust-badges-row {
     flex-wrap: wrap;
     gap: 12px;
   }
@@ -424,32 +464,34 @@
     margin-bottom: 20px;
   }
 
-  .product-image-container {
-    height: 280px;
-    padding: 20px;
+  .pdp-image-panel {
+    height: 270px;
+    min-height: 270px;
+    max-height: 270px;
+    padding: 18px;
     border-radius: 16px;
   }
 
-  .detail-product-name {
+  .pdp-product-name {
     font-size: 24px;
   }
 
-  .detail-product-description {
+  .pdp-product-description {
     font-size: 14px;
     margin-bottom: 18px;
   }
 
-  .price-number {
+  .pdp-price-number {
     font-size: 32px;
   }
 
-  .detail-trust-badges-row {
+  .pdp-trust-badges-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
 
-  .addons-grid {
+  .pdp-addons-grid {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -460,11 +502,11 @@
     scrollbar-width: none;
   }
 
-  .addons-grid::-webkit-scrollbar {
+  .pdp-addons-grid::-webkit-scrollbar {
     display: none;
   }
 
-  .addon-card {
+  .pdp-addon-card {
     min-width: 165px;
     max-width: 165px;
     scroll-snap-align: start;

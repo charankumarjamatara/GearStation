@@ -1,5 +1,5 @@
-import React from 'react';
-import { Heart, Plus, ShoppingBag } from 'lucide-react';
+import React, { useState } from 'react';
+import { Heart, Plus, ShoppingBag, Check } from 'lucide-react';
 import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
 import { getProductBySlugOrId } from '../data/products';
@@ -23,13 +23,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
   name, 
   price, 
   imageUrl, 
-  buttonText = "ADD TO BAG",
+  buttonText = "Add To Bag",
   showHeart = false,
   extraDayPrice,
   onSelectProduct
 }) => {
   const { startDate, endDate, totalDays, setIsDatePromptOpen } = useDateContext();
   const { addToCart } = useCartContext();
+  const [isAdded, setIsAdded] = useState(false);
   const hasDates = startDate && endDate;
 
   const parsePrice = (priceStr: string) => {
@@ -67,6 +68,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         totalDays,
         totalPrice
       });
+      setIsAdded(true);
+      setTimeout(() => setIsAdded(false), 1200);
     }
   };
 
@@ -88,33 +91,50 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
       <div className="product-info">
         <h4 className="product-name">{name}</h4>
-        {!hasDates ? (
-          <div className="date-prompt-price" style={{ marginBottom: '10px' }}>
-            <span className="date-prompt-text" style={{ fontSize: '12px', color: '#047857', fontWeight: 600, display: 'block', marginBottom: '2px' }}>Select Dates to view price</span>
-            <p className="product-price" style={{ filter: 'blur(4px)', opacity: 0.6, userSelect: 'none', margin: 0 }}>
-              From <strong>{price}</strong>
-            </p>
-          </div>
-        ) : (
-          <p className="product-price">
-            Total <strong>₹{totalPrice.toLocaleString('en-IN')}</strong> <span style={{ fontSize: '12px', color: '#64748b' }}>for {totalDays} day{totalDays > 1 ? 's' : ''}</span>
-          </p>
-        )}
         
+        <div className="product-price-container">
+          {!hasDates ? (
+            <div className="date-prompt-price">
+              <span className="date-prompt-text">Select Dates to view price</span>
+              <p className="product-price-blurred">
+                From <strong>{price}</strong>
+              </p>
+            </div>
+          ) : (
+            <div className="product-price-active">
+              <span className="price-tag">₹{totalPrice.toLocaleString('en-IN')}</span>
+              <span className="price-duration">for {totalDays} day{totalDays > 1 ? 's' : ''}</span>
+            </div>
+          )}
+        </div>
 
-        {!hasDates ? (
-          <button 
-            className="btn rent-prompt-btn"
-            style={{ background: 'transparent', border: '1px solid #0f172a', color: '#0f172a', borderRadius: '50%', width: '40px', height: '40px', padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-end', marginTop: '10px' }}
-            onClick={handleActionClick}
-          >
-            <Plus size={20} />
-          </button>
-        ) : (
-          <button className="btn btn-primary add-to-cart-btn" onClick={handleActionClick}>
-            <ShoppingBag size={16} style={{marginRight: '8px'}} /> {buttonText}
-          </button>
-        )}
+        <div className="product-action-container">
+          {!hasDates ? (
+            <button 
+              className="btn rent-prompt-btn"
+              onClick={handleActionClick}
+              aria-label="Select dates to add"
+            >
+              <Plus size={20} />
+            </button>
+          ) : (
+            <button 
+              className={`btn btn-primary add-to-cart-btn ${isAdded ? 'added' : ''}`} 
+              onClick={handleActionClick}
+              aria-label={isAdded ? "Added To Bag" : "Add To Bag"}
+            >
+              {isAdded ? (
+                <>
+                  <Check size={16} /> Added To Bag
+                </>
+              ) : (
+                <>
+                  <ShoppingBag size={16} /> {buttonText}
+                </>
+              )}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

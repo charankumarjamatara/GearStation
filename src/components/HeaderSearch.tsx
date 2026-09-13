@@ -1,15 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, Plus, ArrowRight } from 'lucide-react';
-import { ALL_PRODUCTS_LIST, type ProductItem } from '../data/products';
+import { Search, X, ArrowRight, Plus, Check } from 'lucide-react';
 import { useCartContext } from '../CartContext';
 import { useDateContext } from '../DateContext';
+import { ALL_PRODUCTS_LIST, type ProductItem } from '../data/products';
 import './HeaderSearch.css';
 
-const HeaderSearch: React.FC = () => {
+interface HeaderSearchProps {
+  onSelectCategory?: (categoryKey: string) => void;
+}
+
+export const HeaderSearch: React.FC<HeaderSearchProps> = () => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<ProductItem[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [addedProductId, setAddedProductId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -36,7 +41,7 @@ const HeaderSearch: React.FC = () => {
       setResults([]);
       setIsOpen(false);
     }
-  }, [query]);
+  }, [query, allProducts]);
 
   // Click outside to collapse search
   useEffect(() => {
@@ -107,6 +112,8 @@ const HeaderSearch: React.FC = () => {
       totalDays,
       totalPrice
     });
+    setAddedProductId(product.id);
+    setTimeout(() => setAddedProductId(null), 1200);
   };
 
   const handleResultClick = (product: ProductItem) => {
@@ -194,11 +201,20 @@ const HeaderSearch: React.FC = () => {
                     </div>
                     <button 
                       type="button"
-                      className="search-add-btn" 
+                      className={`search-add-btn ${addedProductId === product.id ? 'added' : ''}`} 
                       onClick={(e) => handleAddToCart(product, e)} 
-                      title="Add to bag"
+                      title={addedProductId === product.id ? "Added To Bag" : "Add To Bag"}
+                      aria-label={addedProductId === product.id ? "Added To Bag" : "Add To Bag"}
                     >
-                      <Plus size={12} /> Add
+                      {addedProductId === product.id ? (
+                        <>
+                          <Check size={12} /> Added To Bag
+                        </>
+                      ) : (
+                        <>
+                          <Plus size={12} /> Add To Bag
+                        </>
+                      )}
                     </button>
                   </div>
                 ))}

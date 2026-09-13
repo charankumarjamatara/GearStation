@@ -557,6 +557,7 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
 
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [isBooked, setIsBooked] = useState(false);
+  const [addedProductId, setAddedProductId] = useState<string | null>(null);
 
   const { startDate, endDate, totalDays, setIsDatePromptOpen } = useDateContext();
   const { addToCart } = useCartContext();
@@ -630,6 +631,8 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
       totalDays,
       totalPrice
     });
+    setAddedProductId(product.id);
+    setTimeout(() => setAddedProductId(null), 1200);
   };
 
   const confirmBooking = (e: React.FormEvent) => {
@@ -732,13 +735,22 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
                       </button>
                     ) : (
                       <button 
-                        className="btn btn-primary rent-now-btn"
+                        className={`btn btn-primary rent-now-btn ${addedProductId === product.id ? 'added' : ''}`}
                         onClick={(e) => {
                           e.stopPropagation();
                           handleBookNow(product);
                         }}
+                        aria-label={addedProductId === product.id ? "Added To Bag" : "Add To Bag"}
                       >
-                        <ShoppingBag size={16} /> ADD TO BAG
+                        {addedProductId === product.id ? (
+                          <>
+                            <Check size={16} /> Added To Bag
+                          </>
+                        ) : (
+                          <>
+                            <ShoppingBag size={16} /> Add To Bag
+                          </>
+                        )}
                       </button>
                     )}
                   </div>

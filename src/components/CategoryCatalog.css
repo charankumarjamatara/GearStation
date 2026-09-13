@@ -941,3 +941,20 @@
   }
 }
 /* --- END COMPACT UTILITY BAR --- */
+
+.rent-now-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.rent-now-btn.added {
+  background-color: #FAD816 !important;
+  color: #0f172a !important;
+  border-color: #FAD816 !important;
+  box-shadow: 0 4px 12px rgba(250, 216, 22, 0.35) !important;
+}

@@ -19,6 +19,9 @@
   gap: 14px;
   cursor: pointer;
   flex: 1;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .full-logo {
@@ -188,6 +191,10 @@
 }
 
 @media (max-width: 1024px) {
+  .header {
+    padding: 6px 0;
+  }
+
   .header-nav {
     display: none;
     position: absolute;
@@ -216,7 +223,9 @@
   }
   
   .full-logo {
-    max-height: 40px;
+    height: 52px;
+    max-height: 52px;
+    width: auto;
   }
   
   .logo-text-container {
