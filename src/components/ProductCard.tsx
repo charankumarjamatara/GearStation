@@ -3,6 +3,7 @@ import { Heart, Plus, ShoppingBag, Check } from 'lucide-react';
 import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
 import { getProductBySlugOrId } from '../data/products';
+import { saveCategoryScrollPosition } from '../utils/scrollRestoration';
 import './ProductCard.css';
 
 interface ProductCardProps {
@@ -45,6 +46,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const targetIdentifier = slug || id || getProductBySlugOrId(name)?.slug || getProductBySlugOrId(name)?.id || name.toLowerCase().replace(/\s+/g, '-');
 
   const handleCardClick = () => {
+    const currentHash = window.location.hash;
+    if (currentHash.startsWith('#category/')) {
+      const cat = currentHash.replace('#category/', '');
+      saveCategoryScrollPosition(cat, window.scrollY);
+    }
     if (onSelectProduct) {
       onSelectProduct(targetIdentifier);
     } else {

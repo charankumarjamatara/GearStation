@@ -69,10 +69,17 @@ import img_action_4_gimbal from '../assets/photography category/dji action camer
 import img_i360_power from '../assets/photography category/insta 360/I 360 X4 Power combo.jpg';
 import img_action_4_vlog from '../assets/photography category/dji action cameras/dji Action 4 vlogging combo.png';
 import img_cannon_1300 from '../assets/photography category/dji action cameras/Cannon 1300 D.jpg';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { ShoppingBag, ShieldCheck, Check, Plus } from 'lucide-react';
 import { useDateContext } from '../DateContext';
 import { useCartContext } from '../CartContext';
+import {
+  saveCategoryScrollPosition,
+  getSavedCategoryScrollPosition,
+  consumeCategoryScrollPosition,
+  isReturningFromProduct,
+  setReturningFromProduct
+} from '../utils/scrollRestoration';
 import RentalDatePill from './RentalDatePill';
 import './CategoryCatalog.css';
 import img_tg_1 from '../assets/outdoor category/trekking gear/trekking gloves.jpg';
@@ -555,6 +562,52 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
   const parentCategory = ['outdoor', 'outdoor-all', 'trekking-gear', 'riding-gear', 'camping-gear', 'winter-jackets', 'riding-luggage', 'backpacks'].includes(activeCategory || categoryKey) ? 'outdoor' : 'photography';
   const sidebarCategories = parentCategory === 'outdoor' ? OUTDOOR_CATEGORIES : PHOTOGRAPHY_CATEGORIES;
 
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  const scrollActiveCategoryIntoView = useCallback((smooth = true) => {
+    const container = sidebarRef.current;
+    if (!container) return;
+
+    const activeEl = container.querySelector<HTMLElement>('.sidebar-item.active') || 
+                     container.querySelector<HTMLElement>(`[data-category-key="${activeCategory}"]`);
+    if (!activeEl) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const itemRect = activeEl.getBoundingClientRect();
+    
+    // Exact position of the active item in the scrollable content
+    const itemXInScrollContent = itemRect.left - containerRect.left + container.scrollLeft;
+    const containerWidth = container.clientWidth;
+    const itemWidth = activeEl.offsetWidth;
+
+    // Centering formula with balanced breathing room on both sides
+    const targetScrollLeft = itemXInScrollContent - (containerWidth - itemWidth) / 2;
+    const maxScroll = container.scrollWidth - containerWidth;
+    const clampedScroll = Math.max(0, Math.min(targetScrollLeft, maxScroll));
+
+    container.scrollTo({
+      left: clampedScroll,
+      behavior: smooth ? 'smooth' : 'auto'
+    });
+  }, [activeCategory]);
+
+  useEffect(() => {
+    // Run after DOM render/update and allow layout to settle
+    const timer = setTimeout(() => {
+      scrollActiveCategoryIntoView(true);
+    }, 60);
+
+    return () => clearTimeout(timer);
+  }, [activeCategory, parentCategory, scrollActiveCategoryIntoView]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      scrollActiveCategoryIntoView(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [scrollActiveCategoryIntoView]);
+
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [isBooked, setIsBooked] = useState(false);
   const [addedProductId, setAddedProductId] = useState<string | null>(null);
@@ -597,7 +650,43 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
 
   const filteredProducts = displayedProducts;
 
+  // Restore scroll position when returning from a product detail page
+  useEffect(() => {
+    if (!activeCategory || !isReturningFromProduct()) return;
+
+    const savedY = getSavedCategoryScrollPosition(activeCategory);
+    if (savedY !== null && savedY > 0) {
+      let cancelled = false;
+
+      const performScroll = () => {
+        if (!cancelled) {
+          window.scrollTo({ top: savedY, behavior: 'instant' });
+        }
+      };
+
+      // Perform immediate restore
+      performScroll();
+
+      // Double-check with rAF and a short delay to accommodate product cards rendering
+      const rAF = requestAnimationFrame(() => {
+        performScroll();
+      });
+
+      const timer = setTimeout(() => {
+        performScroll();
+        consumeCategoryScrollPosition(activeCategory);
+      }, 70);
+
+      return () => {
+        cancelled = true;
+        cancelAnimationFrame(rAF);
+        clearTimeout(timer);
+      };
+    }
+  }, [activeCategory, filteredProducts]);
+
   const handleCategoryChange = (key: string) => {
+    setReturningFromProduct(false);
     setActiveCategory(key);
     window.location.hash = `category/${key}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -605,6 +694,7 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
 
   const handleProductClick = (product: ProductItem) => {
     const target = (product as any).slug || product.id;
+    saveCategoryScrollPosition(activeCategory, window.scrollY);
     if (onSelectProduct) {
       onSelectProduct(target);
     } else {
@@ -656,10 +746,11 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
           
 
           {/* TOP CATEGORIES */}
-          <div className="catalog-sidebar">
+          <div className="catalog-sidebar" ref={sidebarRef}>
             {sidebarCategories.map(cat => (
               <div 
                 key={cat.key} 
+                data-category-key={cat.key}
                 className={`sidebar-item ${activeCategory === cat.key ? 'active' : ''}`}
                 onClick={() => handleCategoryChange(cat.key)}
               >

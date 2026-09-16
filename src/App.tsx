@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Stats from './components/Stats';
@@ -15,9 +15,16 @@ import CategoryCatalog from './components/CategoryCatalog';
 import ProductDetailPage from './components/ProductDetailPage';
 import DateSelectionBanner from './components/DateSelectionBanner';
 import CartModal from './components/CartModal';
+import GearStationLoader from './components/GearStationLoader';
+import { 
+  saveCategoryScrollPosition, 
+  setReturningFromProduct 
+} from './utils/scrollRestoration';
 import './App.css';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(() => {
     const hash = window.location.hash;
     if (hash.startsWith('#category/')) {
@@ -34,21 +41,46 @@ function App() {
     return null;
   });
 
+  const prevHashRef = useRef<string>(window.location.hash);
+
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash;
-      if (hash.startsWith('#product/')) {
-        setSelectedProduct(hash.replace('#product/', ''));
+      const prevHash = prevHashRef.current;
+      const newHash = window.location.hash;
+
+      if (newHash.startsWith('#product/')) {
+        // Leaving category to view product -> save current category scroll position
+        if (prevHash.startsWith('#category/')) {
+          const cat = prevHash.replace('#category/', '');
+          saveCategoryScrollPosition(cat, window.scrollY);
+        }
+        setSelectedProduct(newHash.replace('#product/', ''));
         setSelectedCategory(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash.startsWith('#category/')) {
-        setSelectedCategory(hash.replace('#category/', ''));
+      } else if (newHash.startsWith('#category/')) {
+        const cat = newHash.replace('#category/', '');
+        const isFromProduct = prevHash.startsWith('#product/');
+
+        if (isFromProduct) {
+          setReturningFromProduct(true);
+        } else {
+          setReturningFromProduct(false);
+        }
+
+        setSelectedCategory(cat);
         setSelectedProduct(null);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (!hash) {
+
+        // Only scroll to top if this is a fresh category navigation, NOT returning from product details
+        if (!isFromProduct) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } else if (!newHash) {
+        setReturningFromProduct(false);
         setSelectedCategory(null);
         setSelectedProduct(null);
       }
+
+      prevHashRef.current = newHash;
     };
 
     window.addEventListener('hashchange', handleHashChange);
@@ -56,6 +88,7 @@ function App() {
   }, []);
 
   const handleSelectCategory = (categoryKey: string) => {
+    setReturningFromProduct(false);
     setSelectedCategory(categoryKey);
     setSelectedProduct(null);
     window.location.hash = `category/${categoryKey}`;
@@ -63,6 +96,11 @@ function App() {
   };
 
   const handleSelectProduct = (productIdOrSlug: string) => {
+    const currentHash = window.location.hash;
+    if (currentHash.startsWith('#category/')) {
+      const cat = currentHash.replace('#category/', '');
+      saveCategoryScrollPosition(cat, window.scrollY);
+    }
     setSelectedProduct(productIdOrSlug);
     setSelectedCategory(null);
     window.location.hash = `product/${productIdOrSlug}`;
@@ -70,14 +108,20 @@ function App() {
   };
 
   const handleBackToHome = () => {
-    setSelectedCategory(null);
-    setSelectedProduct(null);
-    window.location.hash = '';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      setReturningFromProduct(false);
+      setSelectedCategory(null);
+      setSelectedProduct(null);
+      window.location.hash = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
     <div className="app">
+      {isLoading && <GearStationLoader onComplete={() => setIsLoading(false)} />}
       <Header />
       <main>
         {selectedProduct ? (

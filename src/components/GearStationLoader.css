@@ -1,0 +1,160 @@
+/* ==========================================================================
+   GEARSTATION WEBSITE LOADING SCREEN - MINIMAL STATIC LOGO LOADER
+   ========================================================================== */
+
+.gs-loader-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fdfdfd;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.gs-loader-overlay.gs-loader-exit {
+  opacity: 0;
+  transform: scale(1.02);
+  pointer-events: none;
+}
+
+.gs-loader-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 24px;
+  width: 100%;
+  max-width: 540px;
+}
+
+/* --------------------------------------------------------------------------
+   Static Brand Logo
+   -------------------------------------------------------------------------- */
+.gs-logo-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.gs-logo-wrap {
+  width: 230px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gs-logo-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Brand Tagline
+   -------------------------------------------------------------------------- */
+.gs-brand-tagline {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #475569;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.9;
+  margin-bottom: 38px;
+}
+
+/* --------------------------------------------------------------------------
+   Bottom Progress Bar & Status Text
+   -------------------------------------------------------------------------- */
+.gs-loader-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.gs-progress-track-wrapper {
+  width: 160px;
+  height: 3px;
+  background-color: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.gs-progress-bar-fill {
+  height: 100%;
+  background-color: #d31d1d;
+  border-radius: 3px;
+  transition: width 0.12s linear;
+  box-shadow: 0 0 8px rgba(211, 29, 29, 0.45);
+}
+
+.gs-loader-msg {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  color: #64748b;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Tablet Responsive (max-width: 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .gs-logo-wrap {
+    width: 205px;
+  }
+
+  .gs-brand-tagline {
+    font-size: 10px;
+    letter-spacing: 3.5px;
+    margin-bottom: 34px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Responsive (max-width: 480px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .gs-logo-wrap {
+    width: 180px;
+  }
+
+  .gs-brand-tagline {
+    font-size: 9px;
+    letter-spacing: 2.8px;
+    margin-bottom: 30px;
+  }
+
+  .gs-progress-track-wrapper {
+    width: 135px;
+    height: 2.5px;
+  }
+
+  .gs-loader-msg {
+    font-size: 8.5px;
+    letter-spacing: 2.5px;
+  }
+}
