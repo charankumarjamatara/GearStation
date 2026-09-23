@@ -1,8 +1,49 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, Check } from 'lucide-react';
+import { sendContactNotification } from '../services/emailService';
 import './Contact.css';
 
 const Contact: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      await sendContactNotification({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message
+      });
+
+      // Clear form and display brief feedback
+      setFormData({ name: '', email: '', message: '' });
+      setIsSent(true);
+      setTimeout(() => setIsSent(false), 3500);
+    } catch (err) {
+      console.error('Contact submission error:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="section contact-section">
       <div className="container">
@@ -47,14 +88,48 @@ const Contact: React.FC = () => {
           </div>
           
           <div className="contact-form-wrapper">
-            <form className="contact-form">
+            <form className="contact-form" onSubmit={handleSubmit}>
               <div className="form-row">
-                <input type="text" placeholder="Your name" className="form-input" />
-                <input type="email" placeholder="Email address" className="form-input" />
+                <input 
+                  type="text" 
+                  name="name"
+                  placeholder="Your name" 
+                  className="form-input" 
+                  value={formData.name}
+                  onChange={handleChange}
+                  required 
+                />
+                <input 
+                  type="email" 
+                  name="email"
+                  placeholder="Email address" 
+                  className="form-input" 
+                  value={formData.email}
+                  onChange={handleChange}
+                  required 
+                />
               </div>
-              <textarea placeholder="How can we help?" className="form-input form-textarea"></textarea>
-              <button type="submit" className="btn btn-primary submit-btn">
-                SEND MESSAGE <ArrowRight size={16} />
+              <textarea 
+                name="message"
+                placeholder="How can we help?" 
+                className="form-input form-textarea"
+                value={formData.message}
+                onChange={handleChange}
+                required
+              ></textarea>
+              <button 
+                type="submit" 
+                className="btn btn-primary submit-btn" 
+                disabled={isSubmitting}
+                style={{ opacity: isSubmitting ? 0.7 : 1 }}
+              >
+                {isSent ? (
+                  <>MESSAGE SENT <Check size={16} /></>
+                ) : isSubmitting ? (
+                  'SENDING...'
+                ) : (
+                  <>SEND MESSAGE <ArrowRight size={16} /></>
+                )}
               </button>
             </form>
           </div>

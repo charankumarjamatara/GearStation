@@ -5,24 +5,20 @@ import './DatePickerCustom.css';
 import { useDateContext } from '../DateContext';
 import './Hero.css';
 
-// Import the new images
-import djiAction4Img from '../assets/photography category/dji action cameras/dji Action 4.jpg';
-import insta360X3Img from '../assets/photography category/insta 360/I 360 X3 Action cam.webp';
-
 const Hero: React.FC = () => {
   const { startDate, endDate, setIsDatePromptOpen } = useDateContext();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const carouselImages = [
     `${import.meta.env.BASE_URL}new_prod_3.png`,
-    djiAction4Img,
-    insta360X3Img
+    `${import.meta.env.BASE_URL}new_prod_2.png`,
+    `${import.meta.env.BASE_URL}new_prod_1.png`
   ];
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % carouselImages.length);
-    }, 3000); // Change image every 3 seconds
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [carouselImages.length]);
@@ -49,6 +45,14 @@ const Hero: React.FC = () => {
           </div>
           
           <div className="hero-right">
+            {/* Layered graphic shapes & coral halftone dots */}
+            <div className="hero-graphic-bg" aria-hidden="true">
+              <div className="hero-bg-pink"></div>
+              <div className="hero-dots-cluster hero-dots-topright"></div>
+              <div className="hero-dots-cluster hero-dots-bottomleft"></div>
+              <div className="hero-bg-coral"></div>
+            </div>
+
             <div className="hero-visual-wrapper">
               <div className="hero-visual">
                 {carouselImages.map((img, index) => {
@@ -74,44 +78,44 @@ const Hero: React.FC = () => {
           </div>
         </div>
 
-          <div className="search-bar">
-            <div className="search-field">
-              <label>PICKUP DATE</label>
-              <div className="input-wrapper">
-                <div 
-                  className="date-input-hero pseudo-input" 
-                  onClick={() => setIsDatePromptOpen(true)}
-                  style={{ display: 'flex', alignItems: 'center', width: '100%', height: '100%', cursor: 'pointer', padding: '12px 16px', color: startDate ? '#1e293b' : '#94a3b8', boxSizing: 'border-box' }}
-                >
-                  {formatDate(startDate)}
-                </div>
-                <Calendar size={18} className="input-icon" style={{position: 'absolute', right: '16px', pointerEvents: 'none'}} />
+        <div className="search-bar">
+          <div className="search-field">
+            <label>PICKUP DATE</label>
+            <div className="input-wrapper">
+              <div 
+                className="date-input-hero pseudo-input" 
+                onClick={() => setIsDatePromptOpen(true)}
+                style={{ display: 'flex', alignItems: 'center', width: '100%', height: '100%', cursor: 'pointer', padding: '12px 16px', color: startDate ? '#1e293b' : '#94a3b8', boxSizing: 'border-box' }}
+              >
+                {formatDate(startDate)}
               </div>
+              <Calendar size={18} className="input-icon" style={{position: 'absolute', right: '16px', pointerEvents: 'none'}} />
             </div>
-            
-            <div className="search-field">
-              <label>RETURN DATE</label>
-              <div className="input-wrapper">
-                <div 
-                  className="date-input-hero pseudo-input" 
-                  onClick={() => setIsDatePromptOpen(true)}
-                  style={{ display: 'flex', alignItems: 'center', width: '100%', height: '100%', cursor: 'pointer', padding: '12px 16px', color: endDate ? '#1e293b' : '#94a3b8', boxSizing: 'border-box' }}
-                >
-                  {formatDate(endDate)}
-                </div>
-                <Calendar size={18} className="input-icon" style={{position: 'absolute', right: '16px', pointerEvents: 'none'}} />
-              </div>
-            </div>
-
-            <div className="search-field location-field">
-              <label>PICKUP LOCATION</label>
-              <div className="input-wrapper">
-                <MapPin size={18} className="input-icon" />
-                <input type="text" value="Gear Station, Hyderabad" readOnly style={{ cursor: 'default' }} />
-              </div>
-            </div>
-
           </div>
+          
+          <div className="search-field">
+            <label>RETURN DATE</label>
+            <div className="input-wrapper">
+              <div 
+                className="date-input-hero pseudo-input" 
+                onClick={() => setIsDatePromptOpen(true)}
+                style={{ display: 'flex', alignItems: 'center', width: '100%', height: '100%', cursor: 'pointer', padding: '12px 16px', color: endDate ? '#1e293b' : '#94a3b8', boxSizing: 'border-box' }}
+              >
+                {formatDate(endDate)}
+              </div>
+              <Calendar size={18} className="input-icon" style={{position: 'absolute', right: '16px', pointerEvents: 'none'}} />
+            </div>
+          </div>
+
+          <div className="search-field location-field">
+            <label>PICKUP LOCATION</label>
+            <div className="input-wrapper">
+              <MapPin size={18} className="input-icon" />
+              <input type="text" value="Gear Station, Hyderabad" readOnly style={{ cursor: 'default' }} />
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   );

@@ -50,44 +50,119 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 50px;
+  position: relative;
 }
 
 .hero-left {
-  width: 55%;
+  width: 48%;
   flex-shrink: 0;
+  z-index: 2;
 }
 
 .hero-right {
-  width: 40%;
+  width: 52%;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Bound the transition to this area */
-  padding: 20px 0; /* Add padding so the shadow is not cut off */
+  padding: 30px 0;
+  /* Micro-correction: Shift entire visual composition slightly right on desktop */
+  transform: translateX(35px);
+  transition: transform 0.3s ease;
+}
+
+.hero-graphic-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 1. Underlying soft warm pink organic shape */
+.hero-bg-pink {
+  position: absolute;
+  width: 480px;
+  height: 380px;
+  border-radius: 56% 44% 60% 40% / 46% 62% 38% 54%;
+  background-color: #FCE9E7;
+  top: 48%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+/* 2. Main bright warm coral-red organic shape (#EF3B36) */
+.hero-bg-coral {
+  position: absolute;
+  width: 440px;
+  height: 350px;
+  border-radius: 46% 54% 38% 62% / 54% 42% 58% 46%;
+  background-color: #EF3B36;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  box-shadow: 0 14px 34px rgba(239, 59, 54, 0.22);
+}
+
+/* 3. Halftone coral-red dot patterns */
+.hero-dots-cluster {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  background-image: radial-gradient(#EF3B36 1.5px, transparent 1.5px);
+  background-size: 11px 11px;
+}
+
+.hero-dots-topright {
+  width: 210px;
+  height: 190px;
+  top: -15px;
+  right: -15px;
+  mask-image: radial-gradient(circle at 30% 70%, black 15%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at 30% 70%, black 15%, transparent 75%);
+  opacity: 0.6;
+}
+
+.hero-dots-bottomleft {
+  width: 210px;
+  height: 190px;
+  bottom: -15px;
+  left: -15px;
+  mask-image: radial-gradient(circle at 70% 30%, black 15%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at 70% 30%, black 15%, transparent 75%);
+  opacity: 0.6;
 }
 
 .hero-visual-wrapper {
   position: relative;
   width: 100%;
-  max-width: 360px;
+  max-width: 380px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 2;
 }
 
 .hero-visual {
   position: relative;
   width: 100%;
   /* Fixed height to contain images and prevent layout shifts */
-  height: 250px; 
+  height: 260px; 
   /* Float animation applied to the visual container so it floats everything inside together */
   animation: float-camera 4.5s ease-in-out infinite;
 }
 
 @media (min-width: 768px) {
   .hero-visual {
-    height: 300px;
+    height: 310px;
   }
 }
 
@@ -123,7 +198,8 @@
   transform: translate(calc(-50% + 40%), -50%);
   opacity: 0;
   transition: none; /* No transition so it jumps to this position instantly on wrap-around */
-  z-index: 1;
+  z-index: 2;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.22));
 }
 
 .hero-camera.active {
@@ -132,7 +208,7 @@
   opacity: 1;
   /* Transform takes 0.9s (smooth slide), Opacity fades in over 0.6s */
   transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease-out;
-  z-index: 2;
+  z-index: 3;
 }
 
 .hero-camera.prev {
@@ -150,7 +226,7 @@
   left: 50%;
   width: 65%;
   height: 25px;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
   transform: translateX(-50%);
   border-radius: 50%;
   z-index: 1;
@@ -189,16 +265,17 @@
   position: relative;
   display: flex;
   align-items: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
   padding: 0 16px;
   height: 48px;
   background: var(--color-white);
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.input-wrapper:focus-within {
-  border-color: var(--color-primary);
+.input-wrapper:focus-within,
+.input-wrapper:hover {
+  border-color: #cbd5e1;
 }
 
 .input-icon {
@@ -227,6 +304,10 @@
 @media (max-width: 1024px) {
   .hero-main-layout {
     gap: 32px;
+  }
+
+  .hero-right {
+    transform: translateX(18px);
   }
 }
 
@@ -257,8 +338,43 @@
   }
 
   .hero-right {
-    width: 80%;
-    max-width: 280px;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 20px 0;
+    transform: none; /* Centered on mobile without horizontal overflow */
+  }
+
+  .hero-bg-pink {
+    width: 300px;
+    height: 240px;
+  }
+
+  .hero-bg-coral {
+    width: 275px;
+    height: 220px;
+  }
+
+  .hero-dots-topright {
+    width: 120px;
+    height: 120px;
+    top: -5px;
+    right: -5px;
+  }
+
+  .hero-dots-bottomleft {
+    width: 120px;
+    height: 120px;
+    bottom: -5px;
+    left: -5px;
+  }
+
+  .hero-visual-wrapper {
+    max-width: 250px;
+  }
+
+  .hero-visual {
+    height: 200px;
   }
 
   .search-bar {
@@ -270,6 +386,17 @@
 
 @media (max-width: 480px) {
   .hero-right {
-    width: 95%;
+    max-width: 280px;
+    transform: none;
+  }
+
+  .hero-bg-pink {
+    width: 260px;
+    height: 210px;
+  }
+
+  .hero-bg-coral {
+    width: 240px;
+    height: 190px;
   }
 }

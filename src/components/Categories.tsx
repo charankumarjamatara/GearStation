@@ -37,7 +37,7 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
       <div className="container">
         <div className="section-header categories-header-new">
           <div className="header-text-container">
-            <h2 className="section-title">BROWSE BY <span className="text-red">CATEGORY</span></h2>
+            <h2 className="section-title">BROWSE BY <span className="text-red">CATEGORY .</span></h2>
             <p className="section-subtitle">Find the right gear for every kind of adventure.</p>
           </div>
         </div>
@@ -74,4 +74,3 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
 };
 
 export default Categories;
-
