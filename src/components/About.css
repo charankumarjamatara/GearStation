@@ -32,6 +32,7 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 24px;
+  position: relative;
 }
 
 .label-number {
@@ -39,6 +40,7 @@
   font-weight: 700;
   font-size: 13px;
   letter-spacing: 1px;
+  flex-shrink: 0;
 }
 
 .label-text {
@@ -46,13 +48,115 @@
   font-weight: 600;
   letter-spacing: 2px;
   color: #111111;
+  flex-shrink: 0;
 }
 
-.label-line {
-  height: 1px;
-  width: 40px;
+/* Extended Red Walking Track & Grounded Rider Animation */
+.story-walk-track {
+  position: relative;
+  width: 340px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  margin-top: -60px;
+  margin-bottom: -60px;
+  pointer-events: none;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* 1. Completely Static Red Line (shortened by ~20% from the right) */
+.story-walk-line {
+  width: 270px;
+  height: 1.5px;
   background-color: var(--color-primary);
-  opacity: 0.6;
+  opacity: 0.85;
+  position: relative;
+  z-index: 2;
+  border-radius: 1px;
+}
+
+/* 2. Character Animation (Independent Layer, reduced to ~70% size) */
+.story-walker {
+  position: absolute;
+  left: 0;
+  bottom: calc(50% - 1px);
+  width: 102px; /* 70% of previous 145px */
+  height: auto;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.story-rider-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent;
+  filter: brightness(1.06) contrast(1.05);
+  outline: none;
+  border: none;
+  box-shadow: none;
+  pointer-events: none;
+  object-fit: contain;
+  opacity: 0;
+  transition: none !important;
+}
+
+/* Tablet adjustments */
+@media (max-width: 1024px) {
+  .story-walk-track {
+    width: 180px;
+    height: 100px;
+    margin-top: -50px;
+    margin-bottom: -50px;
+  }
+
+  .story-walk-line {
+    width: 145px;
+  }
+
+  .story-walker {
+    width: 84px; /* 70% of 120px */
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .story-walk-track {
+    width: 220px;
+    height: 80px;
+    margin-top: -40px;
+    margin-bottom: -40px;
+  }
+
+  .story-walk-line {
+    width: 175px;
+  }
+
+  .story-walker {
+    width: 66px; /* 70% of 95px */
+  }
+}
+
+@media (max-width: 480px) {
+  .story-walk-track {
+    width: 170px;
+    height: 70px;
+    margin-top: -35px;
+    margin-bottom: -35px;
+  }
+
+  .story-walk-line {
+    width: 135px;
+  }
+
+  .story-walker {
+    width: 56px; /* 70% of 80px */
+  }
 }
 
 .about-title {

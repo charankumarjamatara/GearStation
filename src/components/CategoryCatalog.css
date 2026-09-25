@@ -165,7 +165,7 @@
 
 .catalog-sidebar {
   width: 100%;
-  background-color: var(--color-white);
+  background-color: #ffffff;
   border-radius: 16px;
   padding: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
@@ -176,8 +176,8 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
   position: sticky;
-  top: 81px;
-  z-index: 50;
+  top: 85px;
+  z-index: 90;
 }
 
 .catalog-sidebar::-webkit-scrollbar {
@@ -851,7 +851,37 @@
 
 @media (max-width: 1024px) {
   .catalog-sidebar {
-    top: 73px;
+    top: 64px;
+    z-index: 90;
+    background-color: #ffffff !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .catalog-sidebar {
+    top: 64px;
+    z-index: 90;
+    background-color: #ffffff !important;
+    border-radius: 0;
+    margin-left: -20px;
+    margin-right: -20px;
+    width: calc(100% + 40px);
+    padding: 10px 20px 12px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Solid white buffer extending behind the fixed header to completely block product card bleed */
+  .catalog-sidebar::before {
+    content: "";
+    position: absolute;
+    top: -24px;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background-color: #ffffff !important;
+    pointer-events: none;
+    z-index: 90;
   }
 }
 

@@ -1,9 +1,10 @@
 import React, { useMemo, useState, useRef } from 'react';
-import { X, Trash2, Calendar, ShoppingBag, ArrowLeft, CheckCircle, Plus } from 'lucide-react';
+import { X, Trash2, Calendar, ShoppingBag, ArrowLeft, Plus } from 'lucide-react';
 import { useCartContext } from '../CartContext';
 import { useDateContext } from '../DateContext';
 import { getProductBySlugOrId, getRelatedAddOns, type ProductItem } from '../data/products';
 import { sendOrderNotification } from '../services/emailService';
+import successIllustration from '../assets/order_successful.png';
 import './CartModal.css';
 
 const CartModal: React.FC = () => {
@@ -218,7 +219,7 @@ const CartModal: React.FC = () => {
         <div className="cart-modal-content">
           {isSuccess ? (
             <div className="cart-success-state">
-              <CheckCircle size={64} className="success-icon" color="#10b981" />
+              <img src={successIllustration} alt="Booking Confirmed" className="cart-success-illustration" />
               <h3>Request Received!</h3>
               <p>Your booking request has been received successfully.<br />Our team will contact you shortly to confirm the details.</p>
               <button className="btn btn-primary" onClick={handleClose} style={{marginTop: '20px'}}>

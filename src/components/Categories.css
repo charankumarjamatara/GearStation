@@ -9,12 +9,75 @@
   margin-bottom: 40px;
 }
 
+.header-text-container {
+  position: relative;
+}
+
 .header-text-container h2 {
   font-size: clamp(32px, 5vw, 48px);
   font-weight: 900;
   margin: 0 0 8px 0;
   text-transform: uppercase;
   color: #1a1a1a;
+}
+
+.category-heading {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  line-height: 1.1;
+  overflow: visible;
+}
+
+.category-heading-text {
+  position: relative;
+  z-index: 3;
+  background-color: var(--color-white, #ffffff);
+  display: inline-block;
+  white-space: nowrap;
+  padding-right: 2px;
+}
+
+/* Static animation container anchored right after the heading wall */
+.category-animation {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 148px; /* ~70% of previous size (reduced by 30%) */
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+/* Static character wrapper - ZERO CSS translation (line stays completely static) */
+.category-character {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.category-char-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent;
+  filter: brightness(1.06) contrast(1.05);
+  outline: none;
+  border: none;
+  box-shadow: none;
+  pointer-events: none;
+  object-fit: contain;
+  opacity: 0;
+  transition: none !important;
 }
 
 .text-red {
@@ -129,6 +192,12 @@
   transform: scale(1.05);
 }
 
+@media (max-width: 1024px) {
+  .category-animation {
+    width: 120px;
+  }
+}
+
 @media (max-width: 768px) {
   .categories-header-new {
     flex-direction: column;
@@ -139,6 +208,10 @@
   
   .header-text-container h2 {
     font-size: 24px;
+  }
+
+  .category-animation {
+    width: 84px;
   }
   
   .section-subtitle {
@@ -228,3 +301,10 @@
     transform: none !important;
   }
 }
+
+@media (max-width: 480px) {
+  .category-animation {
+    width: 72px;
+  }
+}
+

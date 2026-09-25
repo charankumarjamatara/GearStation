@@ -395,6 +395,15 @@
   color: #64748b;
 }
 
+.cart-success-illustration {
+  width: 140px;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
 .cart-success-state h3 {
   margin: 16px 0 8px;
   color: #1e293b;

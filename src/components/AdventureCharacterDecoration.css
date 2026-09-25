@@ -1,0 +1,196 @@
+/* ==========================================================================
+   Adventure Character Decoration (Walking Track & Seamless Easter Egg)
+   ========================================================================== */
+
+.adventure-char-wrapper {
+  position: relative;
+  width: 100%;
+  pointer-events: none;
+  user-select: none;
+  z-index: 4;
+  overflow: visible;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.adventure-char-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 70px;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+}
+
+/* Walking track container */
+.adventure-char-track-area {
+  position: relative;
+  width: 500px;
+  height: 180px;
+  margin-right: 6%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* Persistent red walking line - always unbroken and visible */
+.adventure-char-line {
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-primary, #d31d1d);
+  border-radius: 1px;
+  position: relative;
+  z-index: 3;
+  opacity: 0.9;
+}
+
+/* Character walker with horizontal motion & smooth entry/exit fades */
+.adventure-char-walker {
+  position: absolute;
+  left: 0;
+  bottom: 0; /* Aligns character's feet directly with the red line */
+  width: 210px; /* 2x previous size */
+  height: auto;
+  z-index: 1;
+  will-change: transform, opacity;
+  animation: riderWalkTrack 10s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  mix-blend-mode: multiply;
+}
+
+.adventure-char-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent;
+  /* Blend off-white background seamlessly into pure white page */
+  filter: brightness(1.06) contrast(1.05);
+  outline: none;
+  border: none;
+  box-shadow: none;
+  pointer-events: none;
+  object-fit: contain;
+}
+
+/*
+  Smooth 10s walk timeline:
+  0% - 14%: Walks in while smoothly fading in from 0 -> 1 opacity
+  14% - 45%: Walks forward naturally with full opacity
+  45% - 68%: Takes photo/action near the center of the line
+  68% - 86%: Continues walking forward with full opacity
+  86% - 98%: Smoothly fades out from 1 -> 0 opacity as it reaches line end
+  98% - 100%: 0 opacity (seamless reset with zero visible teleport or jump)
+*/
+@keyframes riderWalkTrack {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  14% {
+    transform: translate3d(45px, 0, 0);
+    opacity: 1;
+  }
+  45% {
+    transform: translate3d(145px, 0, 0);
+    opacity: 1;
+  }
+  68% {
+    transform: translate3d(180px, 0, 0);
+    opacity: 1;
+  }
+  86% {
+    transform: translate3d(245px, 0, 0);
+    opacity: 1;
+  }
+  98% {
+    transform: translate3d(285px, 0, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(290px, 0, 0);
+    opacity: 0;
+  }
+}
+
+/* Tablet adjustments */
+@media (max-width: 1024px) {
+  .adventure-char-container {
+    padding: 0 40px;
+  }
+
+  .adventure-char-track-area {
+    width: 400px;
+    height: 150px;
+    margin-right: 4%;
+  }
+
+  .adventure-char-walker {
+    width: 180px;
+    bottom: 0;
+    animation-name: riderWalkTrackTablet;
+  }
+
+  @keyframes riderWalkTrackTablet {
+    0% { transform: translate3d(0, 0, 0); opacity: 0; }
+    14% { transform: translate3d(35px, 0, 0); opacity: 1; }
+    45% { transform: translate3d(110px, 0, 0); opacity: 1; }
+    68% { transform: translate3d(140px, 0, 0); opacity: 1; }
+    86% { transform: translate3d(190px, 0, 0); opacity: 1; }
+    98% { transform: translate3d(225px, 0, 0); opacity: 0; }
+    100% { transform: translate3d(230px, 0, 0); opacity: 0; }
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .adventure-char-wrapper {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .adventure-char-container {
+    padding: 0 20px;
+  }
+
+  .adventure-char-track-area {
+    width: 290px;
+    height: 120px;
+    margin-right: 2%;
+  }
+
+  .adventure-char-walker {
+    width: 140px;
+    bottom: 0;
+    animation-name: riderWalkTrackMobile;
+  }
+
+  @keyframes riderWalkTrackMobile {
+    0% { transform: translate3d(0, 0, 0); opacity: 0; }
+    14% { transform: translate3d(25px, 0, 0); opacity: 1; }
+    45% { transform: translate3d(75px, 0, 0); opacity: 1; }
+    68% { transform: translate3d(95px, 0, 0); opacity: 1; }
+    86% { transform: translate3d(130px, 0, 0); opacity: 1; }
+    98% { transform: translate3d(155px, 0, 0); opacity: 0; }
+    100% { transform: translate3d(160px, 0, 0); opacity: 0; }
+  }
+}
+
+@media (max-width: 480px) {
+  .adventure-char-track-area {
+    width: 250px;
+    height: 110px;
+    margin-right: 0;
+  }
+
+  .adventure-char-walker {
+    width: 125px;
+    bottom: 0;
+  }
+}
