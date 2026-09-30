@@ -1,6 +1,6 @@
 .contact-section {
   background-color: var(--color-bg-light);
-  padding: 80px 0;
+  padding: var(--space-3xl) 0;
   border-top: 1px solid var(--color-border);
 }
 
@@ -24,12 +24,12 @@
 }
 
 .contact-title {
-  font-size: 40px;
+  font-size: clamp(32px, 4vw, 42px);
   font-weight: 900;
-  line-height: 1;
+  line-height: 1.05;
   color: var(--color-dark);
   margin-bottom: 24px;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
 }
 
 .contact-desc {
@@ -84,14 +84,17 @@
 
 .form-input {
   width: 100%;
-  padding: 16px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  height: 50px;
+  padding: 0 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   background-color: var(--color-white);
   font-family: inherit;
   font-size: 14px;
+  color: var(--color-dark);
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
 }
 
 .form-input:focus {
@@ -100,19 +103,36 @@
 }
 
 .form-textarea {
+  height: auto;
   min-height: 120px;
+  padding: 14px 16px;
   resize: vertical;
 }
 
 .submit-btn {
   width: 100%;
-  padding: 16px;
+  height: 50px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   font-size: 14px;
-  border-radius: 8px;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.submit-btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
 }
 
 @media (max-width: 1024px) {

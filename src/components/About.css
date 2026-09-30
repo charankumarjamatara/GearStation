@@ -1,20 +1,20 @@
 .about-section {
-  background-color: #FFFFFF;
-  padding: 120px 0;
+  background-color: var(--color-white);
+  padding: var(--space-3xl) 0;
   overflow: hidden;
-  color: #111111;
+  color: var(--color-dark);
 }
 
 .about-container {
-  max-width: 1400px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
-  padding: 0 70px;
+  padding: 0 var(--page-padding);
 }
 
 .about-grid {
   display: grid;
-  grid-template-columns: 44% 1fr;
-  gap: 90px;
+  grid-template-columns: 46% 1fr;
+  gap: 60px;
   align-items: center;
 }
 
@@ -261,18 +261,20 @@
   position: relative;
   display: block;
   width: 85%;
-  height: 480px;
-  border-radius: 10px;
+  height: 460px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   z-index: 2;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   opacity: 0;
   animation: fadeUp 0.8s ease-out 0.2s forwards;
   transition: transform 0.3s ease;
+  box-shadow: var(--shadow-card);
 }
 
 .primary-image-wrapper:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
 }
 
 .primary-img {
@@ -280,31 +282,31 @@
   height: 100%;
   object-fit: contain;
   object-position: center;
-  background-color: #ffffff;
-  padding: 40px;
+  background-color: var(--color-white);
+  padding: 32px;
   box-sizing: border-box;
-  border: 1px solid #f0f0f0;
-  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
 }
 
 .secondary-image-wrapper {
   position: absolute;
   display: block;
   bottom: 0;
-  right: -20px;
+  right: -10px;
   width: 45%;
   aspect-ratio: 1 / 1;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   z-index: 3;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-floating);
   opacity: 0;
   animation: fadeUp 0.8s ease-out 0.4s forwards;
   transition: transform 0.3s ease;
 }
 
 .secondary-image-wrapper:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
 }
 
 .secondary-img {
@@ -312,10 +314,11 @@
   height: 100%;
   object-fit: contain;
   object-position: center;
-  background-color: #ffffff;
-  padding: 30px;
+  background-color: var(--color-white);
+  padding: 24px;
   box-sizing: border-box;
-  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
 }
 
 /* -------------------------------------

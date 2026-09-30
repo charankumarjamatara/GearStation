@@ -18,9 +18,9 @@
 
 .adventure-char-container {
   width: 100%;
-  max-width: 1400px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
-  padding: 0 70px;
+  padding: 0 var(--page-padding);
   position: relative;
   display: flex;
   justify-content: flex-end;

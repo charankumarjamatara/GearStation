@@ -59,11 +59,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
 }
 
 .gs-logo-wrap {
-  width: 230px;
+  width: 170px;
   height: auto;
   display: flex;
   align-items: center;
@@ -74,23 +74,7 @@
   width: 100%;
   height: auto;
   object-fit: contain;
-  mix-blend-mode: multiply;
   pointer-events: none;
-}
-
-/* --------------------------------------------------------------------------
-   Brand Tagline
-   -------------------------------------------------------------------------- */
-.gs-brand-tagline {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  color: #475569;
-  text-transform: uppercase;
-  white-space: nowrap;
-  opacity: 0.9;
-  margin-bottom: 38px;
 }
 
 /* --------------------------------------------------------------------------
@@ -135,14 +119,12 @@
    Tablet Responsive (max-width: 768px)
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
-  .gs-logo-wrap {
-    width: 205px;
+  .gs-logo-container {
+    margin-bottom: 28px;
   }
 
-  .gs-brand-tagline {
-    font-size: 10px;
-    letter-spacing: 3.5px;
-    margin-bottom: 34px;
+  .gs-logo-wrap {
+    width: 150px;
   }
 }
 
@@ -150,14 +132,12 @@
    Mobile Responsive (max-width: 480px)
    -------------------------------------------------------------------------- */
 @media (max-width: 480px) {
-  .gs-logo-wrap {
-    width: 180px;
+  .gs-logo-container {
+    margin-bottom: 24px;
   }
 
-  .gs-brand-tagline {
-    font-size: 9px;
-    letter-spacing: 2.8px;
-    margin-bottom: 30px;
+  .gs-logo-wrap {
+    width: 135px;
   }
 
   .gs-progress-track-wrapper {

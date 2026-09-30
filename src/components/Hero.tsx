@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, ChevronDown, ChevronRight } from 'lucide-react';
+import { Calendar, MapPin, ChevronDown } from 'lucide-react';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DatePickerCustom.css';
 import { useDateContext } from '../DateContext';
@@ -152,9 +152,6 @@ const Hero: React.FC = () => {
             aria-label="Explore Gear"
           >
             <span>Explore Gear</span>
-            <div className="cta-icon-circle">
-              <ChevronRight size={18} />
-            </div>
           </button>
         </div>
       </div>

@@ -154,15 +154,16 @@
   top: -35px;
   background-color: var(--color-dark);
   color: var(--color-white);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
   white-space: nowrap;
   opacity: 0;
   transform: translateY(10px);
   transition: all 0.3s;
   pointer-events: none;
+  box-shadow: var(--shadow-soft);
 }
 
 .floating-tooltip::after {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCartContext } from '../CartContext';
 import HeaderSearch from './HeaderSearch';
+import newLogo from '../assets/new_logo.jpeg';
 import './Header.css';
 
 const Header: React.FC = () => {
@@ -65,10 +66,10 @@ const Header: React.FC = () => {
 
         {/* Logo & Brand Name in Center/Left */}
         <div className="header-logo" onClick={() => window.location.hash = ''} style={{cursor: 'pointer'}}>
-          <img src={`${import.meta.env.BASE_URL}new_logo.jpg`} alt="Gear Station Logo" className="full-logo" />
+          <img src={newLogo} alt="Backpackers Destinations" className="full-logo" />
           <div className="logo-text-container">
-            <span className="logo-title">Gear Station.co</span>
-            <span className="logo-subtitle">by Backpackers.destinations</span>
+            <span className="logo-title">BACKPACKERS</span>
+            <span className="logo-subtitle">DESTINATIONS</span>
           </div>
         </div>
 

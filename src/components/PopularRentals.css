@@ -1,6 +1,6 @@
 .popular-rentals {
   background-color: var(--color-white);
-  padding: 50px 0;
+  padding: var(--space-3xl) 0;
   overflow: hidden;
 }
 
@@ -8,55 +8,73 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-lg);
 }
 
-.view-all-link {
+.popular-nav-arrows {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--color-primary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  gap: 8px;
 }
 
-.view-all-link:hover {
-  text-decoration: underline;
-}
-
-.header-actions-group {
+.popular-nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+  color: var(--color-dark);
   display: flex;
   align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.popular-nav-btn:hover {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  border-color: var(--color-dark);
+  transform: translateY(-1px);
+}
+
+.popular-nav-btn:active {
+  transform: scale(0.94);
 }
 
 .carousel-wrapper {
   overflow: hidden;
   width: 100%;
   position: relative;
-  padding: 6px 0 12px 0;
+  padding: 6px 0 16px 0;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y pinch-zoom;
+}
+
+.carousel-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-wrapper.is-dragging {
+  cursor: grabbing;
+}
+
+.carousel-wrapper.is-dragging * {
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
 }
 
 .products-carousel-track {
   display: flex;
   gap: 24px;
   width: max-content;
-  animation: popularMarquee 32s linear infinite;
   align-items: stretch;
-}
-
-.products-carousel-track:hover {
-  animation-play-state: paused;
-}
-
-@keyframes popularMarquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-50% - 12px));
-  }
+  will-change: transform;
 }
 
 .carousel-item {
@@ -78,16 +96,6 @@
 
   .products-carousel-track {
     gap: 18px;
-    animation: popularMarquee 26s linear infinite;
-  }
-
-  @keyframes popularMarquee {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(calc(-50% - 9px));
-    }
   }
 }
 
@@ -107,16 +115,6 @@
 
   .products-carousel-track {
     gap: 14px;
-    animation: popularMarquee 22s linear infinite;
-  }
-
-  @keyframes popularMarquee {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(calc(-50% - 7px));
-    }
   }
 }
 
@@ -128,14 +126,5 @@
 
   .products-carousel-track {
     gap: 12px;
-  }
-
-  @keyframes popularMarquee {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(calc(-50% - 6px));
-    }
   }
 }

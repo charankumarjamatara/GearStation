@@ -24,17 +24,44 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
     let restartTimer: any = null;
     let isPlaying = false;
     let isInViewport = false;
+    let rafId: number | null = null;
+    const ENTRANCE_DURATION = 1.0; // 1.0s entrance walking duration
+
+    const syncOpacityWithProgress = () => {
+      if (!isMounted || !video) return;
+
+      const t = video.currentTime;
+      if (t < ENTRANCE_DURATION) {
+        const p = Math.max(0, Math.min(t / ENTRANCE_DURATION, 1));
+        // Smooth easing curve: progress 0.0 -> 0.0, 0.2 -> 0.20, 0.4 -> 0.45, 0.6 -> 0.70, 0.8 -> 0.90, 1.0 -> 1.0
+        const opacity = 1 - Math.pow(1 - p, 1.8);
+        video.style.opacity = Math.max(0, Math.min(opacity, 1)).toFixed(3);
+      } else {
+        video.style.opacity = '1';
+      }
+
+      if (isPlaying && !video.paused && !video.ended) {
+        rafId = requestAnimationFrame(syncOpacityWithProgress);
+      }
+    };
 
     const playCycle = () => {
       if (!isMounted || !video) return;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      video.style.transition = 'none';
+      video.style.opacity = '0';
       video.currentTime = 0;
-      video.style.opacity = '1';
 
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
+            if (!isMounted || !video) return;
             isPlaying = true;
+            rafId = requestAnimationFrame(syncOpacityWithProgress);
           })
           .catch(() => {
             isPlaying = false;
@@ -42,14 +69,33 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
       }
     };
 
+    const handleTimeUpdate = () => {
+      if (!isMounted || !video) return;
+      const t = video.currentTime;
+      if (t < ENTRANCE_DURATION) {
+        const p = Math.max(0, Math.min(t / ENTRANCE_DURATION, 1));
+        const opacity = 1 - Math.pow(1 - p, 1.8);
+        video.style.opacity = Math.max(0, Math.min(opacity, 1)).toFixed(3);
+      } else {
+        video.style.opacity = '1';
+      }
+    };
+
     const handleEnded = () => {
       if (!isMounted || !video) return;
       isPlaying = false;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      video.style.transition = 'opacity 0.4s ease';
       video.style.opacity = '0';
 
       // Settle pause of 4s before the next natural walking cycle
       restartTimer = setTimeout(() => {
         if (isMounted && isInViewport) {
+          video.style.transition = 'none';
+          video.style.opacity = '0';
           playCycle();
         }
       }, 4000);
@@ -72,6 +118,12 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
             if (video && !video.paused) {
               video.pause();
               isPlaying = false;
+              if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+              }
+              video.style.transition = 'none';
+              video.style.opacity = '0';
             }
           }
         });
@@ -85,12 +137,15 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
 
     observer.observe(section);
     video.addEventListener('ended', handleEnded);
+    video.addEventListener('timeupdate', handleTimeUpdate);
 
     return () => {
       isMounted = false;
       observer.disconnect();
       video.removeEventListener('ended', handleEnded);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
       if (restartTimer) clearTimeout(restartTimer);
+      if (rafId) cancelAnimationFrame(rafId);
       if (video) video.pause();
     };
   }, []);

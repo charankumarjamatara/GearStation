@@ -6,19 +6,19 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-xl);
 }
 
 /* --- DESKTOP UTILITY BAR --- */
 .rental-date-pill-wrapper .utility-bar {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 50px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
   padding: 8px 16px 8px 22px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  box-shadow: var(--shadow-soft);
   gap: 0;
   margin: 0 auto;
 }
@@ -28,10 +28,10 @@
   align-items: center;
   gap: 8px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-dark);
   font-size: 14px;
   padding-right: 18px;
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid var(--color-border);
 }
 
 .rental-date-pill-wrapper .utility-dates {
@@ -45,7 +45,7 @@
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: #0f172a;
+  color: var(--color-dark);
   font-weight: 600;
   padding: 0 16px;
   white-space: nowrap;
@@ -54,19 +54,19 @@
 .rental-date-pill-wrapper .utility-date-divider {
   width: 1px;
   height: 20px;
-  background-color: #e2e8f0;
+  background-color: var(--color-border);
 }
 
 .rental-date-pill-wrapper .utility-icon {
-  color: #d31d1d;
+  color: var(--color-primary);
   flex-shrink: 0;
 }
 
 .rental-date-pill-wrapper .utility-edit-btn {
-  background-color: #d31d1d;
-  color: #ffffff;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   border: none;
-  border-radius: 24px;
+  border-radius: var(--radius-pill);
   padding: 8px 22px;
   font-size: 14px;
   font-weight: 700;
@@ -80,7 +80,7 @@
 }
 
 .rental-date-pill-wrapper .utility-edit-btn:hover {
-  background-color: #b51515;
+  background-color: var(--color-primary-hover);
   transform: translateY(-1px);
 }
 
@@ -90,11 +90,11 @@
 
 /* --- MOBILE COMPACT PILL --- */
 .rental-date-pill-wrapper .mobile-utility-bar {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 99px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
   padding: 10px 16px;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  box-shadow: var(--shadow-soft);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -110,7 +110,7 @@
 }
 
 .rental-date-pill-wrapper .pill-icon {
-  color: #d31d1d;
+  color: var(--color-primary);
   flex-shrink: 0;
 }
 
@@ -123,7 +123,7 @@
 .rental-date-pill-wrapper .pill-date-main {
   font-size: 12px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-dark);
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
@@ -132,7 +132,7 @@
 
 .rental-date-pill-wrapper .pill-date-sub {
   font-size: 10px;
-  color: #94a3b8;
+  color: var(--color-gray);
   font-weight: 500;
   line-height: 1.2;
 }
@@ -140,7 +140,7 @@
 .rental-date-pill-wrapper .pill-divider {
   width: 1px;
   height: 28px;
-  background-color: #e2e8f0;
+  background-color: var(--color-border);
   margin: 0 10px;
   flex-shrink: 0;
 }
@@ -150,10 +150,10 @@
   align-items: center;
   gap: 4px;
   background: rgba(211, 29, 29, 0.08);
-  color: #d31d1d;
+  color: var(--color-primary);
   border: none;
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
@@ -176,6 +176,6 @@
     display: none !important;
   }
   .rental-date-pill-wrapper {
-    margin-bottom: 18px;
+    margin-bottom: var(--space-md);
   }
 }

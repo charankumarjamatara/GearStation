@@ -63,13 +63,13 @@
 /* --- NEW UTILITY BAR (centered, no search) --- */
 .utility-bar {
   background-color: var(--color-white);
-  border: 1px solid #e2e8f0;
-  border-radius: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
   padding: 8px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-card);
   gap: 4px;
   margin-bottom: 14px;
   width: fit-content;
@@ -84,7 +84,7 @@
   color: var(--color-dark);
   font-size: 14px;
   padding: 0 12px;
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid var(--color-border);
 }
 .utility-dates {
   display: flex;
@@ -103,7 +103,7 @@
 .utility-date-divider {
   width: 1px;
   height: 20px;
-  background-color: #cbd5e1;
+  background-color: var(--color-border);
 }
 .utility-icon {
   color: var(--color-primary);
@@ -112,7 +112,7 @@
   background-color: var(--color-primary);
   color: var(--color-white);
   border: none;
-  border-radius: 24px;
+  border-radius: var(--radius-pill);
   padding: 7px 18px;
   font-size: 14px;
   font-weight: 700;
@@ -124,7 +124,7 @@
   transition: background-color 0.2s;
 }
 .utility-edit-btn:hover {
-  background-color: #b51515;
+  background-color: var(--color-primary-hover);
 }
 .utility-edit-btn .utility-icon {
   color: var(--color-white);
@@ -132,13 +132,13 @@
 @media (max-width: 768px) {
   .utility-bar {
     width: 100%;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     flex-wrap: wrap;
     justify-content: flex-start;
   }
   .utility-location {
     border-right: none;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--color-border);
     width: 100%;
     padding-bottom: 8px;
     margin-bottom: 4px;
@@ -165,10 +165,11 @@
 
 .catalog-sidebar {
   width: 100%;
-  background-color: #ffffff;
-  border-radius: 16px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
   padding: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-card);
   display: flex;
   overflow-x: auto;
   gap: 8px;
@@ -188,10 +189,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4px 10px;
+  padding: 6px 12px;
   margin-bottom: 0;
   cursor: pointer;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   transition: all 0.2s;
   color: var(--color-gray);
   border: 1px solid transparent;
@@ -235,10 +236,10 @@
 .category-banner {
   background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
   color: var(--color-white);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 32px;
   margin-bottom: 32px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-soft);
 }
 
 .category-banner h2 {
@@ -261,8 +262,9 @@
   margin-bottom: 32px;
   background-color: var(--color-white);
   padding: 16px 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
 }
 
 .search-box {
@@ -275,21 +277,22 @@
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--color-gray);
+  color: var(--color-gray-light);
 }
 
 .search-box input {
   width: 100%;
   padding: 10px 16px 10px 42px;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--radius-pill);
   font-size: 14px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search-box input:focus {
   border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(211, 29, 29, 0.08);
 }
 
 .catalog-filter-info {
@@ -311,19 +314,20 @@
 
 .ecom-card {
   background-color: var(--color-white);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
 }
 
 .ecom-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
+  border-color: #cbd5e1;
 }
 
 .card-badge {
@@ -335,7 +339,7 @@
   font-size: 10px;
   font-weight: 800;
   padding: 4px 10px;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   z-index: 5;
   letter-spacing: 0.5px;
 }
@@ -408,12 +412,12 @@
 }
 
 .spec-tag {
-  background-color: #f3f4f6;
-  color: #4b5563;
+  background-color: var(--color-muted);
+  color: var(--color-gray);
   font-size: 11px;
   font-weight: 600;
   padding: 4px 10px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .card-price-section {
@@ -439,28 +443,39 @@
 
 .original-price {
   font-size: 13px;
-  color: var(--color-gray);
+  color: var(--color-gray-light);
   text-decoration: line-through;
 }
 
 .rent-now-btn {
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: 1px solid transparent;
   font-size: 13px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.rent-now-btn:hover {
+  background-color: var(--color-primary-hover);
 }
 
 .empty-state {
   text-align: center;
   padding: 60px 20px;
   background-color: var(--color-white);
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
 }
 
 .empty-state h3 {
@@ -491,9 +506,9 @@
   background-color: var(--color-white);
   width: 100%;
   max-width: 480px;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   padding: 32px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-floating);
   position: relative;
   animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -574,15 +589,20 @@
 
 .form-group input {
   width: 100%;
-  padding: 10px 14px;
+  height: 48px;
+  padding: 0 16px;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-size: 14px;
+  color: var(--color-dark);
   outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
 }
 
 .form-group input:focus {
   border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(211, 29, 29, 0.08);
 }
 
 .form-row {
@@ -596,10 +616,21 @@
 
 .confirm-btn {
   width: 100%;
-  padding: 14px;
-  border-radius: 10px;
+  height: 50px;
+  padding: 0 24px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: 1px solid transparent;
   font-weight: 700;
+  font-size: 14px;
   margin-top: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.confirm-btn:hover {
+  background-color: var(--color-primary-hover);
 }
 
 .success-booking {
@@ -666,7 +697,9 @@
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
   }
 
   /* ── Image area: fixed proportion keeps it looking uniform ── */
@@ -674,8 +707,8 @@
     width: 100%;
     aspect-ratio: 1.25 / 1;
     padding: 10px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #f3f4f6;
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-border-subtle);
     display: flex;
     align-items: center;
     justify-content: center;
