@@ -33,20 +33,21 @@ const Header: React.FC = () => {
   };
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    // If it's a hash route for category catalog, let it behave normally (or handle manually)
+    setIsMobileMenuOpen(false);
+
     if (targetId.startsWith('category/')) {
-      setIsMobileMenuOpen(false);
-      return; // fallback to default hash routing
+      e.preventDefault();
+      window.location.hash = targetId;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
     }
     
     e.preventDefault();
-    setIsMobileMenuOpen(false);
     
     const el = document.getElementById(targetId);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     } else {
-      // If element not found, we might be on catalog page, so we go home first
       window.location.hash = '';
       setTimeout(() => {
         document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
@@ -57,6 +58,12 @@ const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="container header-container">
+        {/* Mobile Hamburger on Left */}
+        <button className="mobile-menu-btn" onClick={toggleMenu} aria-label="Toggle menu">
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        {/* Logo & Brand Name in Center/Left */}
         <div className="header-logo" onClick={() => window.location.hash = ''} style={{cursor: 'pointer'}}>
           <img src={`${import.meta.env.BASE_URL}new_logo.jpg`} alt="Gear Station Logo" className="full-logo" />
           <div className="logo-text-container">
@@ -65,6 +72,7 @@ const Header: React.FC = () => {
           </div>
         </div>
 
+        {/* Desktop Nav */}
         <nav className={`header-nav ${isMobileMenuOpen ? 'open' : ''}`}>
           <ul className="nav-list">
             <li className="nav-item">
@@ -89,14 +97,12 @@ const Header: React.FC = () => {
           </ul>
         </nav>
 
+        {/* Actions on Right */}
         <div className="header-actions">
           <HeaderSearch />
           <button className="icon-btn cart-btn" aria-label="Shopping cart" onClick={() => setIsCartOpen(true)}>
             <ShoppingCart size={20} />
             {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
-          </button>
-          <button className="mobile-menu-btn" onClick={toggleMenu} aria-label="Toggle menu">
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>

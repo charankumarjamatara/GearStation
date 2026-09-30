@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Stats from './components/Stats';
@@ -16,14 +16,23 @@ import ProductDetailPage from './components/ProductDetailPage';
 import DateSelectionBanner from './components/DateSelectionBanner';
 import CartModal from './components/CartModal';
 import GearStationLoader from './components/GearStationLoader';
+import GlobalAssistanceWidget from './components/GlobalAssistanceWidget';
 import { 
   saveCategoryScrollPosition, 
   setReturningFromProduct 
 } from './utils/scrollRestoration';
 import './App.css';
 
+// In-memory application startup flag (resets ONLY on full browser reload / F5 / Ctrl+R)
+let hasAppLoadedInitially = false;
+
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => !hasAppLoadedInitially);
+
+  const handleLoaderComplete = useCallback(() => {
+    hasAppLoadedInitially = true;
+    setIsLoading(false);
+  }, []);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(() => {
     const hash = window.location.hash;
@@ -121,7 +130,7 @@ function App() {
 
   return (
     <div className="app">
-      {isLoading && <GearStationLoader onComplete={() => setIsLoading(false)} />}
+      {isLoading && <GearStationLoader onComplete={handleLoaderComplete} />}
       <Header />
       <main>
         {selectedProduct ? (
@@ -154,6 +163,7 @@ function App() {
         )}
       </main>
       <Footer />
+      <GlobalAssistanceWidget />
       <DateSelectionBanner />
       <CartModal />
     </div>

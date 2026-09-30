@@ -30,23 +30,23 @@ const HowItWorks: React.FC = () => {
             <div className="steps-timeline">
               <div className="step-item">
                 <div className="step-number">01</div>
-                <h4 className="step-title">Choose Dates</h4>
-                <p className="step-desc">Select your pickup and return dates.</p>
-              </div>
-              <div className="step-item">
-                <div className="step-number">02</div>
-                <h4 className="step-title">Pick Your Gear</h4>
+                <h4 className="step-title">Select the product</h4>
                 <p className="step-desc">Browse available gear for your dates.</p>
               </div>
               <div className="step-item">
+                <div className="step-number">02</div>
+                <h4 className="step-title">Schedule the rental</h4>
+                <p className="step-desc">Select Rent From and To dates.</p>
+              </div>
+              <div className="step-item">
                 <div className="step-number">03</div>
-                <h4 className="step-title">Book Online</h4>
-                <p className="step-desc">Pay online or reserve & pay at store.</p>
+                <h4 className="step-title">Receive and use the product</h4>
+                <p className="step-desc">Collect your gear and start exploring.</p>
               </div>
               <div className="step-item">
                 <div className="step-number">04</div>
-                <h4 className="step-title">Pick Up & Explore</h4>
-                <p className="step-desc">Collect your gear and start exploring.</p>
+                <h4 className="step-title">Return the product</h4>
+                <p className="step-desc">Return the gear after your journey.</p>
               </div>
             </div>
           </div>

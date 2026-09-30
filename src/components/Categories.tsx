@@ -8,104 +8,90 @@ interface CategoriesProps {
 }
 
 const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
+  const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    const section = sectionRef.current;
+    if (!video || !section) return;
 
     video.defaultMuted = true;
     video.muted = true;
-    video.loop = false; // Master controller manages smooth exit fade and clean restart
+    video.playsInline = true;
 
     let isMounted = true;
     let restartTimer: any = null;
-    let rafId: number | null = null;
+    let isPlaying = false;
+    let isInViewport = false;
 
-    const checkFade = () => {
-      if (!isMounted || !video) return;
-
-      const t = video.currentTime;
-      const duration = video.duration || 10.01;
-      const exitDuration = 0.55; // ~500ms smooth motion-blur exit window
-      const exitStart = duration - exitDuration;
-
-      if (t < 0.3) {
-        // Subtle soft fade-in on entry (100% sharp, 0px blur)
-        video.style.opacity = `${Math.min(1, t / 0.3)}`;
-        video.style.filter = 'brightness(1.06) contrast(1.05)';
-      } else if (t > exitStart) {
-        // Right-side exit zone: progressive motion-blur (0px -> 3.5px) + subtle fade-out (1 -> 0)
-        const progress = Math.min(1, Math.max(0, (t - exitStart) / exitDuration));
-        const blurAmount = (progress * 3.5).toFixed(2);
-        const opacity = (1 - progress).toFixed(3);
-
-        video.style.opacity = `${opacity}`;
-        video.style.filter = `brightness(1.06) contrast(1.05) blur(${blurAmount}px)`;
-      } else {
-        // Normal walk: completely sharp (0px blur), 100% opaque
-        video.style.opacity = '1';
-        video.style.filter = 'brightness(1.06) contrast(1.05)';
-      }
-
-      if (t >= duration - 0.05 || video.ended) {
-        handleCycleComplete();
-        return;
-      }
-
-      rafId = requestAnimationFrame(checkFade);
-    };
-
-    const handleCycleComplete = () => {
-      if (!isMounted || !video) return;
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = null;
-
-      // Fully invisible and reset filter before next cycle
-      video.style.opacity = '0';
-      video.style.filter = 'brightness(1.06) contrast(1.05)';
-      video.pause();
-      video.currentTime = 0;
-
-      // Clean invisible pause before the next cycle begins
-      restartTimer = setTimeout(() => {
-        if (isMounted) {
-          startCycle();
-        }
-      }, 300);
-    };
-
-    const startCycle = () => {
+    const playCycle = () => {
       if (!isMounted || !video) return;
       video.currentTime = 0;
-      video.style.opacity = '0';
-      video.style.filter = 'brightness(1.06) contrast(1.05)';
+      video.style.opacity = '1';
+
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
-            if (isMounted) {
-              if (rafId) cancelAnimationFrame(rafId);
-              rafId = requestAnimationFrame(checkFade);
-            }
+            isPlaying = true;
           })
           .catch(() => {
-            if (isMounted) {
-              restartTimer = setTimeout(startCycle, 800);
-            }
+            isPlaying = false;
           });
       }
     };
 
-    startCycle();
+    const handleEnded = () => {
+      if (!isMounted || !video) return;
+      isPlaying = false;
+      video.style.opacity = '0';
+
+      // Settle pause of 4s before the next natural walking cycle
+      restartTimer = setTimeout(() => {
+        if (isMounted && isInViewport) {
+          playCycle();
+        }
+      }, 4000);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            isInViewport = true;
+            if (!isPlaying) {
+              playCycle();
+            }
+          } else {
+            isInViewport = false;
+            if (restartTimer) {
+              clearTimeout(restartTimer);
+              restartTimer = null;
+            }
+            if (video && !video.paused) {
+              video.pause();
+              isPlaying = false;
+            }
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.2
+      }
+    );
+
+    observer.observe(section);
+    video.addEventListener('ended', handleEnded);
 
     return () => {
       isMounted = false;
-      if (rafId) cancelAnimationFrame(rafId);
+      observer.disconnect();
+      video.removeEventListener('ended', handleEnded);
       if (restartTimer) clearTimeout(restartTimer);
-      if (video) {
-        video.pause();
-      }
+      if (video) video.pause();
     };
   }, []);
 
@@ -135,7 +121,7 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
   };
 
   return (
-    <section id="categories" className="section categories">
+    <section id="categories" ref={sectionRef} className="section categories">
       <div className="container">
         <div className="section-header categories-header-new">
           <div className="header-text-container">
@@ -144,19 +130,16 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
                 BROWSE BY <span className="text-red">CATEGORY</span>
               </span>
               <span className="category-animation" aria-hidden="true">
-                <span className="category-character">
-                  <video
-                    ref={videoRef}
-                    className="category-char-video"
-                    src={categoryCharVideo}
-                    autoPlay
-                    muted
-                    playsInline
-                    preload="auto"
-                    aria-hidden="true"
-                    tabIndex={-1}
-                  />
-                </span>
+                <video
+                  ref={videoRef}
+                  className="category-char-video"
+                  src={categoryCharVideo}
+                  muted
+                  playsInline
+                  preload="auto"
+                  aria-hidden="true"
+                  tabIndex={-1}
+                />
               </span>
             </h2>
             <p className="section-subtitle">Find the right gear for every kind of adventure.</p>

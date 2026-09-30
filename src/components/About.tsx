@@ -6,100 +6,95 @@ import secondaryImg from '../assets/logo_gearstation.jpg';
 import adventureRiderVideo from '../assets/cute-elements1.mp4';
 
 const About: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const riderVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const video = riderVideoRef.current;
-    if (!video) return;
+    const section = sectionRef.current;
+    if (!video || !section) return;
 
     video.defaultMuted = true;
     video.muted = true;
-    video.loop = false; // Master controller manages smooth exit fade and clean restart
+    video.playsInline = true;
 
     let isMounted = true;
     let restartTimer: any = null;
-    let rafId: number | null = null;
+    let isPlaying = false;
+    let isInViewport = false;
 
-    const checkFade = () => {
-      if (!isMounted || !video) return;
-
-      const t = video.currentTime;
-      const duration = video.duration || 10.01;
-
-      // Natural video playback:
-      // 0.0s -> 0.3s: Subtle soft fade-in on entry
-      // 0.3s -> (duration - 0.45s): 100% full opacity during walk, photo stop, and resume walk
-      // (duration - 0.45s) -> duration: Smooth gradual exit fade-out to 0 opacity while walking out
-      if (t < 0.3) {
-        video.style.opacity = `${Math.min(1, t / 0.3)}`;
-      } else if (t > duration - 0.45) {
-        const fadeRemaining = Math.max(0, (duration - t) / 0.45);
-        video.style.opacity = `${fadeRemaining}`;
-      } else {
-        video.style.opacity = '1';
-      }
-
-      if (t >= duration - 0.05 || video.ended) {
-        handleCycleComplete();
-        return;
-      }
-
-      rafId = requestAnimationFrame(checkFade);
-    };
-
-    const handleCycleComplete = () => {
-      if (!isMounted || !video) return;
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = null;
-
-      // Fully invisible before reset
-      video.style.opacity = '0';
-      video.pause();
-      video.currentTime = 0;
-
-      // Clean invisible pause before the next cycle begins
-      restartTimer = setTimeout(() => {
-        if (isMounted) {
-          startCycle();
-        }
-      }, 300);
-    };
-
-    const startCycle = () => {
+    const playCycle = () => {
       if (!isMounted || !video) return;
       video.currentTime = 0;
-      video.style.opacity = '0';
+      video.style.opacity = '1';
+
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
-            if (isMounted) {
-              if (rafId) cancelAnimationFrame(rafId);
-              rafId = requestAnimationFrame(checkFade);
-            }
+            isPlaying = true;
           })
           .catch(() => {
-            if (isMounted) {
-              restartTimer = setTimeout(startCycle, 800);
-            }
+            isPlaying = false;
           });
       }
     };
 
-    startCycle();
+    const handleEnded = () => {
+      if (!isMounted || !video) return;
+      isPlaying = false;
+      video.style.opacity = '0';
+
+      // Settle pause of 3.5s before next walking cycle
+      restartTimer = setTimeout(() => {
+        if (isMounted && isInViewport) {
+          playCycle();
+        }
+      }, 3500);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            isInViewport = true;
+            if (!isPlaying) {
+              playCycle();
+            }
+          } else {
+            isInViewport = false;
+            if (restartTimer) {
+              clearTimeout(restartTimer);
+              restartTimer = null;
+            }
+            if (video && !video.paused) {
+              video.pause();
+              isPlaying = false;
+            }
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.25
+      }
+    );
+
+    observer.observe(section);
+    video.addEventListener('ended', handleEnded);
 
     return () => {
       isMounted = false;
-      if (rafId) cancelAnimationFrame(rafId);
+      observer.disconnect();
+      video.removeEventListener('ended', handleEnded);
       if (restartTimer) clearTimeout(restartTimer);
-      if (video) {
-        video.pause();
-      }
+      if (video) video.pause();
     };
   }, []);
 
   return (
-    <section id="about" className="section about-section">
+    <section id="about" ref={sectionRef} className="section about-section">
       <div className="container about-container">
         <div className="about-grid">
           
@@ -108,15 +103,14 @@ const About: React.FC = () => {
               <span className="label-number">01</span>
               <span className="label-text">/ OUR STORY</span>
               <div className="story-walk-track" aria-hidden="true" role="presentation">
-                {/* 1. Static Red Line */}
+                {/* 1. Static Ground Red Line */}
                 <div className="story-walk-line"></div>
-                {/* 2. Natural Character Animation Layer */}
+                {/* 2. Natural Walking Character Animation */}
                 <div className="story-walker">
                   <video
                     ref={riderVideoRef}
                     className="story-rider-video"
                     src={adventureRiderVideo}
-                    autoPlay
                     muted
                     playsInline
                     preload="auto"

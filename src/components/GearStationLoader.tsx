@@ -14,6 +14,8 @@ export const GearStationLoader: React.FC<GearStationLoaderProps> = ({
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState<'loading' | 'exiting' | 'hidden'>('loading');
   const startTimeRef = useRef(Date.now());
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     let animationFrameId: number;
@@ -35,10 +37,10 @@ export const GearStationLoader: React.FC<GearStationLoaderProps> = ({
           setPhase('exiting');
           const removeTimer = setTimeout(() => {
             setPhase('hidden');
-            if (onComplete) {
-              onComplete();
+            if (onCompleteRef.current) {
+              onCompleteRef.current();
             }
-          }, 500);
+          }, 450);
           return () => clearTimeout(removeTimer);
         }, 160);
         return () => clearTimeout(exitTimer);
@@ -52,7 +54,7 @@ export const GearStationLoader: React.FC<GearStationLoaderProps> = ({
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [minDuration, onComplete]);
+  }, [minDuration]);
 
   if (phase === 'hidden') {
     return null;

@@ -1,0 +1,211 @@
+/* ==================================================
+   GLOBAL FLOATING ASSISTANCE WIDGET (GEAR STATION BRANDED)
+   ================================================== */
+
+.global-assistance-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Toast Notification (Desktop copy confirmation) */
+.assistance-toast {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #111111;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-main, 'Inter', sans-serif);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e5e5;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px) scale(0.96);
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.22s ease;
+  pointer-events: auto;
+  margin-bottom: 2px;
+}
+
+.assistance-toast.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 50%;
+  color: #16a34a;
+  flex-shrink: 0;
+}
+
+.toast-text {
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+}
+
+/* Vertically Stacked Buttons Container */
+.assistance-buttons-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 9px;
+  pointer-events: auto;
+}
+
+/* Base High-Contrast Rounded-Square Button */
+.assistance-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.2s ease,
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  flex-shrink: 0;
+}
+
+/* Top Button: WhatsApp in Gear Station Red */
+.assistance-whatsapp-btn {
+  background-color: var(--color-primary, #d31d1d);
+  color: #ffffff;
+}
+
+/* Bottom Button: Phone in Dark Charcoal */
+.assistance-phone-btn {
+  background-color: #111111;
+  color: #ffffff;
+}
+
+/* Icons */
+.assistance-icon {
+  display: block;
+  flex-shrink: 0;
+  pointer-events: none;
+  color: #ffffff;
+}
+
+.phone-icon {
+  stroke: #ffffff;
+}
+
+/* Desktop Hover Interaction */
+@media (hover: hover) and (pointer: fine) {
+  .assistance-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .assistance-whatsapp-btn:hover {
+    background-color: var(--color-primary-hover, #b51515);
+  }
+
+  .assistance-phone-btn:hover {
+    background-color: #262626;
+  }
+
+  .assistance-btn:hover .assistance-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+/* Active / Pressed State */
+.assistance-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.assistance-btn:focus-visible {
+  outline: 2px solid var(--color-primary, #d31d1d);
+  outline-offset: 3px;
+}
+
+/* White Minimalist Tooltip (Positioned left of the button) */
+.assistance-tooltip {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%) translateX(4px);
+  background-color: #ffffff;
+  color: #111111;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  font-family: var(--font-main, 'Inter', sans-serif);
+}
+
+.assistance-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  border-width: 5px 0 5px 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent #e5e5e5;
+}
+
+/* ==================================================
+   MOBILE RESPONSIVENESS
+   ================================================== */
+@media (max-width: 768px) {
+  .global-assistance-widget {
+    bottom: 18px;
+    right: 16px;
+    gap: 8px;
+  }
+
+  .assistance-buttons-group {
+    gap: 8px;
+  }
+
+  .assistance-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 15px;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.14);
+  }
+
+  .assistance-tooltip {
+    display: none;
+  }
+}

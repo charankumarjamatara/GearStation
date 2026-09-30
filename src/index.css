@@ -34,7 +34,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html,
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   -webkit-tap-highlight-color: transparent;
 }

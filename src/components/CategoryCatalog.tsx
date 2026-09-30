@@ -348,14 +348,6 @@ export const CATEGORY_DATA: Record<string, { title: string; subtitle: string; ic
       ALL_PRODUCTS['cam-new-1']
     ]
   },
-  'pocket-cameras': {
-    title: 'Pocket Cameras',
-    subtitle: 'Compact and capable.',
-    icon: '📸',
-    products: [
-      ALL_PRODUCTS['dji-1'],
-    ]
-  },
   'mobile-gimbals': {
     title: 'Mobile Gimbals',
     subtitle: 'Smooth shots for smartphones.',
@@ -521,7 +513,6 @@ const PHOTOGRAPHY_CATEGORIES: Array<{ key: string; label: string; icon?: React.R
   { key: 'action-cameras', label: 'Action Cameras', imageUrl: img_photo_0 },
   { key: 'insta360-cameras', label: 'Insta 360 Cameras', imageUrl: img_photo_23 },
   { key: 'vlogging-cameras', label: 'Vlogging Cameras', imageUrl: img_photo_35 },
-  { key: 'pocket-cameras', label: 'Pocket Cameras', imageUrl: img_photo_33 },
   { key: 'mobile-gimbals', label: 'Mobile Gimbals', imageUrl: img_photo_42 },
   { key: 'wireless-mics', label: 'Wireless & Collar Mics', imageUrl: img_photo_44 },
   { key: 'tripod-accessories', label: 'Tripod & Camera Accessories', imageUrl: img_photo_46 },
@@ -554,6 +545,8 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
       setActiveCategory('photography-all');
     } else if (categoryKey === 'outdoor' || categoryKey === 'outdoor-all') {
       setActiveCategory('outdoor-all');
+    } else if (categoryKey === 'pocket-cameras') {
+      setActiveCategory('vlogging-cameras');
     } else {
       setActiveCategory(categoryKey || 'photography-all');
     }

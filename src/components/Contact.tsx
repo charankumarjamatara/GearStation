@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { sendContactNotification } from '../services/emailService';
+import { CONTACT_PHONE_DISPLAY, CONTACT_EMAIL } from '../utils/constants';
 import './Contact.css';
 
 const Contact: React.FC = () => {
@@ -66,7 +67,7 @@ const Contact: React.FC = () => {
               <span className="contact-num">01</span>
               <div>
                 <p className="contact-label">CALL US</p>
-                <p className="contact-value">+91 73079 81667</p>
+                <p className="contact-value">{CONTACT_PHONE_DISPLAY}</p>
               </div>
             </div>
             
@@ -74,7 +75,7 @@ const Contact: React.FC = () => {
               <span className="contact-num">02</span>
               <div>
                 <p className="contact-label">EMAIL US</p>
-                <p className="contact-value">hello@gearstation.co</p>
+                <p className="contact-value">{CONTACT_EMAIL}</p>
               </div>
             </div>
             
