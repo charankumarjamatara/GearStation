@@ -96,7 +96,7 @@ const CartModal: React.FC = () => {
     for (const item of cartItems) {
       const product = getProductBySlugOrId(item.productId);
       if (product) {
-        const addOns = getRelatedAddOns(product, 8);
+        const addOns = getRelatedAddOns(product, 20);
         for (const addOn of addOns) {
           const lowerId = addOn.id.toLowerCase();
           const lowerSlug = (addOn.slug || '').toLowerCase();

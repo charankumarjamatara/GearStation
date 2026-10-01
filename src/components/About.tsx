@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './About.css';
 
-import primaryImg from '../assets/logo_bpd.png';
+import primaryImg from '../assets/new_logo.jpeg';
 import secondaryImg from '../assets/logo_gearstation.jpg';
 import adventureRiderVideo from '../assets/cute-elements1.mp4';
 

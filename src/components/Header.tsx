@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCartContext } from '../CartContext';
 import HeaderSearch from './HeaderSearch';
-import newLogo from '../assets/new_logo.jpeg';
+import logoImg from '../assets/logo_gearstation.jpg';
 import './Header.css';
 
 const Header: React.FC = () => {
@@ -64,12 +64,12 @@ const Header: React.FC = () => {
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        {/* Logo & Brand Name in Center/Left */}
+        {/* Logo & Brand Name */}
         <div className="header-logo" onClick={() => window.location.hash = ''} style={{cursor: 'pointer'}}>
-          <img src={newLogo} alt="Backpackers Destinations" className="full-logo" />
+          <img src={logoImg} alt="Gear Station Logo" className="full-logo" />
           <div className="logo-text-container">
-            <span className="logo-title">BACKPACKERS</span>
-            <span className="logo-subtitle">DESTINATIONS</span>
+            <span className="logo-title">Gear Station.co</span>
+            <span className="logo-subtitle">BY BACKPACKERS.DESTINATIONS</span>
           </div>
         </div>
 

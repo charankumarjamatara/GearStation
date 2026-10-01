@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaInstagram, FaFacebook, FaYoutube } from 'react-icons/fa';
 import { CONTACT_PHONE_DISPLAY, WHATSAPP_URL, CONTACT_EMAIL } from '../utils/constants';
-import newLogo from '../assets/new_logo.jpeg';
+import logoImg from '../assets/logo_gearstation.jpg';
 import './Footer.css';
 
 const Footer: React.FC = () => {
@@ -24,10 +24,10 @@ const Footer: React.FC = () => {
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="footer-logo">
-              <img src={newLogo} alt="Backpackers Destinations" className="full-logo-footer" />
+              <img src={logoImg} alt="Gear Station.co" className="full-logo-footer" />
               <div className="footer-logo-text">
-                <span className="footer-brand-title">BACKPACKERS</span>
-                <span className="footer-brand-subtitle">DESTINATIONS</span>
+                <span className="footer-brand-title">Gear Station.co</span>
+                <span className="footer-brand-subtitle">BY BACKPACKERS.DESTINATIONS</span>
               </div>
             </div>
             <p className="footer-desc">
@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2026 Backpackers Destinations, All rights reserved.</p>
+          <p>&copy; 2026 Gear Station.co, All rights reserved.</p>
         </div>
       </div>
     </footer>

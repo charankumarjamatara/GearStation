@@ -94,7 +94,7 @@ export async function processNotification(payload: any) {
 <body>
   <div class="container">
     <div class="header">
-      <h1>BACKPACKERS DESTINATIONS</h1>
+      <h1>GEAR STATION.CO</h1>
       <p>Contact Form Submission</p>
     </div>
     <div class="content">
@@ -234,7 +234,7 @@ export async function processNotification(payload: any) {
 <body>
   <div class="container">
     <div class="header">
-      <h1>BACKPACKERS DESTINATIONS</h1>
+      <h1>GEAR STATION.CO</h1>
       <p>New Booking Request</p>
     </div>
     <div class="content">

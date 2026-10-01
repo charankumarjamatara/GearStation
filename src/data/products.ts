@@ -2279,60 +2279,203 @@ export function getProductBySlugOrId(identifier: string): ProductItem | undefine
 }
 
 // Reusable Related Add-ons Recommendation Engine
-export function getRelatedAddOns(product: ProductItem, limit: number = 5): ProductItem[] {
+export function getRelatedAddOns(product: ProductItem, limit: number = 20): ProductItem[] {
   const results: ProductItem[] = [];
   const addedIds = new Set<string>([product.id]);
 
-  // 1. Explicit Add-On relationships if defined
+  // Helper to safely add an item by ID
+  const tryAdd = (id: string) => {
+    if (!addedIds.has(id) && ALL_PRODUCTS[id]) {
+      results.push(ALL_PRODUCTS[id]);
+      addedIds.add(id);
+      return true;
+    }
+    return false;
+  };
+
+  // 1. Explicit Add-On relationships defined directly on the product
   if (product.addOnIds && product.addOnIds.length > 0) {
     for (const addOnId of product.addOnIds) {
-      if (!addedIds.has(addOnId) && ALL_PRODUCTS[addOnId]) {
-        results.push(ALL_PRODUCTS[addOnId]);
-        addedIds.add(addOnId);
-        if (results.length >= limit) return results;
-      }
+      tryAdd(addOnId);
+      if (results.length >= limit) return results;
     }
   }
 
-  // 2. Compatible accessory category classification
-  const isCamera = product.category.includes('camera') || product.category === 'dji-cameras';
-  const isOutdoor = product.category.includes('trekking') || product.category.includes('camping') || product.category.includes('winter');
-  const isRiding = product.category.includes('riding');
+  // 2. Comprehensive context-aware accessory classification
+  const cat = (product.category || '').toLowerCase();
+  const name = (product.name || '').toLowerCase();
+  const id = product.id.toLowerCase();
 
-  if (isCamera) {
-    const cameraAddOnIds = ['ta-9', 'bat-new-2', 'wm-2', 'ta-2', 'acm-1', 'acm-15', 'ta-12', 'bat-new-1', 'acm-6'];
-    for (const id of cameraAddOnIds) {
-      if (!addedIds.has(id) && ALL_PRODUCTS[id]) {
-        results.push(ALL_PRODUCTS[id]);
-        addedIds.add(id);
-        if (results.length >= limit) return results;
-      }
+  const isDjiAction = id.startsWith('gp-') || name.includes('dji action');
+  const isInsta360 = id.startsWith('i360-') || name.includes('insta 360') || name.includes('insta360');
+  const isPocketOrGimbal = id === 'dji-1' || id.startsWith('mg-') || id === 'vc-24' || name.includes('pocket') || name.includes('osmo');
+  const isDslr = id === 'cam-new-1' || name.includes('canon') || name.includes('dslr');
+  const isCamera = isDjiAction || isInsta360 || isPocketOrGimbal || isDslr || cat.includes('camera');
+
+  const isRiding = cat.includes('riding') || id.startsWith('rg-') || id.startsWith('rl-');
+  const isBackpack = cat.includes('backpack') || id === 'bp-1' || id === 'tg-2' || id === 'tg-7' || id === 'tg-10';
+  const isCamping = cat.includes('camping') || id.startsWith('cg-');
+  const isWinter = cat.includes('winter') || id.startsWith('wj-');
+  const isTrekking = cat.includes('trekking') || id.startsWith('tg-');
+
+  if (isDjiAction) {
+    const djiAddOnIds = [
+      'acm-8', // DJI Action 5 Waterproof Dive Housing (60m)
+      'acm-14', // 3-in-1 Heavy Duty Motorcycle Mount Kit
+      'acm-6', // Chesty Performance Chest Harness Mount
+      'acm-1', // Head Strap Mount for Action Cameras
+      'acm-10', // Handlebar / Seatpost / Pole Mount
+      'acm-15', // Telescopic Aluminum Action Selfie Stick (120cm)
+      'bat-new-2', // DJI Action 3/4/5 Extreme Battery (1770mAh)
+      'bat-new-1', // DJI Action 4/5 Multifunctional Battery Hub
+      'ta-9', // 128 GB SanDisk Extreme Pro MicroSDXC
+      'acm-7', // The Handler Floating Hand Grip
+      'acm-12', // 3-Way Grip / Extension Arm / Tripod
+      'acm-11', // Heavy-Duty Industrial Suction Cup Mount
+      'acm-16', // 3M Curved & Flat Adhesive Helmet Mounts (Pack of 4)
+      'acm-21', // Magnetic Swivel Clip Mount for Backpacks
+      'ta-2', // Professional Camera Tripod
+      'ta-12', // MI 20,000 mAh Fast Charge Power Bank
+      'wm-2', // DJI Mic 2 (2 TX + 1 RX + Charging Case)
+      'wm-1' // Rode Wireless GO II Microphone
+    ];
+    for (const addId of djiAddOnIds) {
+      tryAdd(addId);
+      if (results.length >= limit) return results;
+    }
+  } else if (isInsta360) {
+    const isX4 = id.includes('x4') || name.includes('x4');
+    const instaAddOnIds = [
+      isX4 ? 'acm-20' : 'acm-22', // 50m Invisible Dive Case
+      isX4 ? 'bat-new-5' : 'bat-new-4', // Rechargeable Battery
+      'acm-5', // Insta 360 Bullet Time Handle + Tripod
+      'acm-14', // 3-in-1 Heavy Duty Motorcycle Mount Kit
+      'acm-15', // Telescopic Aluminum Action Selfie Stick (120cm)
+      'acm-10', // Handlebar / Seatpost / Pole Mount
+      'acm-6', // Chesty Performance Chest Harness Mount
+      'acm-1', // Head Strap Mount for Action Cameras
+      'acm-11', // Heavy-Duty Industrial Suction Cup Mount
+      'acm-7', // The Handler Floating Hand Grip
+      'acm-16', // 3M Curved & Flat Adhesive Helmet Mounts (Pack of 4)
+      'acm-21', // Magnetic Swivel Clip Mount for Backpacks
+      'ta-9', // 128 GB SanDisk Extreme Pro MicroSDXC
+      'ta-2', // Professional Camera Tripod
+      'ta-12', // MI 20,000 mAh Fast Charge Power Bank
+      'wm-1', // Rode Wireless GO II Microphone
+      'wm-2' // DJI Mic 2
+    ];
+    for (const addId of instaAddOnIds) {
+      tryAdd(addId);
+      if (results.length >= limit) return results;
+    }
+  } else if (isCamera) {
+    const cameraAddOnIds = [
+      'wm-2', // DJI Mic 2
+      'wm-1', // Rode Wireless GO II
+      'ta-9', // 128 GB SanDisk Extreme Pro MicroSDXC
+      'ta-2', // Professional Camera Tripod
+      'ta-10', // Canon Tripod Grip HG-100TBR
+      'ta-12', // MI 20,000 mAh Fast Charge Power Bank
+      'bat-new-2', // Extreme Battery
+      'bat-new-3', // Canon Battery
+      'acm-12', // 3-Way Grip
+      'acm-15', // Selfie Stick
+      'acm-1', // Head Strap
+      'acm-6', // Chest Mount
+      'acm-11', // Suction Cup
+      'acm-14' // Motorcycle Mount Kit
+    ];
+    for (const addId of cameraAddOnIds) {
+      tryAdd(addId);
+      if (results.length >= limit) return results;
     }
   } else if (isRiding) {
-    const ridingAddOnIds = ['rg-4', 'rg-5', 'rg-3', 'rg-7', 'rl-2', 'rl-1', 'acm-14'];
-    for (const id of ridingAddOnIds) {
-      if (!addedIds.has(id) && ALL_PRODUCTS[id]) {
-        results.push(ALL_PRODUCTS[id]);
-        addedIds.add(id);
-        if (results.length >= limit) return results;
-      }
+    const ridingAddOnIds = [
+      'rg-5', // Axor Apex Full Face Riding Helmet
+      'rg-4', // Bionic Armored Riding Knee & Shin Guards
+      'rg-1', // Men Armor Riding Jacket (Level 2 CE)
+      'rg-2', // Armored Touring Riding Pants
+      'rg-3', // Motorcycle High-Visibility Rain Jacket
+      'rg-7', // Motorcycle Waterproof Rain Over-Pants
+      'rl-2', // Magnetic Tank Bag with Touch Phone Window
+      'rl-5', // Non-Magnetic Strap-On Tank Bag
+      'rl-1', // Expandable Motorcycle Saddle Bags (Pair)
+      'rl-3', // ViaTerra Element 35L Tail Bag
+      'rl-4', // ViaTerra Claw 72L All-in-One Tail/Saddle Bag
+      'acm-14', // 3-in-1 Heavy Duty Motorcycle Mount Kit
+      'acm-10', // Handlebar / Seatpost / Pole Mount
+      'acm-16', // 3M Curved & Flat Adhesive Helmet Mounts
+      'ta-12' // MI 20,000 mAh Fast Charge Power Bank
+    ];
+    for (const addId of ridingAddOnIds) {
+      tryAdd(addId);
+      if (results.length >= limit) return results;
     }
-  } else if (isOutdoor) {
-    const outdoorAddOnIds = ['tg-6', 'tg-9', 'bp-1', 'tg-1', 'tg-3', 'cg-3', 'cg-5', 'cg-8', 'tg-11'];
-    for (const id of outdoorAddOnIds) {
-      if (!addedIds.has(id) && ALL_PRODUCTS[id]) {
-        results.push(ALL_PRODUCTS[id]);
-        addedIds.add(id);
-        if (results.length >= limit) return results;
-      }
+  } else if (isCamping) {
+    const campingAddOnIds = [
+      'cg-3', // Trekking Insulated Folding Foam Mattress
+      'cg-5', // Trekking Sleeping Bag MT500 (5°C Comfort)
+      'cg-8', // Hygienic Sleeping Bag Silk/Cotton Liner
+      'cg-4', // Foldable Lightweight Camping Stool
+      'cg-9', // Compact Roll-Up Aluminum Camping Table
+      'cg-6', // Camping Foldable Suitcase Table + 4 Stools
+      'cg-1', // 3-Person All-Weather Waterproof Camping Tent
+      'cg-2', // 2-Person Lightweight Backpacking Tent
+      'tg-6', // USB Rechargeable LED Head Torch (400 Lumens)
+      'tg-9', // Rugged Outdoor 20,000 mAh Power Bank
+      'tg-2', // 50L Ergonomic Trekking Backpack
+      'tg-22' // Trek Essentials Kit + 10x42 Binocular
+    ];
+    for (const addId of campingAddOnIds) {
+      tryAdd(addId);
+      if (results.length >= limit) return results;
+    }
+  } else if (isWinter) {
+    const winterAddOnIds = [
+      'tg-1', // Windproof Thermal Trekking Gloves
+      'tg-11', // UV400 Polarized Mountain Hiking Sunglasses
+      'tg-14', // Men Waterproof Thermal Snow Pants
+      'tg-23', // Women Thermal Snow & Ski Pants
+      'tg-5', // Men Trekking Thermal Jacket (-10°C)
+      'tg-17', // Women Trekking Thermal Jacket (-10°C)
+      'tg-20', // Mountain Thermal Fleece Jacket
+      'tg-6', // USB Rechargeable LED Head Torch
+      'tg-2', // 50L Ergonomic Trekking Backpack
+      'tg-3' // Anti-Shock Telescopic Trekking Pole
+    ];
+    for (const addId of winterAddOnIds) {
+      tryAdd(addId);
+      if (results.length >= limit) return results;
+    }
+  } else if (isBackpack || isTrekking) {
+    const trekkingAddOnIds = [
+      'bp-1', // High-Visibility Backpack Rain Cover (40L–75L)
+      'tg-3', // Anti-Shock Telescopic Trekking Pole (Pair)
+      'tg-6', // USB Rechargeable LED Head Torch (400 Lumens)
+      'tg-1', // Windproof Thermal Trekking Gloves
+      'tg-11', // UV400 Polarized Mountain Hiking Sunglasses
+      'tg-9', // Rugged Outdoor 20,000 mAh Power Bank
+      'tg-4', // Heavy-Duty Waterproof Rain Poncho
+      'tg-8', // Waterproof Over-Trouser Rain Pants
+      'tg-16', // Lightweight Breathable Rain Jacket
+      'tg-22', // Trek Essentials Kit + 10x42 Binocular
+      'cg-5', // Trekking Sleeping Bag MT500
+      'cg-3', // Trekking Insulated Folding Foam Mattress
+      'tg-2', // 50L Ergonomic Trekking Backpack
+      'tg-10', // 60L Mountain Trekking Backpack
+      'tg-7', // 70L High-Altitude Expedition Backpack
+      'acm-21' // Magnetic Swivel Clip Mount for Backpacks
+    ];
+    for (const addId of trekkingAddOnIds) {
+      tryAdd(addId);
+      if (results.length >= limit) return results;
     }
   }
 
-  // 3. Same category / accessories fallback
+  // 3. Fallback: Related accessories from product catalog
   for (const item of ALL_PRODUCTS_LIST) {
     if (!addedIds.has(item.id) && item.id !== product.id) {
-      results.push(item);
-      addedIds.add(item.id);
+      tryAdd(item.id);
       if (results.length >= limit) break;
     }
   }

@@ -81,7 +81,7 @@ export const GlobalAssistanceWidget: React.FC = () => {
           type="button"
           onClick={handlePhoneClick}
           className="assistance-btn assistance-phone-btn"
-          aria-label={isMobile ? "Call Backpackers Destinations" : "Copy phone number"}
+          aria-label={isMobile ? "Call Gear Station.co" : "Copy phone number"}
         >
           <Phone className="assistance-icon phone-icon" size={22} strokeWidth={2} />
           <span className="assistance-tooltip">
