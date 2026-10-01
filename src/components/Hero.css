@@ -214,6 +214,11 @@
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.22));
 }
 
+.hero-camera-2 {
+  padding: 24px;
+  box-sizing: border-box;
+}
+
 .hero-camera.active {
   transform: translate(-50%, -50%);
   opacity: 1;
@@ -590,6 +595,11 @@
     pointer-events: none;
   }
 
+  .hero-camera-2 {
+    padding: 28px;
+    box-sizing: border-box;
+  }
+
   .hero-camera.active {
     opacity: 1;
     transform: translate(-50%, -50%) rotate(12deg);
@@ -731,6 +741,10 @@
   .hero-camera {
     height: 200px;
     max-height: 200px;
+  }
+  .hero-camera-2 {
+    padding: 24px;
+    box-sizing: border-box;
   }
   .hero-camera.prev {
     transform: translate(calc(-50% - 110px), -50%) rotate(12deg);

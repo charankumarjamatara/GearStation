@@ -96,7 +96,7 @@ const Hero: React.FC = () => {
                         key={index}
                         src={img} 
                         alt={`Action Camera ${index + 1}`} 
-                        className={`hero-camera ${statusClass}`}
+                        className={`hero-camera hero-camera-${index + 1} ${statusClass}`}
                       />
                     );
                   })}
