@@ -3,6 +3,7 @@ import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCartContext } from '../CartContext';
 import HeaderSearch from './HeaderSearch';
 import logoImg from '../assets/logo_gearstation.jpg';
+import { scrollToSection, getStickyHeaderHeight } from '../utils/navigation';
 import './Header.css';
 
 const Header: React.FC = () => {
@@ -14,18 +15,20 @@ const Header: React.FC = () => {
     const handleScroll = () => {
       const sections = ['rent-gear', 'categories', 'how-it-works', 'about', 'contact'];
       let current = '';
+      const headerHeight = getStickyHeaderHeight();
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom >= 150) {
+          if (rect.top <= headerHeight + 80 && rect.bottom >= headerHeight + 40) {
             current = section;
           }
         }
       }
       setActiveSection(current);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -45,14 +48,27 @@ const Header: React.FC = () => {
     
     e.preventDefault();
     
-    const el = document.getElementById(targetId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    } else {
+    requestAnimationFrame(() => {
+      const scrolled = scrollToSection(targetId, true);
+      if (!scrolled) {
+        window.location.hash = targetId;
+        setTimeout(() => {
+          scrollToSection(targetId, true);
+        }, 100);
+      } else {
+        window.history.pushState(null, '', `#${targetId}`);
+      }
+    });
+  };
+
+  const handleLogoClick = () => {
+    setIsMobileMenuOpen(false);
+    if (window.location.hash.startsWith('#category/') || window.location.hash.startsWith('#product/')) {
       window.location.hash = '';
-      setTimeout(() => {
-        document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.history.pushState(null, '', window.location.pathname);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -65,7 +81,7 @@ const Header: React.FC = () => {
         </button>
 
         {/* Logo & Brand Name */}
-        <div className="header-logo" onClick={() => window.location.hash = ''} style={{cursor: 'pointer'}}>
+        <div className="header-logo" onClick={handleLogoClick} style={{cursor: 'pointer'}}>
           <img src={logoImg} alt="Gear Station Logo" className="full-logo" />
           <div className="logo-text-container">
             <span className="logo-title">Gear Station.co</span>

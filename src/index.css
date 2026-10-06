@@ -53,6 +53,10 @@
   /* ==================== CONTAINER & PADDING ==================== */
   --container-max-width: 1200px;
   --page-padding: 24px;
+
+  /* ==================== HEADER & SCROLL OFFSET ==================== */
+  --header-height: 77px;
+  --scroll-gap: 16px;
 }
 
 *,
@@ -251,6 +255,8 @@ img {
   :root {
     --page-padding: 16px;
     --space-3xl: 56px;
+    --header-height: 60px;
+    --scroll-gap: 16px;
   }
   
   .section {
@@ -262,3 +268,31 @@ img {
     margin-bottom: var(--space-lg);
   }
 }
+
+@media (max-width: 380px) {
+  :root {
+    --header-height: 55px;
+    --scroll-gap: 12px;
+  }
+}
+
+/* ==================== SCROLL MARGIN FOR SECTION ANCHORS ==================== */
+section[id],
+.section[id],
+#rent-gear,
+#categories,
+#how-it-works,
+#contact {
+  scroll-margin-top: calc(var(--header-height) + var(--scroll-gap));
+}
+
+#about {
+  scroll-margin-top: calc(var(--header-height) + 95px);
+}
+
+@media (max-width: 768px) {
+  #about {
+    scroll-margin-top: calc(var(--header-height) + 85px);
+  }
+}
+

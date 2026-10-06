@@ -21,10 +21,13 @@ import {
   saveCategoryScrollPosition, 
   setReturningFromProduct 
 } from './utils/scrollRestoration';
+import { scrollToSection, scrollToSectionWithStabilization } from './utils/navigation';
 import './App.css';
 
 // In-memory application startup flag (resets ONLY on full browser reload / F5 / Ctrl+R)
 let hasAppLoadedInitially = false;
+
+const SECTION_HASHES = ['#rent-gear', '#categories', '#how-it-works', '#about', '#contact'];
 
 function App() {
   const [isLoading, setIsLoading] = useState(() => !hasAppLoadedInitially);
@@ -51,6 +54,18 @@ function App() {
   });
 
   const prevHashRef = useRef<string>(window.location.hash);
+
+  // Scroll to section when initial loader finishes if a section hash is present in URL
+  useEffect(() => {
+    if (!isLoading) {
+      const hash = window.location.hash;
+      if (SECTION_HASHES.includes(hash)) {
+        const secId = hash.substring(1);
+        const cleanup = scrollToSectionWithStabilization(secId, true);
+        return cleanup;
+      }
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -83,6 +98,18 @@ function App() {
         if (!isFromProduct) {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+      } else if (SECTION_HASHES.includes(newHash)) {
+        const secId = newHash.substring(1);
+        setReturningFromProduct(false);
+        if (selectedCategory || selectedProduct) {
+          setSelectedCategory(null);
+          setSelectedProduct(null);
+          setTimeout(() => {
+            scrollToSectionWithStabilization(secId, true);
+          }, 100);
+        } else {
+          scrollToSection(secId, true);
+        }
       } else if (!newHash) {
         setReturningFromProduct(false);
         setSelectedCategory(null);
@@ -94,7 +121,7 @@ function App() {
 
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [selectedCategory, selectedProduct]);
 
   const handleSelectCategory = (categoryKey: string) => {
     setReturningFromProduct(false);

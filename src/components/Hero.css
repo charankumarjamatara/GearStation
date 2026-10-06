@@ -339,14 +339,20 @@
    ========================================================================== */
 @media (max-width: 767px) {
   .hero {
-    padding: 22px 0 16px;
+    height: auto;
+    min-height: unset;
+    max-height: none;
+    padding: 16px 0 20px;
     background-color: #FFFFFF;
     position: relative;
     overflow-x: hidden;
   }
 
   .container.hero-container {
-    padding: 0 20px;
+    height: auto;
+    min-height: unset;
+    max-height: none;
+    padding: 0 16px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -358,9 +364,11 @@
   .hero-main-layout {
     display: block;
     position: relative;
-    margin-bottom: 22px;
+    margin-bottom: 12px;
     width: 100%;
+    height: auto;
     min-height: unset;
+    max-height: none;
   }
 
   /* 2. Hero copy with high z-index to stay crisp & readable on top */
@@ -375,12 +383,12 @@
   }
 
   .hero-subtitle {
-    font-size: clamp(11px, 3.2vw, 13px);
+    font-size: 12px;
     font-weight: 600;
     color: #64748b;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin: 0 0 14px 0;
+    margin: 0 0 6px 0;
     line-height: 1.2;
     position: relative;
     z-index: 3;
@@ -390,17 +398,17 @@
     display: none;
   }
 
-  /* 3. 4-line headline with controlled breathing room */
+  /* 3. 4-line headline with original bold visual scale */
   .hero-title-mobile {
     display: block;
     font-family: var(--font-heading);
-    font-size: clamp(48px, 13.5vw, 62px);
-    line-height: 0.96;
+    font-size: clamp(44px, 12.8vw, 54px);
+    line-height: 0.94;
     font-weight: 900;
     letter-spacing: -1.0px;
     color: #111111;
     text-transform: uppercase;
-    margin: 0 0 16px 0;
+    margin: 0 0 10px 0;
     width: 100%;
     max-width: 100%;
     white-space: normal;
@@ -414,11 +422,11 @@
 
   /* 4. Supporting description sitting on left */
   .hero-desc {
-    font-size: 14px;
-    line-height: 1.42;
+    font-size: 13px;
+    line-height: 1.38;
     color: #4b5563;
     width: 100%;
-    max-width: 180px;
+    max-width: 185px;
     margin: 0;
     position: relative;
     z-index: 3;
@@ -435,10 +443,10 @@
   /* 5. Absolute decorative visual layer positioned BEHIND/around the headline & copy */
   .hero-right {
     position: absolute;
-    right: -30px;
-    top: 65px;
-    width: 260px;
-    height: 280px;
+    right: -25px;
+    top: 40px;
+    width: 245px;
+    height: 260px;
     margin: 0;
     padding: 0;
     transform: none;
@@ -625,30 +633,35 @@
     display: none;
   }
 
-  /* 6. Mobile Booking Card immediately following the copy */
+  /* 6. Mobile Booking Card immediately following the copy in natural document flow */
   .search-bar.booking-card {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
     background: var(--color-white);
     border-radius: var(--radius-xl);
     border: 1px solid var(--color-border);
     box-shadow: var(--shadow-card);
-    padding: 20px 18px;
-    gap: 14px;
+    padding: 13px 14px;
+    gap: 7px;
     box-sizing: border-box;
     width: 100%;
-    margin: 0 0 20px 0;
+    margin: 0 0 24px 0;
     position: relative;
     z-index: 4;
+    height: auto;
+    min-height: unset;
+    max-height: none;
+    overflow: visible;
   }
 
   .search-field {
     width: 100%;
-    gap: 6px;
+    gap: 3px;
   }
 
   .search-field label {
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 700;
     color: var(--color-dark);
     letter-spacing: 0.5px;
@@ -656,11 +669,11 @@
   }
 
   .input-wrapper {
-    height: 52px;
+    height: 45px;
     border-radius: var(--radius-md);
     border: 1px solid var(--color-border);
     background: var(--color-white);
-    padding: 0 16px;
+    padding: 0 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -692,26 +705,26 @@
   }
 
   .date-input-hero {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--color-dark);
   }
 
-  /* Full-width Red CTA Button */
+  /* Full-width Red CTA Button in normal document flow */
   .hero-explore-cta-mobile {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 52px;
+    height: 45px;
     background-color: var(--color-primary);
     color: var(--color-white);
     border: none;
     border-radius: var(--radius-md);
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    margin-top: 4px;
+    margin-top: 2px;
     position: relative;
     transition: transform 0.15s ease, background-color 0.2s ease;
     -webkit-tap-highlight-color: transparent;
@@ -720,37 +733,6 @@
   .hero-explore-cta-mobile:active {
     transform: scale(0.98);
     background-color: var(--color-primary-hover);
-  }
-}
-
-@media (max-width: 380px) {
-  .hero-title-mobile {
-    font-size: clamp(40px, 12vw, 46px);
-    line-height: 0.96;
-  }
-  .hero-desc {
-    font-size: 13px;
-    max-width: 160px;
-  }
-  .hero-right {
-    right: -30px;
-    top: 55px;
-    width: 220px;
-    height: 240px;
-  }
-  .hero-camera {
-    height: 200px;
-    max-height: 200px;
-  }
-  .hero-camera-2 {
-    padding: 24px;
-    box-sizing: border-box;
-  }
-  .hero-camera.prev {
-    transform: translate(calc(-50% - 110px), -50%) rotate(12deg);
-  }
-  .hero-camera.next {
-    transform: translate(calc(-50% + 110px), -50%) rotate(12deg);
   }
 }
 

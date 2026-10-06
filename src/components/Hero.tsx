@@ -3,6 +3,7 @@ import { Calendar, MapPin, ChevronDown } from 'lucide-react';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DatePickerCustom.css';
 import { useDateContext } from '../DateContext';
+import { scrollToSection } from '../utils/navigation';
 import './Hero.css';
 
 const Hero: React.FC = () => {
@@ -29,10 +30,7 @@ const Hero: React.FC = () => {
   };
 
   const handleExploreGear = () => {
-    const el = document.getElementById('categories') || document.getElementById('popular-rentals');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+    scrollToSection('categories', true);
   };
 
   return (

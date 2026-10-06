@@ -2,19 +2,20 @@ import React from 'react';
 import { FaInstagram, FaFacebook, FaYoutube } from 'react-icons/fa';
 import { CONTACT_PHONE_DISPLAY, WHATSAPP_URL, CONTACT_EMAIL } from '../utils/constants';
 import logoImg from '../assets/logo_gearstation.jpg';
+import { scrollToSection } from '../utils/navigation';
 import './Footer.css';
 
 const Footer: React.FC = () => {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
-    const el = document.getElementById(targetId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.hash = '';
+    const scrolled = scrollToSection(targetId, true);
+    if (!scrolled) {
+      window.location.hash = targetId;
       setTimeout(() => {
-        document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+        scrollToSection(targetId, true);
       }, 100);
+    } else {
+      window.history.pushState(null, '', `#${targetId}`);
     }
   };
 
