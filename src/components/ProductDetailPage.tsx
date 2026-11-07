@@ -239,11 +239,32 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     tabIndex={0}
                   >
                     <div className="pdp-addon-image-box">
-                      <img src={addon.imageUrl} alt={addon.name} className="pdp-addon-img" />
+                      <a 
+                        href={`#product/${addon.slug || addon.id}`}
+                        className="pdp-addon-image-link"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleNavigateProduct(addon);
+                        }}
+                        aria-label={addon.name}
+                      >
+                        <img src={addon.imageUrl} alt={addon.name} className="pdp-addon-img" />
+                      </a>
                     </div>
 
                     <div className="pdp-addon-details">
-                      <h4 className="pdp-addon-name">{addon.name}</h4>
+                      <h4 className="pdp-addon-name">
+                        <a 
+                          href={`#product/${addon.slug || addon.id}`}
+                          className="pdp-addon-name-link"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleNavigateProduct(addon);
+                          }}
+                        >
+                          {addon.name}
+                        </a>
+                      </h4>
                       <p className="pdp-addon-price">
                         <strong>{addon.price}</strong> <span className="pdp-price-suffix">/ day</span>
                       </p>

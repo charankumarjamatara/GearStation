@@ -306,6 +306,15 @@
   box-sizing: border-box;
 }
 
+.pdp-addon-image-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
 .pdp-addon-img {
   max-width: 90%;
   max-height: 90%;
@@ -338,6 +347,15 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   height: 34px;
+}
+
+.pdp-addon-name-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.pdp-addon-name-link:hover {
+  color: var(--color-primary);
 }
 
 .pdp-addon-price {

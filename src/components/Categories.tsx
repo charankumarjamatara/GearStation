@@ -214,15 +214,43 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
                   <div className="red-line"></div>
                 </div>
                 
-                <h3 className="category-name-new">{category.name}</h3>
+                <h3 className="category-name-new">
+                  <a 
+                    href={`#category/${category.categoryKey}`}
+                    className="category-name-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCategoryClick(category.categoryKey);
+                    }}
+                  >
+                    {category.name}
+                  </a>
+                </h3>
                 <p className="category-desc-new">{category.description}</p>
                 
-                <div className="explore-link">
+                <a 
+                  href={`#category/${category.categoryKey}`}
+                  className="explore-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleCategoryClick(category.categoryKey);
+                  }}
+                >
                   EXPLORE <ArrowRight size={16} />
-                </div>
+                </a>
               </div>
               <div className="card-image-right">
-                <img src={category.imageUrl} alt={category.name} className="category-img-new" />
+                <a 
+                  href={`#category/${category.categoryKey}`}
+                  className="category-image-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleCategoryClick(category.categoryKey);
+                  }}
+                  aria-label={category.name}
+                >
+                  <img src={category.imageUrl} alt={category.name} className="category-img-new" />
+                </a>
               </div>
             </div>
           ))}

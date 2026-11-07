@@ -63,7 +63,7 @@
 }
 
 .gs-logo-wrap {
-  width: 170px;
+  width: 210px;
   height: auto;
   display: flex;
   align-items: center;
@@ -124,7 +124,7 @@
   }
 
   .gs-logo-wrap {
-    width: 150px;
+    width: 180px;
   }
 }
 
@@ -137,7 +137,7 @@
   }
 
   .gs-logo-wrap {
-    width: 135px;
+    width: 160px;
   }
 
   .gs-progress-track-wrapper {

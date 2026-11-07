@@ -22,6 +22,7 @@ import {
   setReturningFromProduct 
 } from './utils/scrollRestoration';
 import { scrollToSection, scrollToSectionWithStabilization } from './utils/navigation';
+import { getProductBySlugOrId } from './data/products';
 import './App.css';
 
 // In-memory application startup flag (resets ONLY on full browser reload / F5 / Ctrl+R)
@@ -66,6 +67,54 @@ function App() {
       }
     }
   }, [isLoading]);
+
+  // Dynamic document title and meta description updates for view state
+  useEffect(() => {
+    const metaDesc = document.querySelector('meta[name="description"]');
+    const baseTitle = 'Gear Station — Premium Camera & Travel Gear Rentals | Hyderabad';
+    const baseDesc = 'Rent premium action cameras, DJI, Insta360, GoPro, riding gear, and outdoor adventure equipment in Hyderabad. Flexible daily rental plans from Gear Station.';
+
+    if (selectedProduct) {
+      const prod = getProductBySlugOrId(selectedProduct);
+      if (prod) {
+        document.title = `${prod.name} on Rent in Hyderabad | Gear Station`;
+        if (metaDesc) {
+          const snippet = prod.description ? prod.description.slice(0, 95) : 'High quality rental equipment';
+          metaDesc.setAttribute('content', `Rent ${prod.name} in Hyderabad starting at ${prod.price}/day. ${snippet}. Available with doorstep delivery from Gear Station.`);
+        }
+      } else {
+        document.title = 'Product Details | Gear Station';
+      }
+    } else if (selectedCategory) {
+      const categoryNames: Record<string, string> = {
+        'photography': 'Photography & Camera Equipment',
+        'outdoor': 'Outdoor & Adventure Gear',
+        'dji-cameras': 'DJI Cameras & Combos',
+        'action-cameras': 'Action Cameras',
+        'insta-360': 'Insta360 Action Cameras',
+        'mobile-gimbals': 'Mobile Gimbals',
+        'wireless-mics': 'Wireless & Collar Mics',
+        'tripod-accessories': 'Tripod & Camera Accessories',
+        'action-camera-add-ons': 'Action Camera Add-Ons',
+        'trekking-gear': 'Trekking & Hiking Gear',
+        'riding-gear': 'Motorcycle Riding Gear',
+        'winter-jackets': 'Winter & Snow Jackets',
+        'riding-luggage': 'Riding Luggage & Tail Bags',
+        'backpacks': 'Trekking Backpacks',
+        'camp-accessories': 'Camping Accessories'
+      };
+      const catTitle = categoryNames[selectedCategory] || selectedCategory;
+      document.title = `${catTitle} on Rent in Hyderabad | Gear Station`;
+      if (metaDesc) {
+        metaDesc.setAttribute('content', `Browse and rent ${catTitle} in Hyderabad with Gear Station. High-quality equipment, transparent pricing, and flexible rental plans.`);
+      }
+    } else {
+      document.title = baseTitle;
+      if (metaDesc) {
+        metaDesc.setAttribute('content', baseDesc);
+      }
+    }
+  }, [selectedProduct, selectedCategory]);
 
   useEffect(() => {
     const handleHashChange = () => {

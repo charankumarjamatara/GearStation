@@ -75,7 +75,9 @@ const Contact: React.FC = () => {
               <span className="contact-num">02</span>
               <div>
                 <p className="contact-label">EMAIL US</p>
-                <p className="contact-value">{CONTACT_EMAIL}</p>
+                <a href={`mailto:${CONTACT_EMAIL}`} className="contact-value contact-email-link">
+                  {CONTACT_EMAIL}
+                </a>
               </div>
             </div>
             

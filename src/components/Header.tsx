@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCartContext } from '../CartContext';
 import HeaderSearch from './HeaderSearch';
-import logoImg from '../assets/logo_gearstation.jpg';
+const logoImg = '/gearstation_new_logo.png';
 import { scrollToSection, getStickyHeaderHeight } from '../utils/navigation';
 import './Header.css';
 
@@ -81,11 +81,25 @@ const Header: React.FC = () => {
         </button>
 
         {/* Logo & Brand Name */}
-        <div className="header-logo" onClick={handleLogoClick} style={{cursor: 'pointer'}}>
-          <img src={logoImg} alt="Gear Station Logo" className="full-logo" />
+        <div className="header-logo">
+          <img 
+            src={logoImg} 
+            alt="Gear Station" 
+            className="full-logo" 
+            onClick={handleLogoClick}
+          />
           <div className="logo-text-container">
-            <span className="logo-title">Gear Station.co</span>
-            <span className="logo-subtitle">BY BACKPACKERS.DESTINATIONS</span>
+            <span className="logo-title" onClick={handleLogoClick}>Gear Station</span>
+            <a 
+              href="https://backpackersdestinations.in" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="logo-subtitle"
+              onClick={(e) => e.stopPropagation()}
+              aria-label="Backpackers Destinations Website"
+            >
+              BY BACKPACKERS DESTINATIONS
+            </a>
           </div>
         </div>
 

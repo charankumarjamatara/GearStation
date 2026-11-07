@@ -32,13 +32,12 @@
   text-transform: uppercase;
 }
 
-.hero-title-desktop {
-  display: block;
-  white-space: nowrap; /* CRITICAL: force 2 lines on desktop */
+.mobile-br {
+  display: none;
 }
 
-.hero-title-mobile {
-  display: none;
+.desktop-br {
+  display: inline;
 }
 
 .text-primary {
@@ -394,11 +393,16 @@
     z-index: 3;
   }
 
-  .hero-title-desktop {
+  .mobile-br {
+    display: inline;
+  }
+
+  .desktop-br {
     display: none;
   }
 
   /* 3. 4-line headline with original bold visual scale */
+  .hero-title,
   .hero-title-mobile {
     display: block;
     font-family: var(--font-heading);

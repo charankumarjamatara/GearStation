@@ -8,21 +8,21 @@ const Stats: React.FC = () => {
         <div className="stats-container">
           <div className="stat-item">
             <div className="stat-text">
-              <h3 className="stat-value">150+</h3>
+              <span className="stat-value">150+</span>
               <p className="stat-label">GEAR ITEMS</p>
             </div>
           </div>
           
           <div className="stat-item">
             <div className="stat-text">
-              <h3 className="stat-value">24/7</h3>
+              <span className="stat-value">24/7</span>
               <p className="stat-label">SUPPORT</p>
             </div>
           </div>
           
           <div className="stat-item">
             <div className="stat-text">
-              <h3 className="stat-value">1000+</h3>
+              <span className="stat-value">1000+</span>
               <p className="stat-label">ADVENTURERS</p>
             </div>
           </div>

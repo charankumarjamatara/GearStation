@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaInstagram, FaFacebook, FaYoutube } from 'react-icons/fa';
 import { CONTACT_PHONE_DISPLAY, WHATSAPP_URL, CONTACT_EMAIL } from '../utils/constants';
-import logoImg from '../assets/logo_gearstation.jpg';
+const logoImg = '/gearstation_new_logo.png';
 import { scrollToSection } from '../utils/navigation';
 import './Footer.css';
 
@@ -25,10 +25,18 @@ const Footer: React.FC = () => {
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="footer-logo">
-              <img src={logoImg} alt="Gear Station.co" className="full-logo-footer" />
+              <img src={logoImg} alt="Gear Station" className="full-logo-footer" />
               <div className="footer-logo-text">
-                <span className="footer-brand-title">Gear Station.co</span>
-                <span className="footer-brand-subtitle">BY BACKPACKERS.DESTINATIONS</span>
+                <span className="footer-brand-title">Gear Station</span>
+                <a 
+                  href="https://backpackersdestinations.in" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="footer-brand-subtitle"
+                  aria-label="Backpackers Destinations Website"
+                >
+                  BY BACKPACKERS DESTINATIONS
+                </a>
               </div>
             </div>
             <p className="footer-desc">
@@ -91,7 +99,7 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2026 Gear Station.co, All rights reserved.</p>
+          <p>&copy; 2026 Gear Station, All rights reserved.</p>
         </div>
       </div>
     </footer>

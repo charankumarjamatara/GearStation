@@ -178,6 +178,7 @@ const CartModal: React.FC = () => {
     const itemsSnapshot = [...cartItems];
     const customerSnapshot = { ...formData };
     const totalSnapshot = cartTotal;
+    const generatedOrderId = 'GS-' + Math.floor(100000 + Math.random() * 900000);
 
     // 1. Show UI confirmation immediately to user
     setIsSuccess(true);
@@ -186,9 +187,12 @@ const CartModal: React.FC = () => {
     try {
       setIsSubmittingOrder(true);
       await sendOrderNotification({
+        orderId: generatedOrderId,
         customer: customerSnapshot,
         items: itemsSnapshot,
-        total: totalSnapshot
+        total: totalSnapshot,
+        paymentStatus: 'Pay on Pickup',
+        deliveryInfo: 'Store Pickup / Direct Coordination'
       });
     } catch (err) {
       console.error('Order notification error:', err);

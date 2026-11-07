@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import './About.css';
 
-import primaryImg from '../assets/new_logo.jpeg';
-import secondaryImg from '../assets/logo_gearstation.jpg';
+const bpdLogo = '/bpd_new_logo.png';
+const gearstationLogo = '/gearstation_new_logo.png';
 import adventureRiderVideo from '../assets/cute-elements1.mp4';
 
 const About: React.FC = () => {
@@ -142,7 +142,7 @@ const About: React.FC = () => {
               gear to capture every part of them.
             </p>
             
-            <div className="brand-relationship">
+            <div className="brand-relationship brand-relationship-desktop">
               <span className="brand-name">BACKPACKERS<br/>DESTINATIONS</span>
               <span className="brand-x">×</span>
               <span className="brand-name">GEAR STATION</span>
@@ -150,33 +150,40 @@ const About: React.FC = () => {
           </div>
           
           <div className="about-visuals">
-            <div className="visuals-bg-text">01</div>
-            
-            <div className="editorial-text">
-              <span>SAME<br/>PASSION.<br/>DIFFERENT<br/>JOURNEYS.</span>
-              <div className="editorial-line"></div>
+            <div className="about-brand-composition">
+              <a 
+                href="https://www.instagram.com/backpackers.destinations/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="brand-logo-link bpd-logo-link"
+                aria-label="Backpackers Destinations Instagram"
+              >
+                <img 
+                  src={bpdLogo} 
+                  alt="Backpackers Destinations" 
+                  className="brand-logo-img bpd-logo-img" 
+                />
+              </a>
+
+              <span className="brand-separator-cross" aria-hidden="true">×</span>
+
+              <a 
+                href="https://www.instagram.com/gearstation.co/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="brand-logo-link gs-logo-link"
+                aria-label="Gear Station Instagram"
+              >
+                <div className="gs-symbol-wrap">
+                  <img 
+                    src={gearstationLogo} 
+                    alt="Gear Station" 
+                    className="brand-logo-img gs-logo-img" 
+                  />
+                </div>
+                <span className="gs-brand-text">GEAR STATION</span>
+              </a>
             </div>
-            
-            <a 
-              href="https://www.instagram.com/backpackers.destinations/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="primary-image-wrapper"
-            >
-              <img src={primaryImg} alt="Backpackers Destinations" className="about-img primary-img" />
-              <div className="image-overlay-badge">BPD</div>
-            </a>
-            
-            <a 
-              href="https://www.instagram.com/gearstation.co/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="secondary-image-wrapper"
-            >
-              <img src={secondaryImg} alt="Gear Station" className="about-img secondary-img" />
-              <div className="image-overlay-badge">GEAR</div>
-            </a>
-            
           </div>
 
         </div>

@@ -16,6 +16,12 @@ const Hero: React.FC = () => {
     `${import.meta.env.BASE_URL}new_prod_3.png`
   ];
 
+  const carouselImageAlts = [
+    'Insta360 X4 8K Waterproof 360 Action Camera',
+    'DJI Osmo Action 4 4K Action Camera',
+    'DJI Osmo Action 5 Pro Action Camera'
+  ];
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % carouselImages.length);
@@ -40,17 +46,10 @@ const Hero: React.FC = () => {
           <div className="hero-left">
             <p className="hero-subtitle">YOUR NEXT ADVENTURE AWAITS</p>
             
-            {/* Desktop Headline (2 lines) */}
-            <h1 className="hero-title hero-title-desktop">
-              BACKPACK. RENT.<br />
-              <span className="text-primary">TRAVEL. REPEAT.</span>
-            </h1>
-
-            {/* Mobile Headline (4 lines) */}
-            <h1 className="hero-title hero-title-mobile">
-              BACKPACK.<br />
-              RENT.<br />
-              <span className="text-primary">TRAVEL.<br />REPEAT.</span>
+            {/* Unified Primary H1 for all viewports */}
+            <h1 className="hero-title">
+              BACKPACK.<br className="mobile-br" /> RENT.<br className="desktop-br" />
+              <span className="text-primary">TRAVEL.<br className="mobile-br" /> REPEAT.</span>
             </h1>
 
             <p className="hero-desc">
@@ -93,7 +92,7 @@ const Hero: React.FC = () => {
                       <img 
                         key={index}
                         src={img} 
-                        alt={`Action Camera ${index + 1}`} 
+                        alt={carouselImageAlts[index] || 'Action Camera'} 
                         className={`hero-camera hero-camera-${index + 1} ${statusClass}`}
                       />
                     );

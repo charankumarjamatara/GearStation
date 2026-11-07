@@ -87,16 +87,37 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <Heart size={16} />
           </button>
         )}
-        {imageUrl ? (
-          <img src={imageUrl} alt={name} className="product-image" />
-        ) : (
-          <div className="product-image-placeholder">
-            <span className="placeholder-text">Camera Image</span>
-          </div>
-        )}
+        <a 
+          href={`#product/${targetIdentifier}`} 
+          className="product-image-link"
+          onClick={(e) => {
+            e.preventDefault();
+            handleCardClick();
+          }}
+          aria-label={name}
+        >
+          {imageUrl ? (
+            <img src={imageUrl} alt={name} className="product-image" />
+          ) : (
+            <div className="product-image-placeholder">
+              <span className="placeholder-text">Camera Image</span>
+            </div>
+          )}
+        </a>
       </div>
       <div className="product-info">
-        <h4 className="product-name">{name}</h4>
+        <h3 className="product-name">
+          <a 
+            href={`#product/${targetIdentifier}`}
+            className="product-name-link"
+            onClick={(e) => {
+              e.preventDefault();
+              handleCardClick();
+            }}
+          >
+            {name}
+          </a>
+        </h3>
         
         <div className="product-price-container">
           {!hasDates ? (

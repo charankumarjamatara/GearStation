@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import logoImg from '../assets/logo_gearstation.jpg';
+const logoImg = '/gearstation_new_logo.png';
 import './GearStationLoader.css';
 
 interface GearStationLoaderProps {
@@ -66,7 +66,7 @@ export const GearStationLoader: React.FC<GearStationLoaderProps> = ({
       role="status"
       aria-live="polite"
       aria-busy={phase === 'loading'}
-      aria-label="Loading Gear Station.co"
+      aria-label="Loading Gear Station"
     >
       <div className="gs-loader-stage">
         
@@ -75,7 +75,7 @@ export const GearStationLoader: React.FC<GearStationLoaderProps> = ({
           <div className="gs-logo-wrap">
             <img 
               src={logoImg} 
-              alt="Gear Station.co" 
+              alt="Gear Station" 
               className="gs-logo-img" 
             />
           </div>

@@ -71,6 +71,16 @@
   color: var(--color-dark);
 }
 
+.contact-email-link {
+  display: block;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-email-link:hover {
+  color: var(--color-primary);
+}
+
 .contact-form {
   display: flex;
   flex-direction: column;

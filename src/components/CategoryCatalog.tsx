@@ -138,8 +138,8 @@ import img_bp_2 from '../assets/outdoor category/trekking gear/60 L back pack.jp
 import img_vc_24 from '../assets/photography category/dji cameras/DJI vlogging combo.jpg';
 
 export interface ProductItem {
-
   id: string;
+  slug?: string;
   name: string;
   category: string;
   price: string;
@@ -741,11 +741,15 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
           {/* TOP CATEGORIES */}
           <div className="catalog-sidebar" ref={sidebarRef}>
             {sidebarCategories.map(cat => (
-              <div 
+              <a 
                 key={cat.key} 
+                href={`#category/${cat.key}`}
                 data-category-key={cat.key}
                 className={`sidebar-item ${activeCategory === cat.key ? 'active' : ''}`}
-                onClick={() => handleCategoryChange(cat.key)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleCategoryChange(cat.key);
+                }}
               >
                 <div className="sidebar-icon">
                   {cat.imageUrl ? (
@@ -755,7 +759,7 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
                   )}
                 </div>
                 <span className="sidebar-label">{cat.label}</span>
-              </div>
+              </a>
             ))}
           </div>
 
@@ -777,12 +781,33 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
                 >
                   
                   <div className="card-image-wrap">
-                    <img src={product.imageUrl} alt={product.name} className="card-image" />
+                    <a 
+                      href={`#product/${product.slug || product.id}`}
+                      className="card-image-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleProductClick(product);
+                      }}
+                      aria-label={product.name}
+                    >
+                      <img src={product.imageUrl} alt={product.name} className="card-image" />
+                    </a>
                   </div>
 
                   <div className="card-body">
 
-                    <h3 className="card-title">{product.name}</h3>
+                    <h3 className="card-title">
+                      <a 
+                        href={`#product/${product.slug || product.id}`}
+                        className="card-title-link"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleProductClick(product);
+                        }}
+                      >
+                        {product.name}
+                      </a>
+                    </h3>
 
                     <div className="card-specs">
                       {product.specs.slice(0,2).map((spec, i) => (
