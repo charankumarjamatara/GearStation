@@ -141,12 +141,6 @@ const About: React.FC = () => {
               Gear Station makes sure you have the cameras, bikes, accessories and riding 
               gear to capture every part of them.
             </p>
-            
-            <div className="brand-relationship brand-relationship-desktop">
-              <span className="brand-name">BACKPACKERS<br/>DESTINATIONS</span>
-              <span className="brand-x">×</span>
-              <span className="brand-name">GEAR STATION</span>
-            </div>
           </div>
           
           <div className="about-visuals">
