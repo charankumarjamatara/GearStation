@@ -81,6 +81,7 @@ import {
   setReturningFromProduct
 } from '../utils/scrollRestoration';
 import RentalDatePill from './RentalDatePill';
+import { getProductBySlugOrId } from '../data/products';
 import './CategoryCatalog.css';
 import img_tg_1 from '../assets/outdoor category/trekking gear/trekking gloves.jpg';
 import img_tg_2 from '../assets/outdoor category/trekking gear/50L Backpack.png';
@@ -685,7 +686,7 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
   };
 
   const handleProductClick = (product: ProductItem) => {
-    const target = (product as any).slug || product.id;
+    const target = getProductBySlugOrId(product.id)?.slug || (product as any).slug || product.id;
     saveCategoryScrollPosition(activeCategory, window.scrollY);
     if (onSelectProduct) {
       onSelectProduct(target);
@@ -771,7 +772,9 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
             </div>
           ) : (
             <div className="ecommerce-grid">
-              {filteredProducts.map((product) => (
+              {filteredProducts.map((product) => {
+                const productSlug = getProductBySlugOrId(product.id)?.slug || (product as any).slug || product.id;
+                return (
                 <div 
                   key={product.id} 
                   className="ecom-card"
@@ -781,7 +784,7 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
                   
                   <div className="card-image-wrap">
                     <a 
-                      href={`/products/${product.slug || product.id}`}
+                      href={`/products/${productSlug}`}
                       className="card-image-link"
                       onClick={(e) => {
                         e.preventDefault();
@@ -798,7 +801,7 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
 
                     <h3 className="card-title">
                       <a 
-                        href={`/products/${product.slug || product.id}`}
+                        href={`/products/${productSlug}`}
                         className="card-title-link"
                         onClick={(e) => {
                           e.preventDefault();
@@ -865,7 +868,8 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
                     )}
                   </div>
                 </div>
-              ))}
+              );
+            })}
             </div>
           )}
         </div>

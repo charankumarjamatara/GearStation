@@ -43,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const extraP = extraDayPrice ? parsePrice(extraDayPrice) : baseP;
   const totalPrice = baseP + (totalDays > 1 ? extraP * (totalDays - 1) : 0);
 
-  const targetIdentifier = slug || id || getProductBySlugOrId(name)?.slug || getProductBySlugOrId(name)?.id || name.toLowerCase().replace(/\s+/g, '-');
+  const targetIdentifier = slug || (id ? getProductBySlugOrId(id)?.slug : undefined) || getProductBySlugOrId(name)?.slug || id || name.toLowerCase().replace(/\s+/g, '-');
 
   const handleCardClick = () => {
     const currentHash = window.location.hash;
