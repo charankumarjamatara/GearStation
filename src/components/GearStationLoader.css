@@ -63,7 +63,8 @@
 }
 
 .gs-logo-wrap {
-  width: 210px;
+  width: 336px;
+  max-width: 85vw;
   height: auto;
   display: flex;
   align-items: center;
@@ -124,7 +125,7 @@
   }
 
   .gs-logo-wrap {
-    width: 180px;
+    width: 290px;
   }
 }
 
@@ -137,16 +138,31 @@
   }
 
   .gs-logo-wrap {
-    width: 160px;
+    width: clamp(235px, 68vw, 270px);
   }
 
   .gs-progress-track-wrapper {
-    width: 135px;
+    width: 145px;
     height: 2.5px;
   }
 
   .gs-loader-msg {
     font-size: 8.5px;
     letter-spacing: 2.5px;
+  }
+}
+
+@media (max-width: 350px) {
+  .gs-logo-wrap {
+    width: 225px;
+  }
+
+  .gs-progress-track-wrapper {
+    width: 130px;
+  }
+
+  .gs-loader-msg {
+    font-size: 8px;
+    letter-spacing: 2px;
   }
 }

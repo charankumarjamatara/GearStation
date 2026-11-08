@@ -21,7 +21,7 @@ import {
   saveCategoryScrollPosition, 
   setReturningFromProduct 
 } from './utils/scrollRestoration';
-import { scrollToSection, scrollToSectionWithStabilization } from './utils/navigation';
+import { scrollToSectionWithStabilization } from './utils/navigation';
 import { getProductBySlugOrId } from './data/products';
 import './App.css';
 
@@ -30,7 +30,38 @@ let hasAppLoadedInitially = false;
 
 const SECTION_HASHES = ['#rent-gear', '#categories', '#how-it-works', '#about', '#contact'];
 
-function App() {
+export function parseRoute(pathname?: string, hash?: string) {
+  const p = pathname || (typeof window !== 'undefined' ? window.location.pathname : '/');
+  const h = hash !== undefined ? hash : (typeof window !== 'undefined' ? window.location.hash : '');
+
+  // 1. Clean URL pathname
+  if (p.startsWith('/products/')) {
+    const slug = p.replace(/^\/products\//, '').split(/[?#]/)[0].replace(/\/$/, '');
+    if (slug) return { product: slug, category: null, isLegacyHash: false };
+  }
+  if (p.startsWith('/categories/')) {
+    const cat = p.replace(/^\/categories\//, '').split(/[?#]/)[0].replace(/\/$/, '');
+    if (cat) return { product: null, category: cat, isLegacyHash: false };
+  }
+
+  // 2. Legacy hash URL
+  if (h.startsWith('#product/')) {
+    const slug = h.replace(/^#product\//, '').split(/[?#]/)[0];
+    if (slug) return { product: slug, category: null, isLegacyHash: true };
+  }
+  if (h.startsWith('#category/')) {
+    const cat = h.replace(/^#category\//, '').split(/[?#]/)[0];
+    if (cat) return { product: null, category: cat, isLegacyHash: true };
+  }
+
+  return { product: null, category: null, isLegacyHash: false };
+}
+
+interface AppProps {
+  initialPath?: string;
+}
+
+function App({ initialPath }: AppProps = {}) {
   const [isLoading, setIsLoading] = useState(() => !hasAppLoadedInitially);
 
   const handleLoaderComplete = useCallback(() => {
@@ -38,27 +69,36 @@ function App() {
     setIsLoading(false);
   }, []);
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(() => {
-    const hash = window.location.hash;
-    if (hash.startsWith('#category/')) {
-      return hash.replace('#category/', '');
-    }
-    return null;
+  const initialRoute = parseRoute(initialPath);
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialRoute.category);
+  const [selectedProduct, setSelectedProduct] = useState<string | null>(initialRoute.product);
+
+  const prevLocationRef = useRef<{ pathname: string; hash: string }>({
+    pathname: typeof window !== 'undefined' ? window.location.pathname : (initialPath || '/'),
+    hash: typeof window !== 'undefined' ? window.location.hash : ''
   });
 
-  const [selectedProduct, setSelectedProduct] = useState<string | null>(() => {
-    const hash = window.location.hash;
-    if (hash.startsWith('#product/')) {
-      return hash.replace('#product/', '');
+  // Smoothly resolve legacy hash URLs to clean URLs on client mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const currentHash = window.location.hash;
+    if (currentHash.startsWith('#product/')) {
+      const slug = currentHash.replace(/^#product\//, '').split(/[?#]/)[0];
+      if (slug) {
+        window.history.replaceState(null, '', `/products/${slug}`);
+      }
+    } else if (currentHash.startsWith('#category/')) {
+      const cat = currentHash.replace(/^#category\//, '').split(/[?#]/)[0];
+      if (cat) {
+        window.history.replaceState(null, '', `/categories/${cat}`);
+      }
     }
-    return null;
-  });
-
-  const prevHashRef = useRef<string>(window.location.hash);
+  }, []);
 
   // Scroll to section when initial loader finishes if a section hash is present in URL
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && typeof window !== 'undefined') {
       const hash = window.location.hash;
       if (SECTION_HASHES.includes(hash)) {
         const secId = hash.substring(1);
@@ -70,6 +110,7 @@ function App() {
 
   // Dynamic document title and meta description updates for view state
   useEffect(() => {
+    if (typeof document === 'undefined') return;
     const metaDesc = document.querySelector('meta[name="description"]');
     const baseTitle = 'Gear Station — Premium Camera & Travel Gear Rentals | Hyderabad';
     const baseDesc = 'Rent premium action cameras, DJI, Insta360, GoPro, riding gear, and outdoor adventure equipment in Hyderabad. Flexible daily rental plans from Gear Station.';
@@ -116,91 +157,91 @@ function App() {
     }
   }, [selectedProduct, selectedCategory]);
 
+  // Synchronize state with browser back/forward and URL changes
   useEffect(() => {
-    const handleHashChange = () => {
-      const prevHash = prevHashRef.current;
-      const newHash = window.location.hash;
+    if (typeof window === 'undefined') return;
 
-      if (newHash.startsWith('#product/')) {
-        // Leaving category to view product -> save current category scroll position
-        if (prevHash.startsWith('#category/')) {
-          const cat = prevHash.replace('#category/', '');
-          saveCategoryScrollPosition(cat, window.scrollY);
-        }
-        setSelectedProduct(newHash.replace('#product/', ''));
-        setSelectedCategory(null);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (newHash.startsWith('#category/')) {
-        const cat = newHash.replace('#category/', '');
-        const isFromProduct = prevHash.startsWith('#product/');
+    const handleLocationChange = () => {
+      const prevLoc = prevLocationRef.current;
+      const currentPath = window.location.pathname;
+      const currentHash = window.location.hash;
+      const route = parseRoute(currentPath, currentHash);
 
-        if (isFromProduct) {
-          setReturningFromProduct(true);
-        } else {
-          setReturningFromProduct(false);
-        }
-
-        setSelectedCategory(cat);
-        setSelectedProduct(null);
-
-        // Only scroll to top if this is a fresh category navigation, NOT returning from product details
-        if (!isFromProduct) {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      } else if (SECTION_HASHES.includes(newHash)) {
-        const secId = newHash.substring(1);
-        setReturningFromProduct(false);
-        if (selectedCategory || selectedProduct) {
-          setSelectedCategory(null);
-          setSelectedProduct(null);
-          setTimeout(() => {
-            scrollToSectionWithStabilization(secId, true);
-          }, 100);
-        } else {
-          scrollToSection(secId, true);
-        }
-      } else if (!newHash) {
-        setReturningFromProduct(false);
-        setSelectedCategory(null);
-        setSelectedProduct(null);
+      // Category -> Product transition: save scroll position
+      if (route.product && prevLoc.pathname.startsWith('/categories/')) {
+        const cat = prevLoc.pathname.replace(/^\/categories\//, '').split(/[?#]/)[0];
+        saveCategoryScrollPosition(cat, window.scrollY);
+      } else if (route.product && prevLoc.hash.startsWith('#category/')) {
+        const cat = prevLoc.hash.replace(/^#category\//, '').split(/[?#]/)[0];
+        saveCategoryScrollPosition(cat, window.scrollY);
       }
 
-      prevHashRef.current = newHash;
+      const isReturning = Boolean(
+        route.category && 
+        (prevLoc.pathname.startsWith('/products/') || prevLoc.hash.startsWith('#product/'))
+      );
+      setReturningFromProduct(isReturning);
+
+      setSelectedProduct(route.product);
+      setSelectedCategory(route.category);
+
+      // In-page section hash handling
+      if (!route.product && !route.category) {
+        if (SECTION_HASHES.includes(currentHash)) {
+          const secId = currentHash.substring(1);
+          setTimeout(() => {
+            scrollToSectionWithStabilization(secId, true);
+          }, 60);
+        } else if (!currentHash && (prevLoc.pathname !== '/' || prevLoc.hash)) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } else if (!isReturning) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      prevLocationRef.current = { pathname: currentPath, hash: currentHash };
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [selectedCategory, selectedProduct]);
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
+  }, []);
 
   const handleSelectCategory = (categoryKey: string) => {
     setReturningFromProduct(false);
     setSelectedCategory(categoryKey);
     setSelectedProduct(null);
-    window.location.hash = `category/${categoryKey}`;
+    window.history.pushState(null, '', `/categories/${categoryKey}`);
+    prevLocationRef.current = { pathname: `/categories/${categoryKey}`, hash: '' };
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSelectProduct = (productIdOrSlug: string) => {
-    const currentHash = window.location.hash;
-    if (currentHash.startsWith('#category/')) {
-      const cat = currentHash.replace('#category/', '');
-      saveCategoryScrollPosition(cat, window.scrollY);
+    if (selectedCategory) {
+      saveCategoryScrollPosition(selectedCategory, window.scrollY);
     }
     setSelectedProduct(productIdOrSlug);
     setSelectedCategory(null);
-    window.location.hash = `product/${productIdOrSlug}`;
+    window.history.pushState(null, '', `/products/${productIdOrSlug}`);
+    prevLocationRef.current = { pathname: `/products/${productIdOrSlug}`, hash: '' };
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToHome = () => {
-    if (window.history.length > 1) {
+    if (typeof window !== 'undefined' && window.history.length > 1) {
       window.history.back();
     } else {
       setReturningFromProduct(false);
       setSelectedCategory(null);
       setSelectedProduct(null);
-      window.location.hash = '';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (typeof window !== 'undefined') {
+        window.history.pushState(null, '', '/');
+        prevLocationRef.current = { pathname: '/', hash: '' };
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   };
 

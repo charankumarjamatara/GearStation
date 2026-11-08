@@ -8,9 +8,17 @@ import './Footer.css';
 const Footer: React.FC = () => {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
+    if (window.location.pathname !== '/' && window.location.pathname !== '') {
+      window.history.pushState(null, '', `/#${targetId}`);
+      window.dispatchEvent(new PopStateEvent('popstate'));
+      setTimeout(() => {
+        scrollToSection(targetId, true);
+      }, 100);
+      return;
+    }
     const scrolled = scrollToSection(targetId, true);
     if (!scrolled) {
-      window.location.hash = targetId;
+      window.history.pushState(null, '', `/#${targetId}`);
       setTimeout(() => {
         scrollToSection(targetId, true);
       }, 100);

@@ -332,3 +332,24 @@
     letter-spacing: 0.6px;
   }
 }
+
+@media (max-width: 340px) {
+  .header-container {
+    padding: 0 12px;
+  }
+  .header-actions {
+    gap: 4px;
+  }
+  .full-logo {
+    height: 42px;
+    max-height: 42px;
+    margin: -4px -6px -4px -4px;
+  }
+  .logo-title {
+    font-size: 12.5px;
+  }
+  .logo-subtitle {
+    font-size: 6.5px;
+    letter-spacing: 0.4px;
+  }
+}

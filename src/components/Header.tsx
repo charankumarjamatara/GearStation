@@ -41,17 +41,28 @@ const Header: React.FC = () => {
 
     if (targetId.startsWith('category/')) {
       e.preventDefault();
-      window.location.hash = targetId;
+      const catKey = targetId.replace('category/', '');
+      window.history.pushState(null, '', `/categories/${catKey}`);
+      window.dispatchEvent(new PopStateEvent('popstate'));
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
     
     e.preventDefault();
+
+    if (window.location.pathname !== '/' && window.location.pathname !== '') {
+      window.history.pushState(null, '', `/#${targetId}`);
+      window.dispatchEvent(new PopStateEvent('popstate'));
+      setTimeout(() => {
+        scrollToSection(targetId, true);
+      }, 100);
+      return;
+    }
     
     requestAnimationFrame(() => {
       const scrolled = scrollToSection(targetId, true);
       if (!scrolled) {
-        window.location.hash = targetId;
+        window.history.pushState(null, '', `/#${targetId}`);
         setTimeout(() => {
           scrollToSection(targetId, true);
         }, 100);
@@ -63,11 +74,15 @@ const Header: React.FC = () => {
 
   const handleLogoClick = () => {
     setIsMobileMenuOpen(false);
-    if (window.location.hash.startsWith('#category/') || window.location.hash.startsWith('#product/')) {
-      window.location.hash = '';
+    if (window.location.pathname !== '/' && window.location.pathname !== '') {
+      window.history.pushState(null, '', '/');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (window.location.hash) {
+      window.history.pushState(null, '', '/');
+      window.dispatchEvent(new PopStateEvent('popstate'));
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      window.history.pushState(null, '', window.location.pathname);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };

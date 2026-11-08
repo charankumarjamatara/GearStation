@@ -48,7 +48,7 @@ const Hero: React.FC = () => {
             
             {/* Unified Primary H1 for all viewports */}
             <h1 className="hero-title">
-              BACKPACK.<br className="mobile-br" /> RENT.<br className="desktop-br" />
+              BACKPACK.<br className="mobile-br" /> RENT.<br />
               <span className="text-primary">TRAVEL.<br className="mobile-br" /> REPEAT.</span>
             </h1>
 

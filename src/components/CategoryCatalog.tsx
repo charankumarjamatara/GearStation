@@ -537,19 +537,18 @@ interface CategoryCatalogProps {
   onSelectProduct?: (productIdOrSlug: string) => void;
 }
 
+const getInitialActiveCategory = (key?: string) => {
+  if (key === 'photography' || key === 'photography-all') return 'photography-all';
+  if (key === 'outdoor' || key === 'outdoor-all') return 'outdoor-all';
+  if (key === 'pocket-cameras') return 'vlogging-cameras';
+  return key || 'photography-all';
+};
+
 const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelectProduct }) => {
-  const [activeCategory, setActiveCategory] = useState('');
+  const [activeCategory, setActiveCategory] = useState(() => getInitialActiveCategory(categoryKey));
   
   React.useEffect(() => {
-    if (categoryKey === 'photography' || categoryKey === 'photography-all') {
-      setActiveCategory('photography-all');
-    } else if (categoryKey === 'outdoor' || categoryKey === 'outdoor-all') {
-      setActiveCategory('outdoor-all');
-    } else if (categoryKey === 'pocket-cameras') {
-      setActiveCategory('vlogging-cameras');
-    } else {
-      setActiveCategory(categoryKey || 'photography-all');
-    }
+    setActiveCategory(getInitialActiveCategory(categoryKey));
   }, [categoryKey]);
 
   const parentCategory = ['outdoor', 'outdoor-all', 'trekking-gear', 'riding-gear', 'camping-gear', 'winter-jackets', 'riding-luggage', 'backpacks'].includes(activeCategory || categoryKey) ? 'outdoor' : 'photography';
@@ -782,10 +781,11 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
                   
                   <div className="card-image-wrap">
                     <a 
-                      href={`#product/${product.slug || product.id}`}
+                      href={`/products/${product.slug || product.id}`}
                       className="card-image-link"
                       onClick={(e) => {
                         e.preventDefault();
+                        e.stopPropagation();
                         handleProductClick(product);
                       }}
                       aria-label={product.name}
@@ -798,10 +798,11 @@ const CategoryCatalog: React.FC<CategoryCatalogProps> = ({ categoryKey, onSelect
 
                     <h3 className="card-title">
                       <a 
-                        href={`#product/${product.slug || product.id}`}
+                        href={`/products/${product.slug || product.id}`}
                         className="card-title-link"
                         onClick={(e) => {
                           e.preventDefault();
+                          e.stopPropagation();
                           handleProductClick(product);
                         }}
                       >

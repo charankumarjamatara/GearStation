@@ -88,10 +88,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </button>
         )}
         <a 
-          href={`#product/${targetIdentifier}`} 
+          href={`/products/${targetIdentifier}`} 
           className="product-image-link"
           onClick={(e) => {
             e.preventDefault();
+            e.stopPropagation();
             handleCardClick();
           }}
           aria-label={name}
@@ -108,10 +109,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className="product-info">
         <h3 className="product-name">
           <a 
-            href={`#product/${targetIdentifier}`}
+            href={`/products/${targetIdentifier}`}
             className="product-name-link"
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               handleCardClick();
             }}
           >

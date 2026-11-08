@@ -216,7 +216,7 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
                 
                 <h3 className="category-name-new">
                   <a 
-                    href={`#category/${category.categoryKey}`}
+                    href={`/categories/${category.categoryKey}`}
                     className="category-name-link"
                     onClick={(e) => {
                       e.preventDefault();
@@ -229,7 +229,7 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
                 <p className="category-desc-new">{category.description}</p>
                 
                 <a 
-                  href={`#category/${category.categoryKey}`}
+                  href={`/categories/${category.categoryKey}`}
                   className="explore-link"
                   onClick={(e) => {
                     e.preventDefault();
@@ -241,7 +241,7 @@ const Categories: React.FC<CategoriesProps> = ({ onSelectCategory }) => {
               </div>
               <div className="card-image-right">
                 <a 
-                  href={`#category/${category.categoryKey}`}
+                  href={`/categories/${category.categoryKey}`}
                   className="category-image-link"
                   onClick={(e) => {
                     e.preventDefault();

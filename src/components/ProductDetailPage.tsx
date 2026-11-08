@@ -240,7 +240,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   >
                     <div className="pdp-addon-image-box">
                       <a 
-                        href={`#product/${addon.slug || addon.id}`}
+                        href={`/products/${addon.slug || addon.id}`}
                         className="pdp-addon-image-link"
                         onClick={(e) => {
                           e.preventDefault();
@@ -255,7 +255,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                     <div className="pdp-addon-details">
                       <h4 className="pdp-addon-name">
                         <a 
-                          href={`#product/${addon.slug || addon.id}`}
+                          href={`/products/${addon.slug || addon.id}`}
                           className="pdp-addon-name-link"
                           onClick={(e) => {
                             e.preventDefault();
